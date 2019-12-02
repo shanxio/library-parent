@@ -11,5 +11,16 @@
 
     <artifactId>library-utils</artifactId>
 
-
+    <dependencies>
+        <!--jackson-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <artifactId>library-execption</artifactId>
+            <groupId>com.nf</groupId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

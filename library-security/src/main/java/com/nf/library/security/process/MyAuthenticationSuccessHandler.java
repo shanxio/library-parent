@@ -2,6 +2,8 @@ package com.nf.library.security.process;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nf.library.execption.vo.ResponseVo;
+import com.nf.library.utils.JsonUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -18,14 +20,14 @@ import java.util.Map;
  */
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        //返回 json 字符串给前端
-        Map result = new HashMap<>();
-        result.put("succcess",true);
-        String json = objectMapper.writeValueAsString(result);
-        response.setContentType("text/json;charset=utf-8");
-        response.getWriter().write(json);
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
+        response.setContentType("application/json;charset=utf-8");
+        ResponseVo responseVo = ResponseVo.newBuilder()
+                .code("205")
+                .msg("登录成功")
+                .date("true").build();
+        JsonUtils.write(response.getOutputStream(),responseVo);
     }
 }

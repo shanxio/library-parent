@@ -4,6 +4,7 @@ import com.nf.library.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 /**
+ * 用户的业务接口
  * @author Sam
  */
 public interface UserService {

@@ -1,7 +1,6 @@
 package com.nf.library.security.config;
 
 
-import com.nf.library.service.config.SecurityConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

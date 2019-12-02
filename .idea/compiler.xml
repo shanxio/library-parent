@@ -6,7 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="library-dao" />
+        <module name="library-security" />
+        <module name="library-service" />
         <module name="library-controller" />
+        <module name="library-execption" />
+        <module name="library-utils" />
+        <module name="library-entity" />
       </profile>
     </annotationProcessing>
   </component>

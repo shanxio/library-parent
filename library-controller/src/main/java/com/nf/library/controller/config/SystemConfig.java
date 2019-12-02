@@ -1,4 +1,4 @@
-package com.nf.library.config;
+package com.nf.library.controller.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

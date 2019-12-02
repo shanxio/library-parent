@@ -1,6 +1,8 @@
-package com.nf.library.config;
+package com.nf.library.controller.config;
 
 
+import com.nf.library.security.config.EnableSecurit;
+import com.nf.library.service.config.EnableServiceSpring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +18,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 @ComponentScan({"com.nf.library.controller"})
+@EnableServiceSpring
+@EnableSecurit
 @EnableWebMvc
 public class MvcConfig  implements WebMvcConfigurer {
-
 
     @Bean
     public InternalResourceViewResolver internalResourceViewResolver(){

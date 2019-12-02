@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nf.library.dao.UserDao">
+
+    <resultMap id="userResultMap" type="com.nf.library.entity.User">
+        <id column="id" property="id"/>
+    </resultMap>
+    <sql id="userSelect">
+        id, username, loginname, usersex, deptid, deptname, userphone, password, entrydate, enabled
+    </sql>
+    <delete id="deleteById">
+        delete from user where id = #{id}
+    </delete>
+    <select id="getByUserName" resultMap="userResultMap">
+        select <include refid="userSelect"/> from user where username = #{username}
+    </select>
+    <select id="getByloginName" resultMap="userResultMap">
+        select <include refid="userSelect"/> from user where loginname = #{loginName}
+    </select>
+    <select id="getByloginNameAndPassword" resultMap="userResultMap">
+        select <include refid="userSelect"/> from user where loginname = #{loginName} and password = #{password}
+    </select>
+</mapper>

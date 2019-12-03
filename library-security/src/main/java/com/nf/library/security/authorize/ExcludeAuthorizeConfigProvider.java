@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class ExcludeAuthorizeConfigProvider implements AuthorizeConfigProvider {
     @Override
     public boolean config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
-        config.antMatchers("/userLogin","/login").permitAll();
+        config.antMatchers("/userLogin","/login","/403").permitAll();
         return false;
     }
 }

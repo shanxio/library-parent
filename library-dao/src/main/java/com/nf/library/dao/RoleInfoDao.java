@@ -1,6 +1,6 @@
 package com.nf.library.dao;
 
-import com.nf.library.entity.Role;
+import com.nf.library.entity.RoleInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -9,11 +9,11 @@ import java.util.List;
  * 关于用户角色相关操作
  * @author Sam
  */
-public interface RoleDao {
+public interface RoleInfoDao {
     /**
      * 根据登录用户查找对应的角色
-     * @param loginName
+     * @param username
      * @return
      */
-    List<Role> getRoleByloginName(@Param("loginName")String loginName);
+    List<RoleInfo> getRoleByUsername(@Param("username")String username);
 }

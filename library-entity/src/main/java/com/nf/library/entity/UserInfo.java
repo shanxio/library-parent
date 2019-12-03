@@ -16,16 +16,16 @@ import java.util.List;
  * @author Sam
  */
 @Data
-public class User implements UserDetails {
-    private Integer id;
-    private String Username;
-    private String loginName;
+public class UserInfo implements UserDetails {
+    private Integer userId;
+    private String username;
+    private String realName;
     private String userSex;
     private Integer deptId;
     private String deptName;
     private String userPhone;
     private String password;
-    private Date entryDate;
+    private Date userEntrydate;
     private boolean enabled;
 
     /**
@@ -54,7 +54,8 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.Username;
+
+        return this.username;
     }
 
     @Override

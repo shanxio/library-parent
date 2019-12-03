@@ -1,20 +1,20 @@
-package com.nf.library.service;
+package com.nf.library.dao;
 
 import com.nf.library.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 用户的业务接口
+ * 用于用户表操作
  * @author Sam
  */
-public interface UserService {
+public interface UserInfoDao {
 
     /**
      * 根据姓名查找用户
      * @param realName
      * @return
      */
-    UserInfo getByRealName( String realName);
+    UserInfo getByRealName(@Param("realName") String realName);
 
 
     /**
@@ -22,7 +22,7 @@ public interface UserService {
      * @param username
      * @return
      */
-    UserInfo getByUsername(String username);
+    UserInfo getByUsername(@Param("username") String username);
 
     /**
      * 根据id删除用户
@@ -36,5 +36,6 @@ public interface UserService {
      * @param username
      * @return
      */
-    UserInfo getByUsernameAndPassword(String username,  String password);
+    UserInfo getByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
 }

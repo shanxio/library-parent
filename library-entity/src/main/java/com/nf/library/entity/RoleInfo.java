@@ -10,10 +10,10 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class Role {
-    private Integer  id;
+public class RoleInfo {
+    private Integer  roleId;
     private String roleName;
     private String roleTag;
-    private String description;
+    private String roleDescription;
 
 }

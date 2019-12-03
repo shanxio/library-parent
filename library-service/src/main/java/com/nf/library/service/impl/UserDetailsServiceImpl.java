@@ -1,9 +1,9 @@
 package com.nf.library.service.impl;
 
-import com.nf.library.dao.RoleDao;
-import com.nf.library.dao.UserDao;
-import com.nf.library.entity.Role;
-import com.nf.library.entity.User;
+import com.nf.library.dao.RoleInfoDao;
+import com.nf.library.dao.UserInfoDao;
+import com.nf.library.entity.RoleInfo;
+import com.nf.library.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,26 +24,26 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private UserDao userDao;
+    private UserInfoDao userInfoDao;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleInfoDao roleInfoDao;
     @Override
-    public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //找到对应的用户
-        User user = userDao.getByloginName(loginName);
+        UserInfo userInfo = userInfoDao.getByUsername(username);
 
-        if(user!=null){
+        if(userInfo !=null){
             //查询该用户所有的角色
-            List<Role> roles = roleDao.getRoleByloginName(loginName);
+            List<RoleInfo> roleInfos = roleInfoDao.getRoleByUsername(username);
             //存放所有的权限
             List<GrantedAuthority> authorities = new ArrayList<>(5);
-            for (Role role : roles) {
-                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getRoleTag());
+            for (RoleInfo roleInfo : roleInfos) {
+                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(roleInfo.getRoleTag());
                 authorities.add(grantedAuthority);
             }
-            user.setAuthorities(authorities);
+            userInfo.setAuthorities(authorities);
         }
-        return user;
+        return userInfo;
     }
 }

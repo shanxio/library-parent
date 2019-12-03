@@ -1,5 +1,7 @@
 package com.nf.library.entity;
 
+import lombok.Builder;
+import lombok.CustomLog;
 import lombok.Data;
 
 /**
@@ -7,8 +9,8 @@ import lombok.Data;
  * @author Sam
  */
 @Data
+@Builder
 public class Role {
-
     private Integer  id;
     private String roleName;
     private String roleTag;

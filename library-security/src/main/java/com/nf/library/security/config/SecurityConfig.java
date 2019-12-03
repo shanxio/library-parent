@@ -1,9 +1,11 @@
 package com.nf.library.security.config;
 
 
+import com.nf.library.security.authorize.AuthorizeConfigManager;
 import com.nf.library.security.process.MyAccessDeniedHandler;
 import com.nf.library.security.process.MyAuthenticationFailureHandler;
 import com.nf.library.security.process.MyAuthenticationSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,28 +22,23 @@ import org.springframework.security.provisioning.UserDetailsManager;
  * @author Sam
  */
 @EnableWebSecurity
-@ComponentScan("com.nf.library.security.process")
+@ComponentScan({"com.nf.library.security.process","com.nf.library.security.authorize"})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/userLogin").permitAll()
-                .and()
-                .formLogin()
+        authorizeConfigManager.config(http.authorizeRequests());
+        http.formLogin()
                 .loginPage("/login")
-                .permitAll()
                 .loginProcessingUrl("/userLogin")
                 .successHandler(new MyAuthenticationSuccessHandler())
                 .failureHandler(new MyAuthenticationFailureHandler());
-                /*测试代码*/
-                http.authorizeRequests()
-                        .antMatchers("/test1").hasAnyAuthority("ROLE_ADMIN")
-                        .antMatchers("/test2").hasAnyAuthority("ROLE_DE");
+
                 //自定义异常处理
                 http.exceptionHandling().accessDeniedHandler(new MyAccessDeniedHandler("/403"));
-
                 http.csrf().disable();
-                http.authorizeRequests().anyRequest().authenticated();
+                //http.authorizeRequests().anyRequest().authenticated();
     }
     @Bean
     public PasswordEncoder passwordEncoder(){

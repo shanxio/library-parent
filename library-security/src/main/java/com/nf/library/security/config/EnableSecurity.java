@@ -18,5 +18,5 @@ import java.lang.annotation.Target;
 @Target({ ElementType.TYPE })
 @Retention( RetentionPolicy.RUNTIME )
 @Import(SecurityConfig.class)
-public @interface EnableSecurit {
+public @interface EnableSecurity {
 }

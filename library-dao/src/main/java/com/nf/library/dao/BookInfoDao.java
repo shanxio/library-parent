@@ -30,4 +30,10 @@ public interface BookInfoDao {
      * @throws AppException
      */
     void bookInfoDeleteById(Integer id) ;
+
+    /**
+     * 修改
+     * @param bookInfo
+     */
+    void bookInfoUpdate(BookInfo bookInfo);
 }

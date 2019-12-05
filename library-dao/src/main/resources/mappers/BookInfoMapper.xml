@@ -7,6 +7,7 @@
         b.id, b.isbn, b.book_name, b.book_author, b.book_type,
         b.book_publish, b.book_price, b.tmamount, b.bookstock, b.book_state
     </sql>
+
     <delete id="bookInfoDeleteById">
         delete from bookinfo where id = #{id}
     </delete>
@@ -19,6 +20,38 @@
         values (#{isbn},#{bookName},#{bookAuthor},#{bookType} ,#{bookPublish},#{bookPrice},
         #{tmamount},#{bookStock},#{bookState})
     </insert>
-
+    <update id="bookInfoUpdate" parameterType="com.nf.library.entity.BookInfo">
+        update bookinfo
+        <set >
+            <if test="isbn != null">
+                isbn = #{isbn},
+            </if>
+            <if test="bookName != null">
+                book_name = #{bookName},
+            </if>
+            <if test="bookAuthor !=null">
+                book_author = #{bookAuthor},
+            </if>
+            <if test="bookType !=null">
+                book_type = #{bookType},
+            </if>
+            <if test="bookPublish !=null">
+                book_publish = #{bookPublish},
+            </if>
+            <if test="bookPrice !=null">
+                book_price = #{bookPrice},
+            </if>
+            <if test="tmamount !=null">
+                tmamount = #{tmamount},
+            </if>
+            <if test="bookStock !=null">
+                bookstock = #{bookStock},
+            </if>
+            <if test="bookState !=null">
+                book_state = #{bookState}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 
 </mapper>

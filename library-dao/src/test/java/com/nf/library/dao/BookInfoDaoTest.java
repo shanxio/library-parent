@@ -25,17 +25,25 @@ public class BookInfoDaoTest {
     private BookInfoDao bookInfoDao;
 
     @Test
-    public void  bookInfoInsertTest(){
+    public void bookInfoUpdate(){
+        BookInfo bookInfo = getBookInfo();
+        bookInfoDao.bookInfoUpdate(bookInfo);
+    }
+
+    private BookInfo getBookInfo() {
         BookInfo bookInfo = new BookInfo() ;
-        bookInfo.setIsbn("123213");
-        bookInfo.setBookName("java多线程");
-        bookInfo.setBookAuthor("123");
-        bookInfo.setBookType("学习");
-        bookInfo.setBookPublish("机械出版社");
-        bookInfo.setBookPrice(new BigDecimal("123"));
-        bookInfo.setTmamount(1);
+        bookInfo.setId(1);
+//        bookInfo.setIsbn("123213");
+//        bookInfo.setBookName("java多线程");
+//        bookInfo.setBookAuthor("123");
+//        bookInfo.setBookType("学习");
+//        bookInfo.setBookPublish("机械出版社");
+//        bookInfo.setBookPrice(new BigDecimal("123"));
+//        bookInfo.setTmamount(1);
         bookInfo.setBookStock(1);
-        bookInfo.setBookState(1);
-        bookInfoDao.bookInfoInsert(bookInfo);
-    };
+        bookInfo.setBookState(0);
+        return bookInfo;
+    }
+
+    ;
 }

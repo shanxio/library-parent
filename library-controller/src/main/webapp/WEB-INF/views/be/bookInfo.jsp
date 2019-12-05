@@ -18,9 +18,11 @@
 </head>
 <body>
     <div id="app">
+        <input type="button" @click="bookInfoDeleteBatch" value="删除"/>
         <table>
             <tr>
-                <td>编号</td>
+                <td><input type="checkbox" ref="checkAll" @click="checkAll($event)"/></td>
+                <td>isbn</td>
                 <td>名称</td>
                 <td>作者</td>
                 <td>类型</td>
@@ -29,9 +31,11 @@
                 <td>库存册数</td>
                 <td>现存册数</td>
                 <td>状态</td>
+                <td>操作</td>
             </tr>
             <tr v-for="bookInfo in pageInfos.list">
-                <td>{{bookInfo.id}}</td>
+                <td><input type="checkbox" ref="checkItem" @click="checkItemClick($event)"/></td>
+                <td>{{bookInfo.isbn}}</td>
                 <td>{{bookInfo.bookName}}</td>
                 <td>{{bookInfo.bookAuthor}}</td>
                 <td>{{bookInfo.bookType}}</td>
@@ -41,6 +45,7 @@
                 <td>{{bookInfo.bookStock}}</td>
                 <td v-if="bookInfo.bookState == 0">入库</td>
                 <td v-else="bookInfo.bookState == 1">出库</td>
+                <td><input type="button" value="删除"  @click="bookInfoDeleteById(bookInfo.id)"/></td>
             </tr>
         </table>
 
@@ -54,7 +59,7 @@
         <br>
 
         <form id="bookInfoForm" >
-            编号：<input type="text" name="isbn" value="11111"/>
+            编号：<input type="text" name="isbn" value="11111" />
             编号：<input type="text" name="bookName" value="123"/>
             名称：<input type="text" name="bookAuthor" value="测试书籍"/>
             作者：<input type="text" name="bookType" value="admin"/>
@@ -76,7 +81,7 @@
             data:{
                 pageInfos:'',
                 pageNum:1,
-                pageSize:2
+                pageSize:4
             },
 			mounted:function() {
                 this.getAll(this.pageNum,this.pageSize);
@@ -108,12 +113,57 @@
                             }
                         }
                     });//查询图书信息
+
                 }//bookInfoInsert,
+                ,bookInfoDeleteById:function (bookId) {
+                    $.ajax({
+                        url: "/admin/bookInfo/bookInfoDeleteById",
+                        type: "get",
+                        dataType: "json",
+                        data:{"id":bookId},
+                        success: function (result) {
+                            if(result.code=="200"){
+                                alert(result.msg)
+                                vm.getAll(vm.pageNum,vm.pageSize)
+                            }else{
+                                alert(result.msg)
+                            }
+                        }
+                    });//删除图书信息
+                }//bookInfoDeleteById
+                ,bookInfoUpdate:function () {
+
+                }//bookInfoUpdate
+                ,checkAll:function (e) {
+                   var checkObj = vm.$refs.checkItem;
+                   for (var i = 0;i<checkObj.length; i++) {
+                        checkObj[i].checked = e.target.checked;
+                   }
+                }
+                ,checkItemClick:function (e) {
+                    var checkObj = vm.$refs.checkItem;
+                    vm.$refs.checkAll.checked = true;
+                    for (var i = 0;i<checkObj.length; i++) {
+                        var flag = checkObj[i].checked;
+                        if(!flag){
+                            vm.$refs.checkAll.checked=false
+                        }
+                    }
+                }//checkItemClick
+                ,bookInfoDeleteBatch:function () {
+                    var checkObj = vm.$refs.checkItem ;
+                    for (var i = 0;i<checkObj.length; i++) {
+                        if(checkObj[i].checked) {
+                            var bookId = checkObj[i].parentElement.nextElementSibling.innerHTML;
+                        }
+                    }
+
+                }
             },watch:{
                 pageNum:function (val) {
                     this.getAll(val,vm.pageSize)
                 }
-            }//wathc
+            }//watch
         });
     </script>
 </body>

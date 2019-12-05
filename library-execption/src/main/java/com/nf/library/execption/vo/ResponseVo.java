@@ -1,7 +1,9 @@
 package com.nf.library.execption.vo;
 
 import lombok.Builder;
+import lombok.CustomLog;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *

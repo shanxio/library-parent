@@ -2,6 +2,7 @@ package com.nf.library.service.impl;
 
 import com.nf.library.dao.BookInfoDao;
 import com.nf.library.entity.BookInfo;
+import com.nf.library.execption.AppException;
 import com.nf.library.service.BookInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,10 @@ public class BookInfoServiceImpl implements BookInfoService {
     @Override
     public void bookInfoInsert(BookInfo bookInfo) {
         bookInfoDao.bookInfoInsert(bookInfo);
+    }
+
+    @Override
+    public void bookInfoDeleteById(Integer id) throws AppException {
+        bookInfoDao.bookInfoDeleteById(id);
     }
 }

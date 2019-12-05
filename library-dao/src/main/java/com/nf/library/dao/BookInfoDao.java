@@ -1,6 +1,7 @@
 package com.nf.library.dao;
 
 import com.nf.library.entity.BookInfo;
+import com.nf.library.execption.AppException;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,4 +23,11 @@ public interface BookInfoDao {
      * @param bookInfo
      */
     void bookInfoInsert(BookInfo bookInfo);
+
+    /**
+     * 根据id删除对应的图书信息
+     * @param id
+     * @throws AppException
+     */
+    void bookInfoDeleteById(Integer id) ;
 }

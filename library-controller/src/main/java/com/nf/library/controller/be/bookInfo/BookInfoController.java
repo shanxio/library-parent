@@ -4,6 +4,7 @@ package com.nf.library.controller.be.bookInfo;
 import com.github.pagehelper.PageInfo;
 import com.nf.library.controller.vo.BookInfoVo;
 import com.nf.library.entity.BookInfo;
+import com.nf.library.execption.AppException;
 import com.nf.library.execption.vo.ResponseVo;
 import com.nf.library.service.BookInfoService;
 import com.nf.library.service.impl.BookInfoServiceImpl;
@@ -19,7 +20,6 @@ import java.util.List;
 /**
  *
  * 关于书籍信息表的操作
- * 撒旦发射点发
  * @author Sam
  */
 @RestController
@@ -52,5 +52,17 @@ public class BookInfoController {
         return responseVo;
     }
 
+
+    @GetMapping("bookInfoDeleteById")
+    public ResponseVo bookInfoInsert(Integer id){
+        ResponseVo responseVo = null;
+        try{
+            bookInfoService.bookInfoDeleteById(id);
+            responseVo = ResponseVo.builder().code("200").msg("删除成功").build();
+        }catch (RuntimeException e){
+            throw new AppException("删除失败",e);
+        }
+        return responseVo;
+    }
 
 }

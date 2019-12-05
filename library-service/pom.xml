@@ -17,11 +17,6 @@
             <groupId>com.nf</groupId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--aop-->
-        <dependency>
-            <artifactId>library-security</artifactId>
-            <groupId>com.nf</groupId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
 </project>

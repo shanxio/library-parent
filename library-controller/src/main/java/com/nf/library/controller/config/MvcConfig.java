@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  * @author Sam
  */
 @Configuration
-@ComponentScan({"com.nf.library.controller.be"})
+@ComponentScan({"com.nf.library.controller.be","com.nf.library.controller.advice"})
 @EnableServiceSpring
 @EnableSecurity
 @EnableWebMvc

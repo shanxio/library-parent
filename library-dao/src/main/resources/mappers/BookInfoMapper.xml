@@ -7,6 +7,9 @@
         b.id, b.isbn, b.book_name, b.book_author, b.book_type,
         b.book_publish, b.book_price, b.tmamount, b.bookstock, b.book_state
     </sql>
+    <delete id="bookInfoDeleteById">
+        delete from bookinfo where id = #{id}
+    </delete>
     <select id="getAll" resultType="com.nf.library.entity.BookInfo">
         select <include refid="bookInfoRequestMap"/> from bookinfo b order by b.id
     </select>

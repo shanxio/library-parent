@@ -12,11 +12,7 @@
     <artifactId>library-entity</artifactId>
 
     <dependencies>
-        <!--lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
+
         <!-- spring security-config -->
         <dependency>
             <groupId>org.springframework.security</groupId>

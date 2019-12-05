@@ -12,6 +12,19 @@
     <artifactId>library-utils</artifactId>
 
     <dependencies>
+        <!--日志标准-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${version.slf4j}</version>
+        </dependency>
+        <!--日志实现-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${version.logback}</version>
+        </dependency>
+
         <!--jackson-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

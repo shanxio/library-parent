@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nf.library.dao.NodeInfoDao">
+    <resultMap id="nodeInfoResultMap" type="com.nf.library.entity.NodeInfo">
+        <id column="node_id" property="nodeId"/>
+        <result column="isparent" property="parent"/>
+    </resultMap>
+    <sql id="nodeInfo">
+        n.node_id, n.node_url, n.node_description, n.pid,n.node_state,n.node_type,n.isparent
+    </sql>
+    <select id="getRoleTag" resultMap="nodeInfoResultMap">
+        select <include refid="nodeInfo"/>  from
+        roleinfo r
+        inner join role_node rn on r.role_id = rn.role_id
+        inner join nodeinfo   n on rn.node_id = n.node_id
+        where r.role_tag = #{roleTag}
+    </select>
+    <select id="getByPid" resultMap="nodeInfoResultMap">
+        select <include refid="nodeInfo"/> from nodeinfo n where n.pid = #{pid}
+    </select>
+</mapper>

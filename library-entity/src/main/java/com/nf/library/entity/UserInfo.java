@@ -5,10 +5,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -29,9 +26,14 @@ public class UserInfo implements UserDetails {
     private boolean enabled;
 
     /**
-     * 该用户的权限集合
+     * 该用户的角色集合
      */
     private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(10);
+
+
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

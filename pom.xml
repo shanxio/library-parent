@@ -213,13 +213,7 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons.fileupload.version}</version>
             </dependency>
-            <!--lombok-->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
-            </dependency>
+
 
         </dependencies>
 
@@ -241,5 +235,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

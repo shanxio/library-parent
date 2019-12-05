@@ -12,5 +12,8 @@ public class NodeInfo {
     private Integer nodeId;
     private String nodeUrl;
     private String nodeDescription;
-    private Integer nodeParent;
+    private Integer pid;
+    private boolean parent;
+
+
 }

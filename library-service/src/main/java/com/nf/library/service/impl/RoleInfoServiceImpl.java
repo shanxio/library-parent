@@ -3,7 +3,7 @@ package com.nf.library.service.impl;
 
 import com.nf.library.dao.RoleInfoDao;
 import com.nf.library.entity.RoleInfo;
-import com.nf.library.service.RoleService;
+import com.nf.library.service.RoleInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Sam
  */
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleInfoServiceImpl implements RoleInfoService {
     @Autowired
     private RoleInfoDao roleInfoDao;
 

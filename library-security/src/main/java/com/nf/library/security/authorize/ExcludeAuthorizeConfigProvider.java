@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  *
  *将所有的需要premAll()的url进行放行
+ * 包括静态文件
  * @author Sam
  */
 @Component
@@ -16,7 +17,11 @@ import org.springframework.stereotype.Component;
 public class ExcludeAuthorizeConfigProvider implements AuthorizeConfigProvider {
     @Override
     public boolean config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config) {
-        config.antMatchers("/userLogin","/login","/403").permitAll();
+        config.antMatchers("/userLogin"
+                ,"/login"
+                ,"/403"
+                ,"/static/**")
+                .permitAll();
         return false;
     }
 }

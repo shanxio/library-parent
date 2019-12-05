@@ -1,0 +1,25 @@
+package com.nf.library.dao;
+
+import com.nf.library.entity.BookInfo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * 图书信息的crud操作
+ * @author Sam
+ */
+public interface BookInfoDao {
+    /**
+     * 查询所有的图书信息
+     * @return
+     */
+    List<BookInfo> getAll(@Param("pageNum")int pageNum, @Param("pageSize") int pageSize);
+
+
+    /**
+     * 添加图书
+     * @param bookInfo
+     */
+    void bookInfoInsert(BookInfo bookInfo);
+}

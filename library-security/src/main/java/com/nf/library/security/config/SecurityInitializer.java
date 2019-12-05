@@ -6,5 +6,5 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
  * 配置过滤器链
  * @author Sam
  */
-public class SecurityInitializer extends AbstractSecurityWebApplicationInitializer {
-}
+//public class SecurityInitializer extends AbstractSecurityWebApplicationInitializer {
+//}

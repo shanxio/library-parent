@@ -1,26 +1,39 @@
 package com.nf.library.service.impl;
 
+import com.nf.library.dao.NodeInfoDao;
+import com.nf.library.entity.NodeInfo;
 import com.nf.library.entity.UserInfo;
 import com.nf.library.service.RbacService;
+import com.nf.library.utils.JsonUtils;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import javax.servlet.http.HttpSession;
+import java.util.*;
 
 /**
  * 权限判断实现
  * @author Sam
  */
 @Service("rbacService")
+@Slf4j
 public class RbacServiceImpl implements RbacService {
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+    @Autowired
+    private NodeInfoDao nodeInfoDao;
+
+    private Map<String,List<NodeInfo>> nodeInfoMap = new HashMap<>();
+
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
+        HttpSession session = request.getSession();
         Object principal = authentication.getPrincipal();
         boolean hasPermission = false;
         if(principal instanceof UserInfo){
@@ -28,14 +41,10 @@ public class RbacServiceImpl implements RbacService {
             if("admin".equals(((UserInfo)principal).getUsername().trim())){
                 hasPermission = true;
             }else {
-                // 保存用户所拥有权限的所有URL
-                Set<String> urls = new HashSet<>();
-                //读取用户的所有角色
-                Collection<GrantedAuthority> authorityList = (Collection<GrantedAuthority>) ((UserInfo) principal).getAuthorities();
-                //读取用户的所有uri地址
-                for (GrantedAuthority grantedAuthority : authorityList) {
+                //初始化所有的可用url
+                Set<String> urls = init(session,(UserInfo) principal);
 
-                }
+                log.info(((UserInfo) principal).getUsername()+"的所有可用uris："+urls.toString());
                 for (String url : urls) {
                     if (antPathMatcher.match(url, request.getRequestURI())) {
                         hasPermission = true;
@@ -47,5 +56,31 @@ public class RbacServiceImpl implements RbacService {
 
         return hasPermission;
     }
+
+    private Set<String> init(HttpSession session,UserInfo principal) {
+        // 保存用户所拥有权限的所有URL
+        Set<String> urls = new HashSet<>();
+        //读取用户的所有角色
+        Collection<GrantedAuthority> authorityList = (Collection<GrantedAuthority>) principal.getAuthorities();
+        //保存用户所用的节点信息
+        List<NodeInfo> nodeInfos = new ArrayList<>(10);
+        //读取用户的所有uri地址
+        for (GrantedAuthority grantedAuthority : authorityList) {
+             nodeInfos = nodeInfoDao.getRoleTag(grantedAuthority.getAuthority());
+            for (NodeInfo nodeInfo : nodeInfos) {
+                urls.add(nodeInfo.getNodeUrl().trim());
+            }
+        }
+        log.info("用户所有的节点信息："+nodeInfos);
+        if(nodeInfos!=null){
+            //清除
+            session.removeAttribute("nodeInfos");
+        }
+        //保存至会话中，以便可以随时使用
+        session.setAttribute("nodeInfos",nodeInfos);
+        return urls;
+    }
+
+
 
 }

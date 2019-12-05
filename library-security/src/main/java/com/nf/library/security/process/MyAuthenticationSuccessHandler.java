@@ -24,8 +24,8 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
-        ResponseVo responseVo = ResponseVo.newBuilder()
-                .code("205")
+        ResponseVo responseVo = ResponseVo.builder()
+                .code("200")
                 .msg("登录成功")
                 .date("true").build();
         JsonUtils.write(response.getOutputStream(),responseVo);

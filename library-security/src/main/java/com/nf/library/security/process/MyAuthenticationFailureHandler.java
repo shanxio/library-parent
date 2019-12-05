@@ -21,8 +21,8 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
-        ResponseVo responseVo = ResponseVo.newBuilder()
-                .code("200")
+        ResponseVo responseVo = ResponseVo.builder()
+                .code("400")
                 .msg("登录失败")
                 .date(exception).build();
         JsonUtils.write(response.getOutputStream(),responseVo);

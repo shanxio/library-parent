@@ -1,7 +1,7 @@
 package com.nf.library.controller;
 
+
 import com.nf.library.controller.config.MvcConfig;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration("webapp")
 @ContextConfiguration(classes = MvcConfig.class)
 @Slf4j
-public class LoginControllerTest {
+public class NodeInfoGenerateZthreeController {
 
 
     @Autowired
@@ -43,7 +43,7 @@ public class LoginControllerTest {
     @Test
     public void loginTest() throws Exception {
         MvcResult mvcResult = mockMvc.
-                perform(MockMvcRequestBuilders.post("http://localhost:8080/login"))
+                perform(MockMvcRequestBuilders.post("http://localhost:8080/admin/nodeInfo/ztree"))
 //                .param("username","admin").param("password","123456"))
 //                .andExpect(MockMvcResultMatchers.status().is(200)) //判断返回状态码
                 .andDo(MockMvcResultHandlers.print()) //打印出请求和响应的内容
@@ -52,8 +52,4 @@ public class LoginControllerTest {
         System.out.println("请求状态码：" + status);
     }
 
-    @Test
-    public void test(){
-        log.info("----------------------------");
-    }
 }

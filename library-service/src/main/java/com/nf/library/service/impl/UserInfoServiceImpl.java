@@ -2,7 +2,7 @@ package com.nf.library.service.impl;
 
 import com.nf.library.dao.UserInfoDao;
 import com.nf.library.entity.UserInfo;
-import com.nf.library.service.UserService;
+import com.nf.library.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author Sam
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private UserInfoDao userInfoDao;
 

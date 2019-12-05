@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nf.library.dao.BookInfoDao">
+    <sql id="bookInfoRequestMap">
+        b.id, b.isbn, b.book_name, b.book_author, b.book_type,
+        b.book_publish, b.book_price, b.tmamount, b.bookstock, b.book_state
+    </sql>
+    <select id="getAll" resultType="com.nf.library.entity.BookInfo">
+        select <include refid="bookInfoRequestMap"/> from bookinfo b order by b.id
+    </select>
+    <insert id="bookInfoInsert" parameterType="com.nf.library.entity.BookInfo">
+        insert into
+        bookinfo(isbn, book_name, book_author, book_type, book_publish, book_price, tmamount, bookstock, book_state)
+        values (#{isbn},#{bookName},#{bookAuthor},#{bookType} ,#{bookPublish},#{bookPrice},
+        #{tmamount},#{bookStock},#{bookState})
+    </insert>
+
+
+</mapper>

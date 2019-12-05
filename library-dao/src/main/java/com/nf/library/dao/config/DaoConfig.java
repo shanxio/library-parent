@@ -83,7 +83,8 @@ public class DaoConfig {
     public org.apache.ibatis.session.Configuration configuration(){
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setMapUnderscoreToCamelCase(true);
-        configuration.setLogImpl(StdOutImpl.class);
+        //开始sql日志
+//        configuration.setLogImpl(StdOutImpl.class);
         return configuration;
     }
 

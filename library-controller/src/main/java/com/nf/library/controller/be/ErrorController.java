@@ -1,4 +1,4 @@
-package com.nf.library.controller;
+package com.nf.library.controller.be;
 
 
 import org.springframework.stereotype.Controller;

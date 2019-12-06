@@ -14,8 +14,14 @@ import javax.validation.ValidationException;
 @RestControllerAdvice
 public class SystemControllerAdvice {
     @ExceptionHandler(AppException.class)
-    public ResponseVo handlerV(AppException app){
+    public ResponseVo appException(AppException app){
         ResponseVo responseVo = ResponseVo.builder().code("500").msg(app.getMessage()).build();
+        return responseVo;
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseVo validationException(ValidationException e){
+        ResponseVo responseVo = ResponseVo.builder().code("500").msg("数据校验失败").date(e).build();
         return responseVo;
     }
 }

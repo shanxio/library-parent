@@ -1,6 +1,5 @@
 package com.nf.library.controller.be.nodeInfo;
 
-import com.nf.library.entity.NodeInfo;
 import com.nf.library.entity.Ztree;
 import com.nf.library.service.NodeInfoService;
 import lombok.extern.slf4j.Slf4j;

@@ -18,7 +18,12 @@
 </head>
 <body>
     <div id="app">
-        <input type="button" @click="bookInfoDeleteBatch" value="删除"/>
+        <input type="button" @click="bookInfoDeleteBatch" value="删除"/><br>
+        <a href="/admin/bookInfo/download">下载</a>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="uploadExcel"/>
+            <input type="button" @click="upload" value="点击上传"/>
+        </form>
         <table>
             <tr>
                 <td><input type="checkbox" ref="checkAll" @click="checkAll($event)"/></td>
@@ -59,7 +64,7 @@
         <br>
 
         <form id="bookInfoForm" >
-            编号：<input type="text" name="isbn" value="11111" />
+            isbn：<input type="text" name="isbn" value="11111" />
             编号：<input type="text" name="bookName" value="123"/>
             名称：<input type="text" name="bookAuthor" value="测试书籍"/>
             作者：<input type="text" name="bookType" value="admin"/>
@@ -132,8 +137,32 @@
                     });//删除图书信息
                 }//bookInfoDeleteById
                 ,bookInfoUpdate:function () {
-
+                    
                 }//bookInfoUpdate
+                ,upload:function () {
+                    var formData = new FormData($("#uploadForm")[0]);
+                    formData.append('excel',$('#uploadExcel').get(0).files[0]);
+                    console.log(formData);
+                    $.ajax({
+                        url: "/admin/bookInfo/upload",
+                        data:formData,
+                        type:"post",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(result) {
+                            if(result.code=="200"){
+                                alert(result.msg)
+                                vm.getAll(vm.pageNum,vm.pageSize)
+                            }else{
+                                alert(result.msg)
+                            }
+                        },
+                        error: function() {
+                            alert("上传失败")
+                        }
+                    })//上传图片
+                }//upload
                 ,checkAll:function (e) {
                    var checkObj = vm.$refs.checkItem;
                    for (var i = 0;i<checkObj.length; i++) {
@@ -151,13 +180,25 @@
                     }
                 }//checkItemClick
                 ,bookInfoDeleteBatch:function () {
-                    var checkObj = vm.$refs.checkItem ;
-                    for (var i = 0;i<checkObj.length; i++) {
-                        if(checkObj[i].checked) {
-                            var bookId = checkObj[i].parentElement.nextElementSibling.innerHTML;
-                        }
-                    }
 
+                    var _this = this;
+                    console.log(_this.getChecked())
+
+                    $.ajax({
+                        url: "/admin/bookInfo/bookInfoDeleteBatch",
+                        type: "post",
+                        dataType: "json",
+                        traditional:true,
+                        data:{"isbns":_this.getChecked()},
+                        success: function (result) {
+                            if(result.code=="200"){
+                                alert(result.msg)
+                                vm.getAll(vm.pageNum,vm.pageSize)
+                            }else{
+                                alert(result.msg)
+                            }
+                        }
+                    });
                 }
             },watch:{
                 pageNum:function (val) {
@@ -165,6 +206,17 @@
                 }
             }//watch
         });
+        Vue.prototype.getChecked = function (){
+            var checkObj = vm.$refs.checkItem ;
+            var vals = [];
+            for (var i = 0;i<checkObj.length; i++) {
+                if(checkObj[i].checked) {
+                    var val = checkObj[i].parentElement.nextElementSibling.textContent;
+                    vals[i]=val;
+                }
+            }//
+            return vals;
+        }
     </script>
 </body>
 </html>

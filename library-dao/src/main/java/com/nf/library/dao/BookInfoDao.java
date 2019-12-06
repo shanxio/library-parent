@@ -36,4 +36,10 @@ public interface BookInfoDao {
      * @param bookInfo
      */
     void bookInfoUpdate(BookInfo bookInfo);
+
+    /**
+     *批量删除书籍
+     * @param isbns
+     */
+    void bookInfoDeleteBatch(String[] isbns);
 }

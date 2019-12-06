@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 public interface AuthorizeConfigManager {
 
     /**
+     * 收集信息并加载配置
      * @param config
      */
     void config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config);

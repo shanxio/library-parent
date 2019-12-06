@@ -31,4 +31,9 @@ public class BookInfoServiceImpl implements BookInfoService {
     public void bookInfoDeleteById(Integer id) throws AppException {
         bookInfoDao.bookInfoDeleteById(id);
     }
+
+    @Override
+    public void bookInfoDeleteBatch(String[] isbns) {
+        bookInfoDao.bookInfoDeleteBatch(isbns);
+    }
 }

@@ -13,6 +13,8 @@ import java.util.List;
 public interface BookInfoService  {
     /**
      * 查询所有的图书信息
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     List<BookInfo> getAll(int pageNum, int pageSize);
@@ -30,4 +32,10 @@ public interface BookInfoService  {
      * @throws AppException
      */
     void bookInfoDeleteById(Integer id);
+
+    /**
+     *批量删除书籍
+     * @param isbns
+     */
+    void bookInfoDeleteBatch(String[] isbns);
 }

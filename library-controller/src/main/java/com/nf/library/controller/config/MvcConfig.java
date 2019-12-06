@@ -6,6 +6,7 @@ import com.nf.library.service.config.EnableServiceSpring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -37,4 +38,11 @@ public class MvcConfig  implements WebMvcConfigurer {
                 registry.addResourceHandler("/static/**");
         registration.addResourceLocations("classpath:/static/");
     }
+
+    @Bean(name = "multipartResolver")
+    public StandardServletMultipartResolver standardServletMultipartResolver(){
+        StandardServletMultipartResolver standardServletMultipartResolver = new StandardServletMultipartResolver();
+        return standardServletMultipartResolver;
+    }
+
 }

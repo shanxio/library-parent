@@ -11,6 +11,13 @@
     <delete id="bookInfoDeleteById">
         delete from bookinfo where id = #{id}
     </delete>
+    <delete id="bookInfoDeleteBatch">
+        delete from bookinfo
+        where
+        <foreach collection="array" item="isbn" separator="or">
+            isbn = #{isbn}
+        </foreach>
+    </delete>
     <select id="getAll" resultType="com.nf.library.entity.BookInfo">
         select <include refid="bookInfoRequestMap"/> from bookinfo b order by b.id
     </select>

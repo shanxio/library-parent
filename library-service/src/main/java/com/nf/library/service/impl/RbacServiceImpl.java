@@ -30,7 +30,7 @@ public class RbacServiceImpl implements RbacService {
     private NodeInfoDao nodeInfoDao;
 
     private Map<String,List<NodeInfo>> nodeInfoMap = new HashMap<>();
-
+    private static final String userName= "admin";
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession();
@@ -38,7 +38,7 @@ public class RbacServiceImpl implements RbacService {
         boolean hasPermission = false;
         if(principal instanceof UserInfo){
             //如果角色名称为admin直接通过
-            if("admin".equals(((UserInfo)principal).getUsername().trim())){
+            if(userName.equals(((UserInfo)principal).getUsername().trim())){
                 hasPermission = true;
             }else {
                 //初始化所有的可用url

@@ -7,10 +7,8 @@ import com.nf.library.entity.BookInfo;
 import com.nf.library.execption.AppException;
 import com.nf.library.execption.vo.ResponseVo;
 import com.nf.library.service.BookInfoService;
-import com.nf.library.service.impl.BookInfoServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/bookInfo")
-public class BookInfoController {
+public class BookInfoController extends BaseBookInfoController{
 
     @Autowired
     private BookInfoService bookInfoService;
@@ -55,9 +53,25 @@ public class BookInfoController {
 
     @GetMapping("bookInfoDeleteById")
     public ResponseVo bookInfoInsert(Integer id){
+        this.checkNull(id);
         ResponseVo responseVo = null;
         try{
             bookInfoService.bookInfoDeleteById(id);
+            responseVo = ResponseVo.builder().code("200").msg("删除成功").build();
+        }catch (RuntimeException e){
+            throw new AppException("删除失败",e);
+        }
+        return responseVo;
+    }
+
+
+    @PostMapping("bookInfoDeleteBatch")
+    public ResponseVo bookInfoDeleteBatch(String[] isbns){
+        this.checkNull(isbns);
+        ResponseVo responseVo = null;
+        try{
+
+            bookInfoService.bookInfoDeleteBatch(isbns);
             responseVo = ResponseVo.builder().code("200").msg("删除成功").build();
         }catch (RuntimeException e){
             throw new AppException("删除失败",e);

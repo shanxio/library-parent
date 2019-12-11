@@ -1,4 +1,4 @@
-package com.nf.library.entity;
+package com.nf.library.security.process;
 
 
 import lombok.Data;

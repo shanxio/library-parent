@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nf.library.dao.ReaderInfoDao">
+    <resultMap id="readerInfoResultMap" type="com.nf.library.entity.ReaderInfo">
+        <id column="id" property="id"/>
+    </resultMap>
+    <sql id="readerInfoSql">
+        select  r.id, r.reader_name, r.reader_phone, r.reader_address, r.reader_state
+    </sql>
+    <select id="getById" resultMap="readerInfoResultMap">
+       <include refid="readerInfoSql"/> from readerinfo r where r.id = #{id}
+    </select>
+</mapper>

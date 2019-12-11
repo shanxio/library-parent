@@ -361,6 +361,7 @@ public class ExportExcelUtil<T>{
                         if (value != null) {
                             textValue = value.toString();
                         }
+
                     }
                     if (textValue != null) {
                         matcher = p.matcher(textValue);

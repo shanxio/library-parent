@@ -2,8 +2,11 @@ package com.nf.library.controller.be.bookInfo;
 
 
 import com.github.pagehelper.PageInfo;
+import com.nf.library.controller.vo.BookInfoPageVo;
 import com.nf.library.controller.vo.BookInfoVo;
+import com.nf.library.controller.vo.PageVo;
 import com.nf.library.entity.BookInfo;
+import com.nf.library.security.process.UserInfo;
 import com.nf.library.execption.AppException;
 import com.nf.library.execption.vo.ResponseVo;
 import com.nf.library.service.BookInfoService;
@@ -13,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,12 +31,18 @@ public class BookInfoController extends BaseBookInfoController{
     @Autowired
     private BookInfoService bookInfoService;
 
-    @PostMapping("/getAll")
-    public PageInfo<BookInfo> getAll(@RequestParam(value = "pageNum",defaultValue = "1")Integer pageNum,
-                                 @RequestParam(value = "pageSize",defaultValue = "3")Integer pageSize){
-        List<BookInfo> bookInfos = bookInfoService.getAll(pageNum,pageSize);
-        PageInfo<BookInfo> pageInfos = new PageInfo<>(bookInfos,pageSize);
+    @RequestMapping("/getAll")
+    public PageInfo<BookInfo> getAll(@RequestBody BookInfoPageVo bookInfo){
+        List<BookInfo> bookInfos = bookInfoService.getSearchAll(bookInfo.getBookInfo(),bookInfo.getPageVo().getPageNum(),bookInfo.getPageVo().getPageSize());
+        PageInfo<BookInfo> pageInfos = new PageInfo<>(bookInfos,bookInfo.getPageVo().getPageSize());
         return pageInfos;
+    }
+
+    @RequestMapping("/test")
+    public List<BookInfo> getAll2(@RequestBody BookInfoPageVo bookInfo){
+        System.out.println(bookInfo);
+        List<BookInfo> bookInfos = bookInfoService.getAll(1,2);
+        return bookInfos;
     }
 
 
@@ -40,7 +50,7 @@ public class BookInfoController extends BaseBookInfoController{
     public ResponseVo bookInfoInsert(@Valid BookInfoVo bookInfoVo, BindingResult bindingResult){
         ResponseVo responseVo = null;
         if(bindingResult.hasErrors()){
-            responseVo = ResponseVo.builder().code("205").msg("添加失败").date(bindingResult).build();
+            responseVo = ResponseVo.builder().code("205").msg("添加失败").data(bindingResult).build();
         }else{
             BookInfo bookInfo = new BookInfo();
             BeanUtils.copyProperties(bookInfoVo,bookInfo);
@@ -50,6 +60,18 @@ public class BookInfoController extends BaseBookInfoController{
         return responseVo;
     }
 
+
+    @PostMapping("/bookInfoUpdate")
+    public ResponseVo bookInfoUpdate(@Valid BookInfoVo bookInfoVo,BindingResult bindingResult){
+        this.validException(bindingResult);
+        ResponseVo responseVo = null;
+        BookInfo bookInfo = new BookInfo();
+        BeanUtils.copyProperties(bookInfoVo,bookInfo);
+
+        bookInfoService.bookInfoUpdate(bookInfo);
+        responseVo = ResponseVo.builder().code("200").msg("修改成功").build();
+        return responseVo;
+    }
 
     @GetMapping("bookInfoDeleteById")
     public ResponseVo bookInfoInsert(Integer id){

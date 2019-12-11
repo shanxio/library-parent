@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nf.library.dao.LendBookDao">
+    <resultMap id="lendBookResultMap" type="com.nf.library.entity.LendBook">
+        <id column="id" property="id"/>
+    </resultMap>
+    <sql id="lendBookSql">
+        select l.id, l.isbn, l.book_name, l.book_author,
+         l.reader_id, l.reader_name, l.lend_date, l.lend_state, l.return_date, l.totalcount
+    </sql>
+    <insert id="lendBookInsert">
+        insert into lendbook(isbn,book_name,book_author,reader_id,reader_name,lend_date,lend_state)
+        values (#{book.isbn},#{book.bookName},#{book.bookAuthor},#{reader.id},#{reader.readerName},now(),1)
+    </insert>
+
+    <select id="getAll" resultMap="lendBookResultMap">
+        <include refid="lendBookSql"/> from lendbook l
+        <trim prefix="where" suffixOverrides="and">
+            <if test="lend.bookName != null and lend.bookName != ''">
+                <bind name="bookName" value="'%' + _parameter.lend.bookName + '%'"/>
+                l.book_name like #{bookName} and
+            </if>
+            <if test="lend.bookAuthor !=null and lend.bookAuthor != ''">
+                <bind name="bookAuthor" value="'%' + _parameter.lend.bookAuthor + '%'"/>
+                l.book_author like #{bookAuthor} and
+            </if>
+            <if test="lend.readerId !=null and lend.readerId != ''">
+                l.reader_id = #{lend.readerId} and
+            </if>
+            <if test="lend.lendState !=null and lend.lendState != ''  ">
+                l.lend_state = #{lend.lendState} and
+            </if>
+        </trim>
+        order by l.id
+    </select>
+    <delete id="lendBookBatchDelete">
+        delete  from lendbook where
+        <foreach collection="array" item="id" separator="or">
+            id = #{id}
+        </foreach>
+    </delete>
+
+    <update id="lendBookUpdate">
+        update lendbook
+         <set>
+             <if test="isbn != null">
+                 isbn = #{isbn},
+             </if>
+             <if test="bookName != null">
+                 book_name = #{bookName},
+             </if>
+             <if test="bookAuthor != null">
+                 book_author = #{bookAuthor},
+             </if>
+             <if test="readerId != null">
+                 reader_id = #{readerId},
+             </if>
+             <if test="readerName != null">
+                 reader_name = #{readerName},
+             </if>
+             <if test="lendDate != null">
+                 lend_date = #{lendDate},
+             </if>
+             <if test="lendState != null">
+                 lend_state = #{lendState},
+             </if>
+         </set>
+         where id = #{id}
+    </update>
+</mapper>

@@ -1,7 +1,6 @@
 package com.nf.library.service;
 
-import com.nf.library.entity.UserInfo;
-import org.apache.ibatis.annotations.Param;
+import com.nf.library.security.process.UserInfo;
 
 /**
  * 用户的业务接口
@@ -28,7 +27,7 @@ public interface UserInfoService {
      * 根据id删除用户
      * @param userId
      */
-    void deleteById(Integer userId);
+    void userInfoByIdDelete(Integer userId);
 
 
     /**

@@ -1,11 +1,15 @@
 package com.nf.library.controller.be.bookInfo;
 
 import com.nf.library.controller.config.ExportExcelWrapper;
+import com.nf.library.controller.vo.BookInfoVo;
 import com.nf.library.entity.BookInfo;
 import com.nf.library.execption.AppException;
 import com.nf.library.service.BookInfoService;
+import com.nf.library.utils.ExcelConfig;
 import com.nf.library.utils.ExportExcelUtil;
 import com.nf.library.utils.ReadExcelUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.print.Book;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.List;
@@ -34,6 +40,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/admin/bookInfo")
 @MultipartConfig
+@Slf4j
 public class BookInfoDownloadAndUploadController{
 
     @Autowired
@@ -50,35 +57,43 @@ public class BookInfoDownloadAndUploadController{
         String fileName = UUID.randomUUID().toString();
         String title = "图书信息表格";
         ExportExcelWrapper<BookInfo> exportExcelWrapper = new ExportExcelWrapper<BookInfo>();
+
+        response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
         exportExcelWrapper.exportExcel(fileName,title,columnNames,bookInfos,response, ExportExcelUtil.EXCEL_FILE_2003);
     }
 
 
     @PostMapping("/upload")
-    public void upload(MultipartFile[] excel, HttpServletRequest request) throws IOException {
+    public void upload(MultipartFile[] excel, HttpServletRequest request) throws IOException, IllegalAccessException, InstantiationException {
+        String[] columnNames = { "id", "isbn", "图书名称","作者","类型",
+                "出版社名称","价格","库存册数","现存册数","状态" };
         for (MultipartFile myFile : excel) {
             if(myFile.getSize()>0){
-                //获取保存上传文件的file路径
-                String path = request.getServletContext().getRealPath("file");
-                //获取上传的文件名
-                String name = myFile.getOriginalFilename();
-                File file = new File(path,name);
                 FileInputStream fileInputStream = (FileInputStream) myFile.getInputStream();
                 ReadExcelUtil read = new ReadExcelUtil();
-                List<Map<String,String>> list = read.readExcel2003(fileInputStream,-1,0,0);
+                List<Map<String,String>> list = read.readExcel2003(fileInputStream,0,0,0);
                 if(list!=null) {
+                    BookInfo bookInfo = new BookInfo();
                     for (int i = 0; i < list.size(); i++) {
                         Map<String, String> m = list.get(i);
+
+
+//                        String val = m.get(columnNames[i]);
+//                        Class clz = BookInfoVo.class;
+//                        Field[] clzFiles = clz.getDeclaredFields();
+//                        if(clzFiles[i].isAnnotationPresent(ExcelConfig.class)) {
+//                            ExcelConfig excelConfig = clzFiles[i].getAnnotation(ExcelConfig.class);
+//                            if(excelConfig.value()==columnNames[i]){
+//                                clzFiles[i].setAccessible(true);
+//                                clzFiles[i].set(bookInfo,val);
+//                                clzFiles[i].setAccessible(false);
+//                            }
+//                        }
+
                         for (Map.Entry<String, String> e : m.entrySet()) {
-                            System.out.print(e.getValue() + "   ");
+                           log.info(e.getValue() + "   ");
                         }
                     }
-                }
-
-                try {
-                    myFile.transferTo(file);
-                }catch (IOException e){
-                    throw new AppException("上传失败",e);
                 }
 
             }

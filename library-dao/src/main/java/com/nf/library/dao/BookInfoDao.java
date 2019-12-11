@@ -15,8 +15,14 @@ public interface BookInfoDao {
      * 查询所有的图书信息
      * @return
      */
-    List<BookInfo> getAll(@Param("pageNum")int pageNum, @Param("pageSize") int pageSize);
+    List<BookInfo> getAll(@Param("bookInfo") BookInfo bookInfo,@Param("pageNum")int pageNum, @Param("pageSize") int pageSize);
 
+    /**
+     * 根据isbn查询图书信息
+     * @param isbn
+     * @return
+     */
+    BookInfo getByIsbn(String isbn);
 
     /**
      * 添加图书
@@ -29,7 +35,7 @@ public interface BookInfoDao {
      * @param id
      * @throws AppException
      */
-    void bookInfoDeleteById(Integer id) ;
+    void bookInfoByIdDelete(Integer id) ;
 
     /**
      * 修改
@@ -41,5 +47,5 @@ public interface BookInfoDao {
      *批量删除书籍
      * @param isbns
      */
-    void bookInfoDeleteBatch(String[] isbns);
+    void bookInfoBatchDelete(String[] isbns);
 }

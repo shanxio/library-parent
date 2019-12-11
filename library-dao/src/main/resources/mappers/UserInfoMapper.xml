@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nf.library.dao.UserInfoDao">
 
-    <resultMap id="userResultMap" type="com.nf.library.entity.UserInfo">
+    <resultMap id="userResultMap" type="com.nf.library.security.process.UserInfo">
         <id column="user_id" property="userId"/>
         <result column="real_name" property="realName"/>
         <result column="user_sex" property="userSex"/>
@@ -14,7 +14,7 @@
         user_id, username,real_name, user_sex, dept_id, dept_name,
         user_phone, password, user_entrydate, enable
     </sql>
-    <delete id="deleteById">
+    <delete id="userInfoByIdDelete">
         delete from userinfo where user_id = #{userId}
     </delete>
     <select id="getByRealName" resultMap="userResultMap">

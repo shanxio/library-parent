@@ -3,7 +3,7 @@ package com.nf.library.service.impl;
 import com.nf.library.dao.RoleInfoDao;
 import com.nf.library.dao.UserInfoDao;
 import com.nf.library.entity.RoleInfo;
-import com.nf.library.entity.UserInfo;
+import com.nf.library.security.process.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

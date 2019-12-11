@@ -8,8 +8,8 @@
 <head>
     <title>Title</title>
 
-    <script type="text/javascript" src="/static/js/common/vue.min.js"></script>
-    <script type="text/javascript" src="/static/js/common/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/vue.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-3.3.1.min.js"></script>
     <style>
         .numColor{
             background-color: yellow;

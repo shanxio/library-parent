@@ -19,7 +19,18 @@ public class BookInfoServiceImpl implements BookInfoService {
     private BookInfoDao bookInfoDao;
     @Override
     public List<BookInfo> getAll(int pageNum,int pageSize) {
-        return bookInfoDao.getAll(pageNum,pageSize);
+
+        return bookInfoDao.getAll(new BookInfo(),pageNum,pageSize);
+    }
+
+    @Override
+    public List<BookInfo> getSearchAll(BookInfo bookInfo, int pageNum, int pageSize) {
+        return bookInfoDao.getAll(bookInfo,pageNum,pageSize);
+    }
+
+    @Override
+    public BookInfo getByIsbn(String isbn) {
+        return bookInfoDao.getByIsbn(isbn);
     }
 
     @Override
@@ -28,12 +39,17 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     @Override
-    public void bookInfoDeleteById(Integer id) throws AppException {
-        bookInfoDao.bookInfoDeleteById(id);
+    public void bookInfoByIdDelete(Integer id) throws AppException {
+        bookInfoDao.bookInfoByIdDelete(id);
     }
 
     @Override
-    public void bookInfoDeleteBatch(String[] isbns) {
-        bookInfoDao.bookInfoDeleteBatch(isbns);
+    public void bookInfoUpdate(BookInfo bookInfo) {
+        bookInfoDao.bookInfoUpdate(bookInfo);
+    }
+
+    @Override
+    public void bookInfoBatchDelete(String[] isbns) {
+        bookInfoDao.bookInfoBatchDelete(isbns);
     }
 }

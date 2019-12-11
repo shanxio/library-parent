@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class ResponseVo {
     private String code;
     private String msg;
-    private Object date;
+    private Object data;
 
 }

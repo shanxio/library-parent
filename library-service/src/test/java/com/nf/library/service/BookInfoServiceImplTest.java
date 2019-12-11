@@ -15,6 +15,7 @@ import java.util.List;
 
 
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ServiceConfig.class)
 public class BookInfoServiceImplTest {
@@ -24,12 +25,17 @@ public class BookInfoServiceImplTest {
     public void bookInfoDeleteById()  {
         try{
 
-            bookInfoService.bookInfoDeleteById(44);
+            bookInfoService.bookInfoByIdDelete(44);
         }catch (RuntimeException e){
             System.out.println(e.getMessage()+"-----");
         }
 
     }
 
+    @Test
+    public void getAll()  {
+        bookInfoService.getAll(1,2);
+
+    }
 
 }

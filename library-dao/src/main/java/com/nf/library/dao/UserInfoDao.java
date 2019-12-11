@@ -1,6 +1,6 @@
 package com.nf.library.dao;
 
-import com.nf.library.entity.UserInfo;
+import com.nf.library.security.process.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -28,7 +28,7 @@ public interface UserInfoDao {
      * 根据id删除用户
      * @param userId
      */
-    void deleteById(Integer userId);
+    void userInfoByIdDelete(Integer userId);
 
 
     /**

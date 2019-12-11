@@ -19,7 +19,21 @@ public interface BookInfoService  {
      */
     List<BookInfo> getAll(int pageNum, int pageSize);
 
+    /**
+     * 根据条件查询图书信息
+     * @param bookInfo
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    List<BookInfo> getSearchAll(BookInfo bookInfo,int pageNum,int pageSize);
 
+    /**
+     * 根据isbn查询图书信息
+     * @param isbn
+     * @return
+     */
+    BookInfo getByIsbn(String isbn);
     /**
      * 添加图书
      * @param bookInfo
@@ -31,11 +45,15 @@ public interface BookInfoService  {
      * @param id
      * @throws AppException
      */
-    void bookInfoDeleteById(Integer id);
-
+    void bookInfoByIdDelete(Integer id);
+    /**
+     * 修改
+     * @param bookInfo
+     */
+    void bookInfoUpdate(BookInfo bookInfo);
     /**
      *批量删除书籍
      * @param isbns
      */
-    void bookInfoDeleteBatch(String[] isbns);
+    void bookInfoBatchDelete(String[] isbns);
 }

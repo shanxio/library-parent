@@ -1,6 +1,7 @@
 package com.nf.library.controller.vo;
 
 
+import com.nf.library.utils.ExcelConfig;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
@@ -15,23 +16,33 @@ import java.math.BigDecimal;
  */
 @Data
 public class BookInfoVo {
+    @ExcelConfig(value = "编号")
     private Integer id ;
     @NotEmpty
+    @ExcelConfig(value = "isbn")
     private String isbn;
     @NotEmpty
+    @ExcelConfig(value = "图书名称")
     private String bookName;
     @NotEmpty
+    @ExcelConfig(value = "作者")
     private String bookAuthor;
     @NotEmpty
+    @ExcelConfig(value = "类型")
     private String bookType;
     @NotEmpty
+    @ExcelConfig(value = "出版社名称")
     private String bookPublish;
     @Min(1)
+    @ExcelConfig(value = "价格")
     private BigDecimal bookPrice;
     @Min(1)
+    @ExcelConfig(value = "库存册数")
     private Integer tmamount ;
     @Min(1)
+    @ExcelConfig(value = "现存册数")
     private Integer bookStock = this.tmamount;
+    @ExcelConfig(value = "状态")
     private Integer bookState;
 
 }

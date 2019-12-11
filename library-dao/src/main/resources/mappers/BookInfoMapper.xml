@@ -3,23 +3,56 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nf.library.dao.BookInfoDao">
-    <sql id="bookInfoRequestMap">
-        b.id, b.isbn, b.book_name, b.book_author, b.book_type,
+    <sql id="bookInfoSql">
+        select  b.id, b.isbn, b.book_name, b.book_author, b.book_type,
         b.book_publish, b.book_price, b.tmamount, b.bookstock, b.book_state
     </sql>
-
-    <delete id="bookInfoDeleteById">
+    <resultMap id="bookInfoResultMap" type="com.nf.library.entity.BookInfo">
+        <id column="id" property="id"/>
+    </resultMap>
+    <delete id="bookInfoByIdDelete">
         delete from bookinfo where id = #{id}
     </delete>
-    <delete id="bookInfoDeleteBatch">
+
+
+    <delete id="bookInfoBatchDelete">
         delete from bookinfo
         where
         <foreach collection="array" item="isbn" separator="or">
             isbn = #{isbn}
         </foreach>
     </delete>
+
+
     <select id="getAll" resultType="com.nf.library.entity.BookInfo">
-        select <include refid="bookInfoRequestMap"/> from bookinfo b order by b.id
+
+        <include refid="bookInfoSql"/> from bookinfo b
+        <trim prefix="where" suffixOverrides="and">
+            <if test="bookInfo.bookName != null and bookInfo.bookName != ''">
+                <bind name="bookName" value="'%' + _parameter.bookInfo.bookName + '%'"/>
+                b.book_name like #{bookName} and
+            </if>
+            <if test="bookInfo.bookAuthor !=null and bookInfo.bookAuthor != ''">
+                <bind name="bookAuthor" value="'%' + _parameter.bookInfo.bookAuthor + '%'"/>
+                b.book_author like #{bookAuthor} and
+            </if>
+            <if test="bookInfo.bookType !=null and bookInfo.bookType != ''">
+                b.book_type = #{bookInfo.bookType} and
+            </if>
+            <if test="bookInfo.startDate !=null and bookInfo.endDate != null  ">
+                b.book_publish between  #{bookInfo.startDate} and #{bookInfo.endDate} and
+            </if>
+            <if test="bookInfo.bookStock !=null and bookInfo.bookStock != ''">
+                b.bookstock = #{bookInfo.bookStock} and
+            </if>
+            <if test="bookInfo.bookState !=null and bookInfo.bookState != ''">
+                b.book_state = #{bookInfo.bookState} and
+            </if>
+        </trim>
+        order by b.id
+    </select>
+    <select id="getByIsbn" resultMap="bookInfoResultMap">
+        <include refid="bookInfoSql"/> from bookinfo b where b.isbn = #{isbn}
     </select>
     <insert id="bookInfoInsert" parameterType="com.nf.library.entity.BookInfo">
         insert into

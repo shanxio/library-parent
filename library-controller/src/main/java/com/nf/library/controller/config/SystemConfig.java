@@ -1,16 +1,17 @@
 package com.nf.library.controller.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 
 /**
  * 此类用来初始化springmvc的。
  * @author Sam
  */
 public class SystemConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{MvcConfig.class};
@@ -34,5 +35,7 @@ public class SystemConfig extends AbstractAnnotationConfigDispatcherServletIniti
         registration.setMultipartConfig(new MultipartConfigElement(servletContext.getRealPath("/file")));
 
     }
+
+
 
 }

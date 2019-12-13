@@ -45,6 +45,7 @@ public class BookInfoServiceImpl implements BookInfoService {
 
     @Override
     public void bookInfoUpdate(BookInfo bookInfo) {
+
         bookInfoDao.bookInfoUpdate(bookInfo);
     }
 

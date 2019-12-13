@@ -11,13 +11,16 @@
          l.reader_id, l.reader_name, l.lend_date, l.lend_state, l.return_date, l.totalcount
     </sql>
     <insert id="lendBookInsert">
-        insert into lendbook(isbn,book_name,book_author,reader_id,reader_name,lend_date,lend_state)
-        values (#{book.isbn},#{book.bookName},#{book.bookAuthor},#{reader.id},#{reader.readerName},now(),1)
+        insert into lendbook(isbn,book_name,book_author,reader_id,reader_name,lend_date,lend_state,totalcount)
+        values (#{book.isbn},#{book.bookName},#{book.bookAuthor},#{reader.id},#{reader.readerName},now(),1,0)
     </insert>
 
     <select id="getAll" resultMap="lendBookResultMap">
         <include refid="lendBookSql"/> from lendbook l
         <trim prefix="where" suffixOverrides="and">
+            <if test="lend.isbn != null and lend.isbn != ''">
+                l.isbn = #{lend.isbn} and
+            </if>
             <if test="lend.bookName != null and lend.bookName != ''">
                 <bind name="bookName" value="'%' + _parameter.lend.bookName + '%'"/>
                 l.book_name like #{bookName} and
@@ -29,11 +32,11 @@
             <if test="lend.readerId !=null and lend.readerId != ''">
                 l.reader_id = #{lend.readerId} and
             </if>
-            <if test="lend.lendState !=null and lend.lendState != ''  ">
+            <if test="lend.lendState != null  ">
                 l.lend_state = #{lend.lendState} and
             </if>
         </trim>
-        order by l.id
+        order by  l.id desc
     </select>
     <delete id="lendBookBatchDelete">
         delete  from lendbook where
@@ -45,28 +48,20 @@
     <update id="lendBookUpdate">
         update lendbook
          <set>
-             <if test="isbn != null">
-                 isbn = #{isbn},
+             <if test="lend.lendState != null">
+                 lend_state = #{lend.lendState},
              </if>
-             <if test="bookName != null">
-                 book_name = #{bookName},
+             <if test="lend.returnDate != null">
+                 return_date = #{lend.returnDate},
              </if>
-             <if test="bookAuthor != null">
-                 book_author = #{bookAuthor},
-             </if>
-             <if test="readerId != null">
-                 reader_id = #{readerId},
-             </if>
-             <if test="readerName != null">
-                 reader_name = #{readerName},
-             </if>
-             <if test="lendDate != null">
-                 lend_date = #{lendDate},
-             </if>
-             <if test="lendState != null">
-                 lend_state = #{lendState},
+             <if test="lend.totalcount != null">
+                 totalcount = #{lend.totalcount},
              </if>
          </set>
-         where id = #{id}
+         where id = #{lend.id}
     </update>
+
+    <select id="getById" resultMap="lendBookResultMap">
+        <include refid="lendBookSql"/> from lendbook l where l.id = #{id}
+    </select>
 </mapper>

@@ -12,14 +12,5 @@ import javax.validation.ValidationException;
  */
 public class BaseBookInfoController extends BaseController {
 
-    /**
-     * 验证是否错误
-     * @param bindingResult
-     */
-    public void validException(BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            String fieldErrors = JsonUtils.getJsonString(bindingResult.getFieldErrors());
-            throw new ValidationException(fieldErrors);
-        }
-    }
+
 }

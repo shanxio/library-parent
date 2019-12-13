@@ -26,8 +26,8 @@ public class LendBookServiceImpl implements LendBookService {
     public void lendBookInsert(ReaderInfo readerInfo, BookInfo bookInfo) {
         BookInfo bookInfo1 = new BookInfo();
         //现存册数减一
-        bookInfo1.setBookStock(bookInfo.getBookStock()-1);
-        bookInfo1.setId(bookInfo.getId());
+        bookInfo1.setBookStock(bookInfoDao.getByIsbn(bookInfo.getIsbn()).getBookStock()-1);
+        bookInfo1.setIsbn(bookInfo.getIsbn());
         bookInfoDao.bookInfoUpdate(bookInfo1);
         lendBookDao.lendBookInsert(readerInfo,bookInfo);
     }
@@ -52,6 +52,24 @@ public class LendBookServiceImpl implements LendBookService {
         lendBookDao.lendBookUpdate(lendBook);
     }
 
+    @Override
+    @Transactional(readOnly = false)
+    public void lendBookStateUpdate(LendBook lendBook) {
+        BookInfo bookInfo = new BookInfo();
+        bookInfo.setIsbn(lendBook.getIsbn());
+        bookInfo.setBookStock(bookInfoDao.getByIsbn(lendBook.getIsbn()).getBookStock()+1);
+        //图书的现存数量加一
+        bookInfoDao.bookInfoUpdate(bookInfo);
+        lendBookDao.lendBookUpdate(lendBook);
+    }
+    @Transactional(readOnly = false)
+    @Override
+    public void lendTotalcountUpdate(Integer id) {
+        LendBook lendBook = new LendBook();
+        lendBook.setId(id);
+        lendBook.setTotalcount(lendBookDao.getById(id).getTotalcount()+1);
+        lendBookDao.lendBookUpdate(lendBook);
+    }
 
 
 }

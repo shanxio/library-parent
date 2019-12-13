@@ -50,6 +50,15 @@ public interface LendBookService {
      */
     void lendBookUpdate(LendBook lendBook);
 
+    /**
+     * 修改借阅状态
+     * @param lendBook
+     */
+    void lendBookStateUpdate(LendBook lendBook);
 
-
+    /**
+     * 修改续借状态
+     * @param id
+     */
+    void lendTotalcountUpdate(Integer id);
 }

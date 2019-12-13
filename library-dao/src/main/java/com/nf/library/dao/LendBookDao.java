@@ -31,6 +31,12 @@ public interface LendBookDao {
                           @Param("pageSize")Integer pageSize);
 
     /**
+     * 根据id查询借阅信息
+     * @param id
+     * @return
+     */
+    LendBook getById(Integer id);
+    /**
      * 批量删除数据
      * @param id
      */

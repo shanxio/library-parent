@@ -37,15 +37,19 @@ public class BookInfoController extends BaseBookInfoController{
         PageInfo<BookInfo> pageInfos = new PageInfo<>(bookInfos,bookInfo.getPageVo().getPageSize());
         return pageInfos;
     }
+//
+//    @RequestMapping("/test")
+//    public List<BookInfo> getAll2(@RequestBody BookInfoPageVo bookInfo){
+//        System.out.println(bookInfo);
+//        List<BookInfo> bookInfos = bookInfoService.getAll(1,2);
+//        return bookInfos;
+//    }
 
-    @RequestMapping("/test")
-    public List<BookInfo> getAll2(@RequestBody BookInfoPageVo bookInfo){
-        System.out.println(bookInfo);
-        List<BookInfo> bookInfos = bookInfoService.getAll(1,2);
-        return bookInfos;
+    @RequestMapping("/getIsbn")
+    public BookInfo getIsbn(String isbn){
+      BookInfo bookInfo = bookInfoService.getByIsbn(isbn);
+        return bookInfo;
     }
-
-
     @PostMapping("/bookInfoInsert")
     public ResponseVo bookInfoInsert(@Valid BookInfoVo bookInfoVo, BindingResult bindingResult){
         ResponseVo responseVo = null;
@@ -78,7 +82,7 @@ public class BookInfoController extends BaseBookInfoController{
         this.checkNull(id);
         ResponseVo responseVo = null;
         try{
-            bookInfoService.bookInfoDeleteById(id);
+            bookInfoService.bookInfoByIdDelete(id);
             responseVo = ResponseVo.builder().code("200").msg("删除成功").build();
         }catch (RuntimeException e){
             throw new AppException("删除失败",e);
@@ -93,7 +97,7 @@ public class BookInfoController extends BaseBookInfoController{
         ResponseVo responseVo = null;
         try{
 
-            bookInfoService.bookInfoDeleteBatch(isbns);
+            bookInfoService.bookInfoBatchDelete(isbns);
             responseVo = ResponseVo.builder().code("200").msg("删除成功").build();
         }catch (RuntimeException e){
             throw new AppException("删除失败",e);

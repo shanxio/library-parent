@@ -1,5 +1,6 @@
 package com.nf.library.controller.be.nodeInfo;
 
+import com.nf.library.controller.be.BaseController;
 import com.nf.library.entity.Ztree;
 import com.nf.library.service.NodeInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/nodeInfo")
 @Slf4j
-public class NodeInfoGenerateZthreeController {
+public class NodeInfoGenerateZthreeController extends BaseController {
     @Autowired
     private NodeInfoService nodeInfoService;
     @PostMapping("/ztree")

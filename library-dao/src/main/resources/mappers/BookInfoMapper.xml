@@ -91,7 +91,7 @@
                 book_state = #{bookState}
             </if>
         </set>
-        where id = #{id}
+        where isbn = #{isbn}
     </update>
 
 </mapper>

@@ -168,7 +168,11 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate.validator.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>3.0.1-b09</version>
+            </dependency>
             <!--日志标准-->
             <dependency>
                 <groupId>org.slf4j</groupId>

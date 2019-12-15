@@ -16,6 +16,7 @@ ReaderInfo {
     private String readerName;
     private String readerPhone;
     private String readerAddress;
+    private String readerFullAddress;
     private String readerCard;
     /**
      * 读者状态 0 为正常 ，1 为禁用

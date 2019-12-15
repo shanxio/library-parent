@@ -5,9 +5,10 @@
 <mapper namespace="com.nf.library.dao.ReaderInfoDao">
     <resultMap id="readerInfoResultMap" type="com.nf.library.entity.ReaderInfo">
         <id column="id" property="id"/>
+        <result column="reader_fulladdress" property="readerFullAddress"/>
     </resultMap>
     <sql id="readerInfoSql">
-        select  r.id, r.reader_name, r.reader_phone, r.reader_address, r.reader_state
+        select  r.id, r.reader_name, r.reader_phone, r.reader_address, r.reader_state,r.reader_fulladdress
     </sql>
     <select id="getById" resultMap="readerInfoResultMap">
        <include refid="readerInfoSql"/> from readerinfo r where r.id = #{id}
@@ -50,6 +51,9 @@
             <if test="readerAddress!=null">
                 reader_address = #{readerAddress},
             </if>
+            <if test="readerFullAddress!=null">
+                reader_fulladdress = #{readerFullAddress},
+            </if>
             <if test="readerState!=null">
                 reader_state = #{readerState},
             </if>
@@ -61,7 +65,7 @@
     </update>
 
     <insert id="readerInfoInsert">
-        insert into readerinfo(reader_name, reader_phone, reader_address, reader_state, reader_card,createDate)
-        values(#{readerName},#{readerPhone},#{readerAddress},#{readerState},#{readerCard},now())
+        insert into readerinfo(reader_name, reader_phone, reader_address, reader_state, reader_card,createDate,reader_fulladdress)
+        values(#{readerName},#{readerPhone},#{readerAddress},#{readerState},#{readerCard},#{createDate},#{readerFullAddress})
     </insert>
 </mapper>

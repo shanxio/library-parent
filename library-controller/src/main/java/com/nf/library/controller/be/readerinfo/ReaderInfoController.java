@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class ReaderInfoController extends BaseController {
     }
 
     @PostMapping("/readerInfoInsert")
-    public ResponseVo readerInfoInsert(@RequestBody ReaderInfoVo readerInfoVo, BindingResult bindingResult){
+    public ResponseVo readerInfoInsert(@RequestBody @Valid ReaderInfoVo readerInfoVo, BindingResult bindingResult){
         this.checkNull(readerInfoVo);
         this.validException(bindingResult);
         ReaderInfo readerInfo = new ReaderInfo();
@@ -52,4 +53,6 @@ public class ReaderInfoController extends BaseController {
         readerInfoService.readerInfoInsert(readerInfo);
         return ResponseVo.builder().code("200").msg("添加成功").build();
     }
+
+
 }

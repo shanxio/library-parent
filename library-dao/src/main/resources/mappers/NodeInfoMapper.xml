@@ -8,10 +8,11 @@
         <result column="isparent" property="parent"/>
     </resultMap>
     <sql id="nodeInfo">
-        n.node_id, n.node_url, n.node_description, n.pid,n.node_state,n.node_type,n.isparent
+        select n.node_id, n.node_url, n.node_description,
+         n.pid,n.node_type,n.isparent,n.node_tag
     </sql>
     <select id="getRoleTag" resultMap="nodeInfoResultMap">
-        select <include refid="nodeInfo"/>  from
+         <include refid="nodeInfo"/>  from
         roleinfo r
         inner join role_node rn on r.role_id = rn.role_id
         inner join nodeinfo   n on rn.node_id = n.node_id
@@ -19,5 +20,19 @@
     </select>
     <select id="getByPid" resultMap="nodeInfoResultMap">
         select <include refid="nodeInfo"/> from nodeinfo n where n.pid = #{pid}
+    </select>
+
+    <select id="getRoleTagMenu" resultMap="nodeInfoResultMap">
+         <include refid="nodeInfo"/>  from
+        roleinfo r
+        inner join role_node rn on r.role_id = rn.role_id
+        inner join nodeinfo   n on rn.node_id = n.node_id
+        where
+        r.role_tag = #{roleTag} and n.node_type = #{nodeType}
+    </select>
+
+    <select id="getChild" resultMap="nodeInfoResultMap">
+         <include refid="nodeInfo"/>  from nodeinfo n
+        where n.pid = #{pid}
     </select>
 </mapper>

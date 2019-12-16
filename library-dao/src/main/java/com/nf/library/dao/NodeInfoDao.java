@@ -16,6 +16,20 @@ public interface NodeInfoDao {
      */
     List<NodeInfo> getRoleTag(@Param("roleTag") String roleTag);
 
+
+    /**
+     * 根据角色标识符，和 权限类型进行查询
+     * @param roleTag
+     * @return
+     */
+    List<NodeInfo> getRoleTagMenu(@Param("roleTag") String roleTag,@Param("nodeType") int nodeType);
+
+    /**
+     * 根据pid查询子菜单
+     * @param pid
+     * @return
+     */
+    List<NodeInfo> getChild(Integer pid);
     /**
      * 查询子节点
      * @return

@@ -28,7 +28,6 @@ import java.util.List;
  */
 @Configuration
 @ComponentScan({"com.nf.library.controller.be","com.nf.library.controller.advice"})
-@EnableServiceSpring
 @EnableSecurity
 @EnableWebMvc
 public class MvcConfig  implements WebMvcConfigurer {

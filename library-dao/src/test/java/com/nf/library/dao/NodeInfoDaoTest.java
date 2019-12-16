@@ -20,4 +20,11 @@ public class NodeInfoDaoTest {
         List<NodeInfo> nodeInfos = nodeInfoDao.getRoleTag("ROLE_DENG");
         System.out.println(nodeInfos);
     }
+
+    @Test
+    public void getRolePid() {
+        List<NodeInfo> nodeInfos = nodeInfoDao.getChild(10);
+
+        System.out.println(nodeInfos);
+    }
 }

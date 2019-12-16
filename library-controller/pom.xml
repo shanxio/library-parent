@@ -17,7 +17,7 @@
   <dependencies>
       <dependency>
           <groupId>com.nf</groupId>
-          <artifactId>library-service</artifactId>
+          <artifactId>library-security</artifactId>
           <version>1.0-SNAPSHOT</version>
       </dependency>
       <dependency>

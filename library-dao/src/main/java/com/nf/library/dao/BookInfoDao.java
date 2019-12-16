@@ -1,7 +1,6 @@
 package com.nf.library.dao;
 
 import com.nf.library.entity.BookInfo;
-import com.nf.library.execption.AppException;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

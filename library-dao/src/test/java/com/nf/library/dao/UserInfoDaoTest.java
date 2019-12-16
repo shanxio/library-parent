@@ -2,7 +2,7 @@ package com.nf.library.dao;
 
 
 import com.nf.library.dao.config.DaoConfig;
-import com.nf.library.security.process.UserInfo;
+import com.nf.library.entity.UserInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.nf.library.controller.advice;
 
 import com.nf.library.execption.AppException;
-import com.nf.library.execption.vo.ResponseVo;
+import com.nf.library.security.process.ResponseVo;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

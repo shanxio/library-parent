@@ -1,8 +1,8 @@
 package com.nf.library.security.process;
 
+import com.nf.library.utils.JsonUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,17 +16,17 @@ import java.io.IOException;
 
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
-    private String accessDeniedUrl;
-
-    public MyAccessDeniedHandler(String accessDeniedUrl) {
-        this.accessDeniedUrl = accessDeniedUrl;
-    }
 
     @Override
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        response.sendRedirect(accessDeniedUrl);
+        response.setContentType("application/json;charset=utf-8");
+        ResponseVo responseVo = ResponseVo.builder()
+                .code("403")
+                .msg("权限不足")
+                .data(accessDeniedException).build();
+        JsonUtils.write(response.getOutputStream(),responseVo);
     }
 
 }

@@ -54,5 +54,15 @@ public class NodeInfoServiceImpl implements NodeInfoService {
         return ztrees;
     }
 
+    @Override
+    public List<NodeInfo> getChild(Integer pid) {
+        return nodeInfoDao.getChild(pid);
+    }
+
+    @Override
+    public List<NodeInfo> getRoleTagMenu(String roleTag, int nodeType) {
+        return nodeInfoDao.getRoleTagMenu(roleTag,nodeType);
+    }
+
 
 }

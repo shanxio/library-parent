@@ -1,6 +1,6 @@
 package com.nf.library.dao;
 
-import com.nf.library.security.process.UserInfo;
+import com.nf.library.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 /**

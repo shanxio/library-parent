@@ -1,8 +1,9 @@
 package com.nf.library.service;
 
+import com.nf.library.entity.UserInfo;
 import com.nf.library.service.aop.LogAspect;
 import com.nf.library.service.config.ServiceConfig;
-import com.nf.library.security.process.UserInfo;
+import com.nf.library.service.impl.UserDetailsServiceImpl;
 import com.nf.library.service.impl.UserInfoServiceImpl;
 import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
@@ -19,7 +20,8 @@ public class UserInfoServiceImplTest {
     @Autowired
     private UserInfoServiceImpl userService;
 
-
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     public LogAspect logAspect;

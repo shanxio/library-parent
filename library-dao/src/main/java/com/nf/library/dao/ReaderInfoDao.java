@@ -2,7 +2,6 @@ package com.nf.library.dao;
 
 import com.nf.library.entity.ReaderInfo;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.nf.library.service.impl;
 
 import com.nf.library.dao.UserInfoDao;
-import com.nf.library.security.process.UserInfo;
+import com.nf.library.entity.UserInfo;
 import com.nf.library.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

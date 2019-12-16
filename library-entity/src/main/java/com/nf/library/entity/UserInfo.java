@@ -1,4 +1,4 @@
-package com.nf.library.security.process;
+package com.nf.library.entity;
 
 
 import lombok.Data;
@@ -24,9 +24,9 @@ public class UserInfo implements UserDetails {
     private String password;
     private Date userEntrydate;
     private boolean enabled;
-
+    private String rolesName;
     /**
-     * 该用户的角色集合
+     * 该用户的角色标识符集合
      */
     private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(10);
 

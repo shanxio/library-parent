@@ -1,6 +1,5 @@
-package com.nf.library.service.impl.authorize;
+package com.nf.library.security.authorize;
 
-import com.nf.library.security.authorize.AuthorizeConfigProvider;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;

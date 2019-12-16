@@ -1,7 +1,11 @@
 package com.nf.library.utils;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.nf.library.execption.AppException;
+import io.jsonwebtoken.lang.Assert;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -59,10 +63,16 @@ public class JsonUtils {
             T bean = null;
             try {
                 // 将json语句转化为Bean对象
-                bean = (T) mapper.readValue(json, clazz);
+                bean =  mapper.readValue(json, clazz);
             } catch (IOException e) {
                 System.out.println("json转对象失败！");
             }
             return bean;
         }
+
+    public static void main(String[] args) {
+        String str = "{\"username\":\"123\"}";
+        JwtSubject jwtSubject = readValue(str,JwtSubject.class);
+        System.out.println(jwtSubject);
+    }
 }

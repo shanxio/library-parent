@@ -24,4 +24,18 @@ public interface NodeInfoService {
      * @return
      */
     List<Ztree> getByPid(Integer pid, HttpSession session);
+
+
+    /**
+     * 根据pid查询子菜单
+     * @param pid
+     * @return
+     */
+    List<NodeInfo> getChild(Integer pid);
+    /**
+     * 根据角色标识符，和 权限类型进行查询
+     * @param roleTag
+     * @return
+     */
+    List<NodeInfo> getRoleTagMenu(String roleTag, int nodeType);
 }

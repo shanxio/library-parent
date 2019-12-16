@@ -1,6 +1,6 @@
 package com.nf.library.service;
 
-import com.nf.library.security.process.UserInfo;
+import com.nf.library.entity.UserInfo;
 
 /**
  * 用户的业务接口
@@ -13,7 +13,7 @@ public interface UserInfoService {
      * @param realName
      * @return
      */
-    UserInfo getByRealName( String realName);
+    UserInfo getByRealName(String realName);
 
 
     /**

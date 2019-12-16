@@ -2,7 +2,7 @@ package com.nf.library.service.impl;
 
 import com.nf.library.dao.NodeInfoDao;
 import com.nf.library.entity.NodeInfo;
-import com.nf.library.security.process.UserInfo;
+import com.nf.library.entity.UserInfo;
 import com.nf.library.service.RbacService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,7 @@ public class RbacServiceImpl implements RbacService {
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession();
+
         Object principal = authentication.getPrincipal();
         boolean hasPermission = false;
         if(principal instanceof UserInfo){

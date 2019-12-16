@@ -1,7 +1,6 @@
 package com.nf.library.service;
 
 import com.nf.library.entity.BookInfo;
-import com.nf.library.execption.AppException;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -43,7 +42,6 @@ public interface BookInfoService  {
     /**
      * 根据id删除对应的图书信息
      * @param id
-     * @throws AppException
      */
     void bookInfoByIdDelete(Integer id);
     /**

@@ -4,11 +4,9 @@ package com.nf.library.controller.be.bookInfo;
 import com.github.pagehelper.PageInfo;
 import com.nf.library.controller.vo.BookInfoPageVo;
 import com.nf.library.controller.vo.BookInfoVo;
-import com.nf.library.controller.vo.PageVo;
 import com.nf.library.entity.BookInfo;
-import com.nf.library.security.process.UserInfo;
 import com.nf.library.execption.AppException;
-import com.nf.library.execption.vo.ResponseVo;
+import com.nf.library.security.process.ResponseVo;
 import com.nf.library.service.BookInfoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,13 +34,6 @@ public class BookInfoController extends BaseBookInfoController{
         PageInfo<BookInfo> pageInfos = new PageInfo<>(bookInfos,bookInfo.getPageVo().getPageSize());
         return pageInfos;
     }
-//
-//    @RequestMapping("/test")
-//    public List<BookInfo> getAll2(@RequestBody BookInfoPageVo bookInfo){
-//        System.out.println(bookInfo);
-//        List<BookInfo> bookInfos = bookInfoService.getAll(1,2);
-//        return bookInfos;
-//    }
 
     @RequestMapping("/getIsbn")
     public BookInfo getIsbn(String isbn){

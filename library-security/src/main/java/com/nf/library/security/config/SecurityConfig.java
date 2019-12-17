@@ -2,7 +2,7 @@ package com.nf.library.security.config;
 
 
 import com.nf.library.security.authorize.AuthorizeConfigManager;
-import com.nf.library.security.process.JwtAuthenticationTokenFilter;
+import com.nf.library.security.filter.JwtAuthenticationTokenFilter;
 import com.nf.library.security.process.MyAccessDeniedHandler;
 import com.nf.library.security.process.MyAuthenticationFailureHandler;
 import com.nf.library.security.process.MyAuthenticationSuccessHandler;
@@ -30,7 +30,8 @@ import org.springframework.web.cors.CorsUtils;
 @Configuration
 @EnableWebSecurity
 @ComponentScan({"com.nf.library.security.process",
-        "com.nf.library.security.authorize"})
+        "com.nf.library.security.authorize",
+        "com.nf.library.security.filter"})
 @EnableServiceSpring
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired

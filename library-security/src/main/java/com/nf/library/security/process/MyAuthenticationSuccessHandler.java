@@ -58,16 +58,29 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             //获取用户信息
             responseVo = ResponseVo.builder()
                     .code("200")
-                    .msg(userInfo.getUsername())
+                    .name(userInfo.getUsername())
                     .data(userInfo.getRolesName())
                     .token(jwtToken).build();
-        setResponseVo(userInfo,responseVo);
+        setRouterAndMenus(userInfo,responseVo);
+        setBtns(userInfo,responseVo);
         JsonUtils.write(response.getOutputStream(),responseVo);
     }
 
 
-
-    private void setResponseVo(UserInfo userInfo,ResponseVo responseVo){
+    private void setBtns(UserInfo userInfo,ResponseVo responseVo){
+        //读取用户的所有角色
+        List<GrantedAuthority> authorityList =  (List<GrantedAuthority>) userInfo.getAuthorities();
+        //保存按钮信息
+        List<NodeInfo> btns = new ArrayList<>();
+        for (GrantedAuthority grantedAuthority : authorityList) {
+            List<NodeInfo> nodeInfos = nodeInfoService.getRoleTagMenu(grantedAuthority.getAuthority(),1);
+            for (NodeInfo nodeInfo : nodeInfos) {
+               btns.add(nodeInfo);
+            }
+        }
+        responseVo.setBtns(btns);
+    }
+    private void setRouterAndMenus(UserInfo userInfo,ResponseVo responseVo){
         //读取用户的所有角色
         List<GrantedAuthority> authorityList =  (List<GrantedAuthority>) userInfo.getAuthorities();
         Set<NodeInfo> reouts = new HashSet<>();
@@ -78,12 +91,13 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
                 if(nodeInfo.getPid()==0) {
                         NodeInfo nodeInfo1 = setChild(nodeInfo, nodeInfo.getNodeId());
                         menus.add(nodeInfo1);
-
                 }
                 reouts.add(nodeInfo);
             }
         }
+        //添加菜单信息
         responseVo.setMenus(menus);
+        //添加路由信息
         responseVo.setRouters(reouts);
     }
     public NodeInfo setChild(NodeInfo nodeInfo,Integer pid){

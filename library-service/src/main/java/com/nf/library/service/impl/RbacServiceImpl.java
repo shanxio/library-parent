@@ -31,7 +31,7 @@ public class RbacServiceImpl implements RbacService {
     private static final String userName= "admin";
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-        HttpSession session = request.getSession();
+//        HttpSession session = request.getSession();
 
         Object principal = authentication.getPrincipal();
         boolean hasPermission = false;
@@ -41,7 +41,7 @@ public class RbacServiceImpl implements RbacService {
                 hasPermission = true;
             }else {
                 //初始化所有的可用url
-                Set<String> urls = init(session,(UserInfo) principal);
+                Set<String> urls = init((UserInfo) principal);
 
                 log.info(((UserInfo) principal).getUsername()+"的所有可用uris："+urls.toString());
                 for (String url : urls) {
@@ -56,27 +56,33 @@ public class RbacServiceImpl implements RbacService {
         return hasPermission;
     }
 
-    private Set<String> init(HttpSession session,UserInfo principal) {
+    private Set<String> init(UserInfo principal) {
         // 保存用户所拥有权限的所有URL
         Set<String> urls = new HashSet<>();
         //读取用户的所有角色
         Collection<GrantedAuthority> authorityList = (Collection<GrantedAuthority>) principal.getAuthorities();
-        //保存用户所用的节点信息
-        List<NodeInfo> nodeInfos = new ArrayList<>(10);
+
+//        List<NodeInfo> nodeInfos = new ArrayList<>(10);
         //读取用户的所有uri地址
         for (GrantedAuthority grantedAuthority : authorityList) {
-             nodeInfos = nodeInfoDao.getRoleTag(grantedAuthority.getAuthority());
+            //保存用户所用的节点信息
+            List<NodeInfo> nodeInfos = nodeInfoDao.getRoleTag(grantedAuthority.getAuthority());
             for (NodeInfo nodeInfo : nodeInfos) {
-                urls.add(nodeInfo.getNodeUrl().trim());
+                String[] nodeUrls = nodeInfo.getNodeUrl().split(",");
+                log.info(nodeUrls.toString());
+                for (String nodeUrl : nodeUrls) {
+                    urls.add(nodeUrl);
+                }
+
             }
         }
-        log.info("用户所有的节点信息："+nodeInfos);
-        if(nodeInfos!=null){
-            //清除
-            session.removeAttribute("nodeInfos");
-        }
-        //保存至会话中，以便可以随时使用
-        session.setAttribute("nodeInfos",nodeInfos);
+//        log.info("用户所有的节点信息："+nodeInfos);
+//        if(nodeInfos!=null){
+//            //清除
+//            session.removeAttribute("nodeInfos");
+//        }
+//        //保存至会话中，以便可以随时使用
+//        session.setAttribute("nodeInfos",nodeInfos);
         return urls;
     }
 

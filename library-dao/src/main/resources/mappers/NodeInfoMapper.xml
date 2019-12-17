@@ -9,7 +9,7 @@
     </resultMap>
     <sql id="nodeInfo">
         select n.node_id, n.node_url, n.node_description,
-         n.pid,n.node_type,n.isparent,n.node_tag
+         n.pid,n.node_type,n.isparent,n.node_tag,n.node_path
     </sql>
     <select id="getRoleTag" resultMap="nodeInfoResultMap">
          <include refid="nodeInfo"/>  from

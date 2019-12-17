@@ -13,8 +13,10 @@ public class NodeInfo {
 
     private Integer nodeId;
     private String nodeUrl;
+    private String nodePath;
     private String nodeDescription;
     private Integer pid;
+
     private boolean parent;
     private String nodeTag;
     private List<NodeInfo> child;

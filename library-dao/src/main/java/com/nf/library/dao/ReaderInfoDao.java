@@ -52,6 +52,9 @@ public interface ReaderInfoDao {
      */
     void readerInfoInsert(ReaderInfo readerInfo);
 
-
-
+    /**
+     * 批量添加数据
+     * @param readerInfos
+     */
+    void readerInfoBatchInsert(List<ReaderInfo> readerInfos);
 }

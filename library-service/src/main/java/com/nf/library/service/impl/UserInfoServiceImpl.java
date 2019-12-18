@@ -6,6 +6,8 @@ import com.nf.library.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 /**
  * userServie实现类
@@ -35,5 +37,25 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfo getByUsernameAndPassword(String username, String password) {
         return userInfoDao.getByUsernameAndPassword(username,password);
+    }
+
+    @Override
+    public List<UserInfo> getAll(UserInfo userInfo, int pageNum, int pageSize) {
+        return userInfoDao.getAll(userInfo,pageNum,pageSize);
+    }
+
+    @Override
+    public void userInfoInsert(UserInfo userInfo) {
+        userInfoDao.userInfoInsert(userInfo);
+    }
+
+    @Override
+    public void userInfoBatchDelete(Integer[] id) {
+        userInfoDao.userInfoBatchDelete(id);
+    }
+
+    @Override
+    public void userInfoUpdate(UserInfo userInfo) {
+        userInfoDao.userInfoUpdate(userInfo);
     }
 }

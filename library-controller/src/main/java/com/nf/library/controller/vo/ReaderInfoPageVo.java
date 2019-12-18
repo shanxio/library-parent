@@ -8,7 +8,8 @@ import lombok.Data;
  * @author Sam
  */
 @Data
-public class ReaderInfoPageVo {
+public class
+ReaderInfoPageVo {
     private ReaderInfo reader;
     private PageVo pageVo;
 }

@@ -10,10 +10,7 @@ import com.nf.library.service.ReaderInfoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -51,8 +48,34 @@ public class ReaderInfoController extends BaseController {
         ReaderInfo readerInfo = new ReaderInfo();
         BeanUtils.copyProperties(readerInfoVo,readerInfo);
         readerInfoService.readerInfoInsert(readerInfo);
+
         return ResponseVo.builder().code("200").msg("添加成功").build();
+
     }
 
 
+    @PostMapping("/readerInfoDelete")
+    public ResponseVo readerInfoDelete(Integer id){
+        this.checkNull(id);
+        readerInfoService.readerInfoDelete(id);
+        return ResponseVo.builder().code("200").msg("删除成功").build();
+    }
+    @PostMapping("/readerInfoBatchDelete")
+    public ResponseVo readerInfoBatchDelete(@RequestBody Integer[] id){
+        this.checkNull(id);
+        readerInfoService.readerInfoBatchDelete(id);
+        return ResponseVo.builder().code("200").msg("删除成功").build();
+    }
+
+    /**
+     * 修改读者状态
+     * @param readerInfo
+     * @return
+     */
+    @PostMapping("/readerInfoStateUpdate")
+    public ResponseVo readerInfoUpdate(@RequestBody ReaderInfo readerInfo){
+        this.checkNull(readerInfo);
+        readerInfoService.readerInfoUpdate(readerInfo);
+        return ResponseVo.builder().code("200").msg("修改成功").build();
+    }
 }

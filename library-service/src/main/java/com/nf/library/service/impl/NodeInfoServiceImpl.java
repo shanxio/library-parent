@@ -33,7 +33,7 @@ public class NodeInfoServiceImpl implements NodeInfoService {
             Ztree ztree = Ztree.builder()
                     .id(nodeInfo.getNodeId())
                     .name(nodeInfo.getNodeDescription())
-                    .isParent(nodeInfo.isParent())
+//                    .isParent(nodeInfo.isParent())
                     .open(true)
                     .pid(pid).build();
             //获取用户的所拥有的节点信息

@@ -2,8 +2,10 @@ package com.nf.library.controller;
 
 import com.nf.library.controller.config.MvcConfig;
 import com.nf.library.controller.vo.ReaderInfoVo;
+import com.nf.library.entity.ReaderInfo;
 import com.nf.library.security.process.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,10 +71,10 @@ public class LoginControllerTest {
         ReaderInfoVo readerInfoVo = new ReaderInfoVo();
         readerInfoVo.setReaderAddress("123");
         readerInfoVo.setReaderFullAddress("123");
-        readerInfoVo.setReaderCard("1232131231");
+        readerInfoVo.setReaderCard("1847670800");
         readerInfoVo.setReaderMoney(new BigDecimal(123));
         readerInfoVo.setReaderName("王武");
-        readerInfoVo.setReaderPhone("1355667667");
+        readerInfoVo.setReaderPhone("18476708005");
         ReaderInfoVo readerInfoVo1 = new ReaderInfoVo();
         readerInfoVo1.setReaderAddress("1233");
         readerInfoVo1.setReaderFullAddress("123");
@@ -80,28 +82,16 @@ public class LoginControllerTest {
         readerInfoVo1.setReaderMoney(new BigDecimal(123));
 //        readerInfoVo1.setReaderName("王武");
         readerInfoVo1.setReaderPhone("135576976887");
-        List<ReaderInfoVo> readerInfoVos = new ArrayList<>();
+        List<Object> readerInfoVos = new ArrayList<>();
         readerInfoVos.add(readerInfoVo);
         readerInfoVos.add(readerInfoVo1);
         List<ResponseVo> responseVos = new ArrayList<>();
 
-        for (int i = 0;i<readerInfoVos.size();i++) {
-            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-            Validator validator = factory.getValidator();
-            //开始校验
-            Set<ConstraintViolation<ReaderInfoVo>> result = validator.validate(readerInfoVos.get(i));
-            Iterator<ConstraintViolation<ReaderInfoVo>> iterator = result.iterator();
-
-            while (iterator.hasNext()) {
-                System.out.println("--------------------------"+iterator.hasNext());
-                ConstraintViolation<ReaderInfoVo> next = iterator.next();
-                //打印校验结果
-                System.out.println(next.getMessage()+" "+next.getRootBean()+" --"+next.getPropertyPath());
-            }
-        }
-//        System.out.println(readerInfoVos);
-//        readerInfoVo.setReaderState("1");
-        // 得到validator 对象
+//
+//        List<Object> reasd = setVaild(readerInfoVos);
+//        System.out.println("正确数据"+readerInfoVos);
+//        System.out.println("错误数据"+reasd);
 
     }
+
 }

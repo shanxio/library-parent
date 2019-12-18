@@ -8,7 +8,15 @@
         <result column="reader_fulladdress" property="readerFullAddress"/>
     </resultMap>
     <sql id="readerInfoSql">
-        select  r.id, r.reader_name, r.reader_phone, r.reader_address, r.reader_state,r.reader_fulladdress
+        select  r.id,
+        r.reader_name,
+        r.reader_phone,
+         r.reader_address,
+         r.reader_state,
+         r.reader_fulladdress,
+         r.reader_money,
+         r.reader_card,
+         r.createDate
     </sql>
     <select id="getById" resultMap="readerInfoResultMap">
        <include refid="readerInfoSql"/> from readerinfo r where r.id = #{id}
@@ -16,15 +24,14 @@
     <select id="getAll" resultMap="readerInfoResultMap">
         <include refid="readerInfoSql"/> from readerinfo r
          <trim prefix="where" suffixOverrides="and">
-             <if test="reader.readerName!=null">
+             <if test="reader.readerName!=null and reader.readerName!=''">
                  <bind name="readerName" value="'%'+_parameter.reader.readerName+'%'"/>
-                 r.reader_name like #{readerName} and
+                 r.reader_name like #{reader.readerName} and
              </if>
-             <if test="reader.readerState!=null">
-                 r.reader_state = #{reader.readerState}
+             <if test="reader.readerState!=null and reader.readerState!=''">
+                 r.reader_state = #{reader.readerState} and
              </if>
          </trim>
-         where r.id = #{reader.id}
     </select>
 
     <delete id="readerInfoBatchDelete">
@@ -42,22 +49,22 @@
     <update id="readerInfoUpdate">
         update readerinfo
         <set>
-            <if test="readerName!=null">
+            <if test="readerName!=null and readerName!=''">
                 reader_name = #{readerName},
             </if>
-            <if test="readerPhone!=null">
+            <if test="readerPhone!=null and readerPhone!=''">
                 reader_phone = #{readerPhone},
             </if>
-            <if test="readerAddress!=null">
+            <if test="readerAddress!=null and readerAddress!=''">
                 reader_address = #{readerAddress},
             </if>
-            <if test="readerFullAddress!=null">
+            <if test="readerFullAddress!=null and readerFullAddress!=''">
                 reader_fulladdress = #{readerFullAddress},
             </if>
-            <if test="readerState!=null">
+            <if test="readerState!=null and readerState!=''">
                 reader_state = #{readerState},
             </if>
-            <if test="readerCard!=null">
+            <if test="readerCard!=null and readerCard!=''">
                 reader_card = #{readerCard},
             </if>
         </set>
@@ -66,6 +73,15 @@
 
     <insert id="readerInfoInsert">
         insert into readerinfo(reader_name, reader_phone, reader_address, reader_state, reader_card,createDate,reader_fulladdress)
-        values(#{readerName},#{readerPhone},#{readerAddress},#{readerState},#{readerCard},#{createDate},#{readerFullAddress})
+        values(#{readerName},#{readerPhone},#{readerFullAddress},#{readerState},#{readerCard},#{createDate},#{readerAddress})
+    </insert>
+    <insert id="readerInfoBatchInsert">
+        insert into readerinfo(reader_name, reader_phone, reader_address, reader_money, reader_card,createDate,reader_fulladdress)
+        values
+        <foreach collection="list" item="reader" separator=",">
+            (#{reader.readerName},#{reader.readerPhone},#{reader.readerAddress},#{reader.readerMoney},
+            #{reader.readerCard},#{reader.createDate},#{reader.readerFullAddress})
+        </foreach>
+
     </insert>
 </mapper>

@@ -56,7 +56,7 @@ public class LendBookController extends BaseController {
     }
 
 
-        @PostMapping("/lendBookBatchDelete")
+    @PostMapping("/lendBookBatchDelete")
     public ResponseVo lendBookBatchDelete(@RequestBody  Integer[] id){
         this.checkNull(id);
         lendBookService.lendBookBatchDelete(id);

@@ -18,6 +18,7 @@ import java.util.Date;
 public class ReaderInfoVo {
     @NotEmpty(message = "姓名不能为空")
     @ExcelConfig("姓名")
+
     private String readerName;
     @NotEmpty(message = "手机号码不能为空")
     @Phone
@@ -38,5 +39,8 @@ public class ReaderInfoVo {
     @ExcelConfig(value = "充值金额")
     private BigDecimal readerMoney;
     @ExcelConfig(value = "创建日期")
+
     private Date createDate;
+
+    private String msg;
 }

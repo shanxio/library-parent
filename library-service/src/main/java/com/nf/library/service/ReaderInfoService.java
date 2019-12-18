@@ -45,10 +45,17 @@ public interface ReaderInfoService {
      */
     void readerInfoUpdate(ReaderInfo readerInfo);
 
+
+
     /**
      * 增加数据
      * @param readerInfo
      */
     void readerInfoInsert(ReaderInfo readerInfo);
 
+    /**
+     * 批量添加数据
+     * @param readerInfos
+     */
+    void readerInfoBatchInsert(List<ReaderInfo> readerInfos);
 }

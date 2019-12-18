@@ -11,19 +11,98 @@
         <result column="enable" property="enabled"/>
     </resultMap>
     <sql id="userSelect">
-        user_id, username,real_name, user_sex, dept_id, dept_name,
-        user_phone, password, user_entrydate, enable
+       select u.user_id, u.username,
+            u.real_name, u.user_sex,
+            u.dept_id, u.user_phone,
+            u.password, u.user_entrydate,
+            u.enable, u.user_address,
+            u.user_fulladdress,
+            u.user_photo
     </sql>
+    <insert id="userInfoInsert">
+        insert into userinfo(
+        username, real_name,
+        dept_id, user_phone,
+        password, user_entrydate,
+        enable, user_address,
+        user_fulladdress, user_photo)
+        values(
+        #{username},#{realName},
+        #{deptId},#{userPhone},
+        #{password},#{userEntrydate},
+        #{enable},#{userAddress},
+        #{userFulladdress},#{userPhoto}
+        )
+    </insert>
+    <update id="userInfoUpdate">
+
+        update userinfo
+        <set>
+            <if test="userPhoto !=null and userPhoto != '' ">
+                user_photo = #{userPhoto}
+            </if>
+            <if test="userFulladdress !=null and userFulladdress != '' ">
+                user_fulladdress = #{userFulladdress}
+            </if>
+            <if test="userAddress !=null and userAddress != '' ">
+                user_address = #{userAddress}
+            </if>
+            <if test="enable !=null and enable != '' ">
+                enable = #{enable}
+            </if>
+
+            <if test="userEntrydate !=null and userEntrydate != '' ">
+                user_entrydate = #{userEntrydate}
+            </if>
+            <if test="password !=null and password != '' ">
+                password = #{password}
+            </if>
+            <if test="userPhone !=null and userPhone != '' ">
+                user_phone = #{userPhone}
+            </if>
+            <if test="deptId !=null and deptId != '' ">
+                dept_id = #{deptId}
+            </if>
+            <if test="realName !=null and realName != '' ">
+                real_name = #{realName}
+            </if>
+            <if test="username !=null and username != '' ">
+                username = #{username}
+            </if>
+        </set>
+    </update>
     <delete id="userInfoByIdDelete">
         delete from userinfo where user_id = #{userId}
     </delete>
+    <delete id="userInfoBatchDelete">
+        delete from userinfo
+        <where>
+            <foreach collection="array" item="id" separator="or">
+                user_id = #{id}
+            </foreach>
+        </where>
+    </delete>
     <select id="getByRealName" resultMap="userResultMap">
-        select <include refid="userSelect"/> from userinfo where real_name = #{realName}
+         <include refid="userSelect"/> from userinfo u where u.real_name = #{realName}
     </select>
     <select id="getByUsername" resultMap="userResultMap">
-        select <include refid="userSelect"/> from userinfo where username = #{username}
+         <include refid="userSelect"/> from userinfo u where u.username = #{username}
     </select>
     <select id="getByUsernameAndPassword" resultMap="userResultMap">
-        select <include refid="userSelect"/> from userinfo where username= #{username} and password = #{password}
+         <include refid="userSelect"/> from userinfo u where u.username= #{username} and u.password = #{password}
     </select>
+    <select id="getAll" resultMap="userResultMap">
+        <include refid="userSelect"/> ,d.deptname
+         from userinfo u inner join dept d on u.dept_id = d.deptid
+        <trim prefix="where" suffixOverrides="and">
+            <if test="user.username!=null and user.username!=''">
+                <bind name="username" value="'%'+_parameter.user.username+'%'"/>
+                u.username like #{username} and
+            </if>
+            <if test="user.deptId!=null and user.deptId!=''">
+                u.dept_id = #{user.deptId} and
+            </if>
+        </trim>
+    </select>
+
 </mapper>

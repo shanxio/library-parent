@@ -1,6 +1,9 @@
 package com.nf.library.service;
 
 import com.nf.library.entity.UserInfo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户的业务接口
@@ -36,4 +39,33 @@ public interface UserInfoService {
      * @return
      */
     UserInfo getByUsernameAndPassword(String username,  String password);
+
+    /**
+     * 查询所有的用户信息
+     * @return
+     */
+    List<UserInfo> getAll(@Param("user") UserInfo userInfo,
+                          @Param("pageNum")int pageNum,
+                          @Param("pageSize")int pageSize);
+
+
+    /**
+     * 添加用户信息
+     * @param userInfo
+     */
+    void userInfoInsert(UserInfo userInfo);
+
+
+    /**
+     * 批量删除数据
+     * @param id
+     */
+    void userInfoBatchDelete(Integer[] id);
+
+
+    /**
+     * 修改数据
+     * @param userInfo
+     */
+    void userInfoUpdate(UserInfo userInfo);
 }

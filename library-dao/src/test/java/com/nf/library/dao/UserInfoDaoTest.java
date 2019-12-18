@@ -5,6 +5,7 @@ import com.nf.library.dao.config.DaoConfig;
 import com.nf.library.entity.UserInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,8 +21,11 @@ public class UserInfoDaoTest {
     private UserInfoDao userInfoDao;
     @Test
     public void userDaoTestQuery()  {
-        UserInfo userInfo = userInfoDao.getByUsername("admin");
-        System.out.println(userInfo.isEnabled());
+        List<UserInfo> userInfos = userInfoDao.getAll(new UserInfo(),2,1);
+
+        for (UserInfo userInfo : userInfos) {
+            System.out.println(userInfo);
+        }
     }
 
 

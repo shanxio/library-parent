@@ -46,4 +46,9 @@ public class ReaderInfoServiceImpl implements ReaderInfoService {
     public void readerInfoInsert(ReaderInfo readerInfo) {
         readerInfoDao.readerInfoInsert(readerInfo);
     }
+
+    @Override
+    public void readerInfoBatchInsert(List<ReaderInfo> readerInfos) {
+        readerInfoDao.readerInfoBatchInsert(readerInfos);
+    }
 }

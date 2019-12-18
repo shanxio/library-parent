@@ -6,7 +6,11 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,12 +23,16 @@ import org.springframework.stereotype.Component;
 @Order(Integer.MAX_VALUE)
 public class LogAspect {
 
+
+
     @Pointcut("execution(* com.nf.library.service.impl..*.get*(..))")
     public void getCell(){
 
     }
     @Around(value = "getCell()")
     public Object getAround(ProceedingJoinPoint joinPoint){
+
+        SecurityContextHolder.getContext().getAuthentication();
         Object result = null;
         try {
             Long start = System.currentTimeMillis();

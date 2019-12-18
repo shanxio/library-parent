@@ -12,8 +12,7 @@
     </resultMap>
     <sql id="userSelect">
        select u.user_id, u.username,
-            u.real_name, u.user_sex,
-            u.dept_id, u.user_phone,
+            u.real_name, u.user_sex, u.user_phone,
             u.password, u.user_entrydate,
             u.enable, u.user_address,
             u.user_fulladdress,
@@ -92,8 +91,7 @@
          <include refid="userSelect"/> from userinfo u where u.username= #{username} and u.password = #{password}
     </select>
     <select id="getAll" resultMap="userResultMap">
-        <include refid="userSelect"/> ,d.deptname
-         from userinfo u inner join dept d on u.dept_id = d.deptid
+        <include refid="userSelect"/>    from userinfo u
         <trim prefix="where" suffixOverrides="and">
             <if test="user.username!=null and user.username!=''">
                 <bind name="username" value="'%'+_parameter.user.username+'%'"/>

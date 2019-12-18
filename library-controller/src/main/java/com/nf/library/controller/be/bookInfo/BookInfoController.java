@@ -2,6 +2,7 @@ package com.nf.library.controller.be.bookInfo;
 
 
 import com.github.pagehelper.PageInfo;
+import com.nf.library.controller.be.BaseController;
 import com.nf.library.controller.vo.BookInfoPageVo;
 import com.nf.library.controller.vo.BookInfoVo;
 import com.nf.library.entity.BookInfo;
@@ -23,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/bookInfo")
-public class BookInfoController extends BaseBookInfoController{
+public class BookInfoController extends BaseController {
 
     @Autowired
     private BookInfoService bookInfoService;

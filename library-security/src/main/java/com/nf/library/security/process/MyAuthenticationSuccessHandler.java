@@ -71,7 +71,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         //读取用户的所有角色
         List<GrantedAuthority> authorityList =  (List<GrantedAuthority>) userInfo.getAuthorities();
         //保存按钮信息
-        List<NodeInfo> btns = new ArrayList<>();
+        Set<NodeInfo> btns = new HashSet<>();
         for (GrantedAuthority grantedAuthority : authorityList) {
             List<NodeInfo> nodeInfos = nodeInfoService.getRoleTagMenu(grantedAuthority.getAuthority(),1);
             for (NodeInfo nodeInfo : nodeInfos) {
@@ -84,7 +84,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         //读取用户的所有角色
         List<GrantedAuthority> authorityList =  (List<GrantedAuthority>) userInfo.getAuthorities();
         Set<NodeInfo> reouts = new HashSet<>();
-        List<NodeInfo> menus = new ArrayList<>();
+        Set<NodeInfo> menus = new HashSet<>();
         for (GrantedAuthority grantedAuthority : authorityList) {
             List<NodeInfo> nodeInfos = nodeInfoService.getRoleTagMenu(grantedAuthority.getAuthority(),0);
             for (NodeInfo nodeInfo : nodeInfos) {

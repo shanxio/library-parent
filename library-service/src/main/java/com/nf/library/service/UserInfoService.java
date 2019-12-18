@@ -1,5 +1,6 @@
 package com.nf.library.service;
 
+import com.nf.library.entity.RequestVo;
 import com.nf.library.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -53,7 +54,7 @@ public interface UserInfoService {
      * 添加用户信息
      * @param userInfo
      */
-    void userInfoInsert(UserInfo userInfo);
+    void userInfoInsert(UserInfo userInfo, List<RequestVo> ids);
 
 
     /**

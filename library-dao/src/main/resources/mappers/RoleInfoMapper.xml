@@ -8,12 +8,31 @@
     <resultMap id="roleResultMap" type="com.nf.library.entity.RoleInfo">
         <id column="id" property="roleId"/>
     </resultMap>
-
+    <sql id="roleSql">
+         select r.role_id,r.role_description,r.role_tag,r.role_name
+    </sql>
     <!--根据用户与角色的中间表查询对应的角色-->
     <select id="getRoleByUsername" resultMap="roleResultMap">
-        select r.role_id,r.role_description,r.role_tag,r.role_name from role_user ru
+      <include refid="roleSql"/> from role_user ru
         inner join roleinfo r on ru.role_id = r.role_id
         inner join userinfo u on ru.user_id = u.user_id
         where u.username = #{username}
     </select>
+    <select id="getAll" resultMap="roleResultMap">
+        <include refid="roleSql"/> from roleinfo r
+    </select>
+
+
+    <insert id="RoleUserInsert">
+        insert into role_user(user_id, role_id)
+        values
+        <foreach collection="list" item="id" separator=",">
+            (#{userId},#{roleId})
+        </foreach>
+    </insert>
+
+
+    <delete id="RoleUserDelete">
+        delete from role_user  where user_id = #{userId}
+    </delete>
 </mapper>

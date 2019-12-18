@@ -27,12 +27,12 @@ public class ResponseVo {
     /**
      * 菜单信息
      */
-    private List<NodeInfo> menus;
+    private Set<NodeInfo> menus;
     /**
      * 按钮信息
      */
 
-    private List<NodeInfo> btns;
+    private Set<NodeInfo> btns;
     /**
      * 登录令牌
      */

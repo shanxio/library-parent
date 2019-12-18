@@ -1,10 +1,14 @@
 package com.nf.library.service.impl;
 
+import com.nf.library.dao.RoleInfoDao;
 import com.nf.library.dao.UserInfoDao;
+import com.nf.library.entity.RequestVo;
 import com.nf.library.entity.UserInfo;
+import com.nf.library.service.RoleInfoService;
 import com.nf.library.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +22,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private UserInfoDao userInfoDao;
 
+
+    @Autowired
+    private RoleInfoDao roleInfoDao;
 
     @Override
     public UserInfo getByRealName(String realName) {
@@ -43,9 +50,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<UserInfo> getAll(UserInfo userInfo, int pageNum, int pageSize) {
         return userInfoDao.getAll(userInfo,pageNum,pageSize);
     }
-
+    @Transactional(readOnly = false)
     @Override
-    public void userInfoInsert(UserInfo userInfo) {
+    public void userInfoInsert(UserInfo userInfo, List<RequestVo> ids) {
+        roleInfoDao.RoleUserInsert(ids);
         userInfoDao.userInfoInsert(userInfo);
     }
 

@@ -1,9 +1,11 @@
 package com.nf.library.controller.vo;
 
+import com.nf.library.entity.RequestVo;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 添加使用的vo类
@@ -11,11 +13,11 @@ import java.util.Date;
  */
 @Data
 public class UserInfoVo {
+    private String  userId;
     /**
      * 用户登录姓名
      */
     @NotEmpty
-
     private String username;
     /**
      * 用户真实姓名
@@ -69,8 +71,11 @@ public class UserInfoVo {
      * 是否禁用
      */
 
-    private boolean enabled;
+    private Integer enabled;
 
-
+    /**
+     * 角色id
+     */
+    private List<RequestVo> ids;
 
 }

@@ -42,7 +42,7 @@ public class FileController extends BaseController{
             myFile.transferTo(file);
         }
 
-        return ResponseVo.builder().code("200").data(name).msg("上传成功").build();
+        return ResponseVo.builder().code("200").data("http://localhost:8080/admin/file/download?"+name).msg("上传成功").build();
     }
 
     //下载

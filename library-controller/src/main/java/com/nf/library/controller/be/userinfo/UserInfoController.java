@@ -46,8 +46,7 @@ public class UserInfoController extends BaseController {
         this.validException(bindingResult);
         UserInfo userInfo = new UserInfo();
         BeanUtils.copyProperties(userInfoVo,userInfo);
-        userInfoService.userInfoInsert(userInfo);
-
+//        userInfoService.userInfoInsert(userInfo,userInfoVo.getIds());
         return ResponseVo.builder().code("200").msg("添加成功").build();
 
     }

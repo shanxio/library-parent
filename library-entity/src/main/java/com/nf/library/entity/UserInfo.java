@@ -47,7 +47,7 @@ public class UserInfo implements UserDetails {
      */
     private String password;
     /**
-     * 日志日期
+     * 创建日期
      */
     private Date userEntrydate;
     /**

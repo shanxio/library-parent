@@ -3,7 +3,7 @@ package com.nf.library.controller.be.address;
 
 import com.nf.library.controller.be.BaseController;
 import com.nf.library.entity.Address;
-import com.nf.library.security.process.ResponseVo;
+import com.nf.library.execption.vo.ResponseVo;
 import com.nf.library.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

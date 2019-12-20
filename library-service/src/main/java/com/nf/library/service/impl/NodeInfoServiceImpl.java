@@ -21,6 +21,7 @@ public class NodeInfoServiceImpl implements NodeInfoService {
     private NodeInfoDao nodeInfoDao;
     @Override
     public List<NodeInfo> getRoleTag(String roleTag) {
+
         return nodeInfoDao.getRoleTag(roleTag);
     }
 
@@ -60,8 +61,8 @@ public class NodeInfoServiceImpl implements NodeInfoService {
     }
 
     @Override
-    public List<NodeInfo> getRoleTagMenu(String roleTag, int nodeType) {
-        return nodeInfoDao.getRoleTagMenu(roleTag,nodeType);
+    public List<NodeInfo> getRoleTagMenu(String username, int nodeType) {
+        return nodeInfoDao.getRoleTagMenu(username,nodeType);
     }
 
 

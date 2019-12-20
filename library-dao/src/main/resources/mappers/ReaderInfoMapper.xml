@@ -5,7 +5,6 @@
 <mapper namespace="com.nf.library.dao.ReaderInfoDao">
     <resultMap id="readerInfoResultMap" type="com.nf.library.entity.ReaderInfo">
         <id column="id" property="id"/>
-        <result column="reader_fulladdress" property="readerFullAddress"/>
     </resultMap>
     <sql id="readerInfoSql">
         select  r.id,
@@ -21,15 +20,17 @@
     <select id="getById" resultMap="readerInfoResultMap">
        <include refid="readerInfoSql"/> from readerinfo r where r.id = #{id}
     </select>
-    <select id="getAll" resultMap="readerInfoResultMap">
+    <select id="getAll" resultType="com.nf.library.entity.ReaderInfo">
         <include refid="readerInfoSql"/> from readerinfo r
          <trim prefix="where" suffixOverrides="and">
-             <if test="reader.readerName!=null and reader.readerName!=''">
-                 <bind name="readerName" value="'%'+_parameter.reader.readerName+'%'"/>
-                 r.reader_name like #{reader.readerName} and
-             </if>
-             <if test="reader.readerState!=null and reader.readerState!=''">
-                 r.reader_state = #{reader.readerState} and
+             <if test="reader!=null">
+                 <if test="reader.readerName!= null and reader.readerName!= '' ">
+                     <bind name="name" value="'%'+_parameter.reader.readerName+'%'"/>
+                     r.reader_name like #{name} and
+                 </if>
+                 <if test="reader.readerState!=null and reader.readerState!=''">
+                     r.reader_state = #{reader.readerState} and
+                 </if>
              </if>
          </trim>
     </select>

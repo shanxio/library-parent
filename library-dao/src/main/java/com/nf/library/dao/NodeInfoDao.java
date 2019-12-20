@@ -22,7 +22,9 @@ public interface NodeInfoDao {
      * @param roleTag
      * @return
      */
-    List<NodeInfo> getRoleTagMenu(@Param("roleTag") String roleTag,@Param("nodeType") int nodeType);
+    List<NodeInfo> getRoleTagMenu(
+            @Param("roleTag") String roleTag,
+            @Param("nodeType") int nodeType);
 
     /**
      * 根据pid查询子菜单

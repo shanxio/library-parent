@@ -8,67 +8,71 @@
         <id column="user_id" property="userId"/>
         <result column="real_name" property="realName"/>
         <result column="user_sex" property="userSex"/>
-        <result column="enable" property="enabled"/>
+        <result column="enabled" property="enabled"/>
     </resultMap>
     <sql id="userSelect">
        select u.user_id, u.username,
             u.real_name, u.user_sex, u.user_phone,
             u.password, u.user_entrydate,
-            u.enable, u.user_address,
+            u.enabled, u.user_address,u.user_card,
             u.user_fulladdress,
             u.user_photo
     </sql>
-    <insert id="userInfoInsert">
+    <insert  id="userInfoInsert"
+             useGeneratedKeys="true" keyProperty="userId"  keyColumn="user_id">
         insert into userinfo(
         username, real_name,
-        dept_id, user_phone,
+         user_phone,user_card,
         password, user_entrydate,
-        enable, user_address,
+        enabled, user_address,
         user_fulladdress, user_photo)
         values(
         #{username},#{realName},
-        #{deptId},#{userPhone},
+        #{userPhone},#{userCard},
         #{password},#{userEntrydate},
-        #{enable},#{userAddress},
+        #{enabled},#{userAddress},
         #{userFulladdress},#{userPhoto}
         )
+
+
     </insert>
     <update id="userInfoUpdate">
 
         update userinfo
         <set>
+
+            <if test="userSex !=null and userSex != '' ">
+                user_sex = #{userSex},
+            </if>
             <if test="userPhoto !=null and userPhoto != '' ">
-                user_photo = #{userPhoto}
+                user_photo = #{userPhoto},
             </if>
             <if test="userFulladdress !=null and userFulladdress != '' ">
-                user_fulladdress = #{userFulladdress}
+                user_fulladdress = #{userFulladdress},
             </if>
             <if test="userAddress !=null and userAddress != '' ">
-                user_address = #{userAddress}
+                user_address = #{userAddress},
             </if>
-            <if test="enable !=null and enable != '' ">
-                enable = #{enable}
+            <if test="enabled !=null  ">
+                enabled = #{enabled},
             </if>
-
-            <if test="userEntrydate !=null and userEntrydate != '' ">
-                user_entrydate = #{userEntrydate}
-            </if>
-            <if test="password !=null and password != '' ">
-                password = #{password}
-            </if>
+<!--            <if test="userEntrydate != null">-->
+<!--                user_entrydate = #{userEntrydate},-->
+<!--            </if>-->
             <if test="userPhone !=null and userPhone != '' ">
-                user_phone = #{userPhone}
-            </if>
-            <if test="deptId !=null and deptId != '' ">
-                dept_id = #{deptId}
+                user_phone = #{userPhone},
             </if>
             <if test="realName !=null and realName != '' ">
-                real_name = #{realName}
+                real_name = #{realName},
             </if>
             <if test="username !=null and username != '' ">
-                username = #{username}
+                username = #{username},
+            </if>
+            <if test="userCard !=null and userCard != '' ">
+                user_card = #{userCard},
             </if>
         </set>
+        where user_id = #{userId}
     </update>
     <delete id="userInfoByIdDelete">
         delete from userinfo where user_id = #{userId}
@@ -91,14 +95,11 @@
          <include refid="userSelect"/> from userinfo u where u.username= #{username} and u.password = #{password}
     </select>
     <select id="getAll" resultMap="userResultMap">
-        <include refid="userSelect"/>    from userinfo u
+        <include refid="userSelect"/> from userinfo u
         <trim prefix="where" suffixOverrides="and">
             <if test="user.username!=null and user.username!=''">
                 <bind name="username" value="'%'+_parameter.user.username+'%'"/>
                 u.username like #{username} and
-            </if>
-            <if test="user.deptId!=null and user.deptId!=''">
-                u.dept_id = #{user.deptId} and
             </if>
         </trim>
     </select>

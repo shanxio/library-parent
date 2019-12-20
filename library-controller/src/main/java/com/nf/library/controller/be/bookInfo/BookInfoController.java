@@ -7,7 +7,7 @@ import com.nf.library.controller.vo.BookInfoPageVo;
 import com.nf.library.controller.vo.BookInfoVo;
 import com.nf.library.entity.BookInfo;
 import com.nf.library.execption.AppException;
-import com.nf.library.security.process.ResponseVo;
+import com.nf.library.execption.vo.ResponseVo;
 import com.nf.library.service.BookInfoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

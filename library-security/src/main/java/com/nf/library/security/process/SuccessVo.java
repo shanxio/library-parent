@@ -2,11 +2,8 @@ package com.nf.library.security.process;
 
 import com.nf.library.entity.NodeInfo;
 import lombok.Builder;
-import lombok.CustomLog;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,7 +12,7 @@ import java.util.Set;
  */
 @Data
 @Builder
-public class ResponseVo {
+public class SuccessVo {
     private String code;
     private String name;
     private String msg;

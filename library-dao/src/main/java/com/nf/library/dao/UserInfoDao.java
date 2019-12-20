@@ -49,7 +49,7 @@ public interface UserInfoDao {
      * 添加用户信息
      * @param userInfo
      */
-    void userInfoInsert(UserInfo userInfo);
+    int userInfoInsert(UserInfo userInfo);
 
     /**
      * 批量删除数据

@@ -7,9 +7,11 @@ import com.nf.library.entity.UserInfo;
 import com.nf.library.service.RoleInfoService;
 import com.nf.library.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,13 +50,23 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public List<UserInfo> getAll(UserInfo userInfo, int pageNum, int pageSize) {
+
+
         return userInfoDao.getAll(userInfo,pageNum,pageSize);
     }
     @Transactional(readOnly = false)
     @Override
-    public void userInfoInsert(UserInfo userInfo, List<RequestVo> ids) {
-        roleInfoDao.RoleUserInsert(ids);
-        userInfoDao.userInfoInsert(userInfo);
+    public void userInfoInsert(UserInfo userInfo, Integer[] ids) {
+        List<RequestVo> requestVos = new ArrayList<>();
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        userInfo.setPassword(bCryptPasswordEncoder.encode(userInfo.getPassword()));
+        int userInfoInsert = userInfoDao.userInfoInsert(userInfo);
+        for (Integer id : ids) {
+            requestVos.add(RequestVo.builder().userId(userInfo.getUserId()).roleId(id).build());
+
+        }
+        roleInfoDao.roleUserInsert(requestVos);
+
     }
 
     @Override
@@ -62,8 +74,24 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfoDao.userInfoBatchDelete(id);
     }
 
+
+    @Transactional(readOnly = false)
     @Override
-    public void userInfoUpdate(UserInfo userInfo) {
+    public void userInfoUpdate(UserInfo userInfo, Integer[] ids) {
+        List<RequestVo> requestVos = new ArrayList<>();
+
+         roleInfoDao.roleUserDelete(userInfo.getUserId());
+
+        for (Integer id : ids) {
+            requestVos.add(RequestVo.builder().userId(userInfo.getUserId()).roleId(id).build());
+
+        }
+        roleInfoDao.roleUserInsert(requestVos);
+        userInfoDao.userInfoUpdate(userInfo);
+    }
+
+    @Override
+    public void userInfoStateUpdate(UserInfo userInfo) {
         userInfoDao.userInfoUpdate(userInfo);
     }
 }

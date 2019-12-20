@@ -2,10 +2,8 @@ package com.nf.library.controller;
 
 import com.nf.library.controller.config.MvcConfig;
 import com.nf.library.controller.vo.ReaderInfoVo;
-import com.nf.library.entity.ReaderInfo;
-import com.nf.library.security.process.ResponseVo;
+import com.nf.library.execption.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,15 +19,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("webapp")

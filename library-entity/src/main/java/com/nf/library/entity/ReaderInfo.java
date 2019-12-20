@@ -10,8 +10,7 @@ import java.util.Date;
  * @author Sam
  */
 @Data
-public class
-ReaderInfo {
+public class ReaderInfo {
     private Integer id;
     private String readerName;
     private String readerPhone;

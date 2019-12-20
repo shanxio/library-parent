@@ -1,9 +1,12 @@
 package com.nf.library.controller.vo;
 
+import com.nf.library.controller.validator.Phone;
 import com.nf.library.entity.RequestVo;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +16,7 @@ import java.util.List;
  */
 @Data
 public class UserInfoVo {
-    private String  userId;
+    private Integer  userId;
     /**
      * 用户登录姓名
      */
@@ -30,14 +33,10 @@ public class UserInfoVo {
     @NotEmpty
     private String userSex;
     /**
-     * 部门id
-     */
-
-    private Integer deptId;
-    /**
      * 手机号码
      */
     @NotEmpty
+    @Phone
     private String userPhone;
     /**
      * 登录密码
@@ -65,17 +64,24 @@ public class UserInfoVo {
      * 用户照片
      */
 
-    @NotEmpty
     private String userPhoto;
     /**
      * 是否禁用
      */
 
-    private Integer enabled;
+    private boolean enabled;
 
+
+    private String userCard;
     /**
      * 角色id
      */
-    private List<RequestVo> ids;
+    private Integer[] ids;
 
+    private String rolesName;
+    private String roleId;
+    private List<GrantedAuthority> authorities =null;
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
 }

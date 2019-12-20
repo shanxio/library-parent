@@ -1,6 +1,6 @@
 package com.nf.library.security.filter;
 
-import com.nf.library.security.process.ResponseVo;
+import com.nf.library.execption.vo.ResponseVo;
 import com.nf.library.service.impl.UserDetailsServiceImpl;
 import com.nf.library.utils.JsonUtils;
 import com.nf.library.utils.JwtResult;

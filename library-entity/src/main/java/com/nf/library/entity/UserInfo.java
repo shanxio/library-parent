@@ -13,11 +13,17 @@ import java.util.*;
  * @author Sam
  */
 @Data
-public class UserInfo implements UserDetails {
+public class
+UserInfo implements UserDetails {
     /**
      * 用户id
      */
     private Integer userId;
+    /**
+     * 身份证号
+     *
+     */
+    private String userCard;
     /**
      * 用户登录姓名
      */
@@ -30,14 +36,6 @@ public class UserInfo implements UserDetails {
      * 性别
      */
     private String userSex;
-    /**
-     * 部门id
-     */
-    private Integer deptId;
-    /**
-     * 部门名称
-     */
-    private String deptName;
     /**
      * 手机号码
      */
@@ -68,15 +66,12 @@ public class UserInfo implements UserDetails {
     private boolean enabled;
 
 
-
-
     private String rolesName;
+    private String roleId;
     /**
      * 该用户的角色标识符集合
      */
     private List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(10);
-
-
 
 
 
@@ -126,7 +121,7 @@ public class UserInfo implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-
-        return this.enabled;
+        return enabled;
     }
+
 }

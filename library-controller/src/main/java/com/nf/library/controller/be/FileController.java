@@ -1,12 +1,13 @@
 package com.nf.library.controller.be;
 
 
-import com.nf.library.security.process.ResponseVo;
+import com.nf.library.execption.vo.ResponseVo;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ import java.util.UUID;
  * 用于文件操作的控制类
  * @author Sam
  */
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/admin/file")
 public class FileController extends BaseController{
@@ -44,10 +46,9 @@ public class FileController extends BaseController{
 
         return ResponseVo.builder().code("200").data("http://localhost:8080/admin/file/download?"+name).msg("上传成功").build();
     }
-
     //下载
     @RequestMapping("/download")
-    public ResponseEntity<InputStreamResource> download(String fileName, HttpServletRequest request) throws IOException {
+    public ResponseEntity<InputStreamResource> download(String fileName) throws IOException {
         //1.读取文件
         String path = FILE_PATH+File.separator+fileName;
 

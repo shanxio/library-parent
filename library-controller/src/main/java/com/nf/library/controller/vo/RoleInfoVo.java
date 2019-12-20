@@ -1,18 +1,21 @@
-package com.nf.library.entity;
+package com.nf.library.controller.vo;
 
-import lombok.Builder;
-import lombok.CustomLog;
+
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
- * 角色实体类
  * @author Sam
  */
 @Data
-public class RoleInfo {
+public class RoleInfoVo {
     private Integer  roleId;
-    private String roleName;
-    private String roleTag;
-    private String roleDescription;
 
+    @NotEmpty
+    private String roleName;
+    @NotEmpty
+    private String roleTag;
+    @NotEmpty
+    private String roleDescription;
 }

@@ -54,7 +54,7 @@ public interface UserInfoService {
      * 添加用户信息
      * @param userInfo
      */
-    void userInfoInsert(UserInfo userInfo, List<RequestVo> ids);
+    void userInfoInsert(UserInfo userInfo, Integer[] ids);
 
 
     /**
@@ -68,5 +68,11 @@ public interface UserInfoService {
      * 修改数据
      * @param userInfo
      */
-    void userInfoUpdate(UserInfo userInfo);
+    void userInfoUpdate(UserInfo userInfo, Integer[] ids);
+
+    /**
+     * 修改状态
+     * @param userInfo
+     */
+    void userInfoStateUpdate(UserInfo userInfo);
 }

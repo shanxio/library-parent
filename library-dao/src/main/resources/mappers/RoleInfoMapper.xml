@@ -6,14 +6,16 @@
 
 
     <resultMap id="roleResultMap" type="com.nf.library.entity.RoleInfo">
-        <id column="id" property="roleId"/>
+        <id column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
     </resultMap>
     <sql id="roleSql">
          select r.role_id,r.role_description,r.role_tag,r.role_name
     </sql>
     <!--根据用户与角色的中间表查询对应的角色-->
     <select id="getRoleByUsername" resultMap="roleResultMap">
-      <include refid="roleSql"/> from role_user ru
+      <include refid="roleSql"/>
+       from role_user ru
         inner join roleinfo r on ru.role_id = r.role_id
         inner join userinfo u on ru.user_id = u.user_id
         where u.username = #{username}
@@ -21,18 +23,67 @@
     <select id="getAll" resultMap="roleResultMap">
         <include refid="roleSql"/> from roleinfo r
     </select>
+    <select id="getSearchAll" resultMap="roleResultMap">
+        <include refid="roleSql"/> from roleinfo r
+        <trim prefix="where" suffixOverrides="and">
+            <if test="role!=null">
+                <if test="role.roleName!= null and role.roleName!= '' ">
+                    <bind name="roleName" value="'%'+_parameter.role.roleName+'%'"/>
+                    r.role_name like #{roleName} and
+                </if>
+            </if>
+        </trim>
+    </select>
+    <select id="roleInfoInsert" resultMap="roleResultMap">
+        insert into roleinfo(role_name, role_tag, role_description)
+        values(#{roleName},#{roleTag},#{roleDescription})
+    </select>
+    <select id="getRoleIdUser" resultType="com.nf.library.entity.UserInfo">
+        select u.real_name,u.username from roleinfo r
+        inner join role_user ru on r.role_id = ru.role_id
+        inner join userinfo u on ru.user_id = u.user_id
+        where r.role_id = #{roleId}
+    </select>
 
 
-    <insert id="RoleUserInsert">
+    <insert id="roleUserInsert">
         insert into role_user(user_id, role_id)
         values
         <foreach collection="list" item="id" separator=",">
-            (#{userId},#{roleId})
+            (#{id.userId},#{id.roleId})
         </foreach>
     </insert>
 
 
-    <delete id="RoleUserDelete">
+    <delete id="roleUserDelete">
         delete from role_user  where user_id = #{userId}
     </delete>
+    <delete id="roleDelete">
+        delete from roleinfo where role_id = #{roleId}
+    </delete>
+    <delete id="roleNodeDelete">
+        delete  from role_node where role_id = #{roldId}
+    </delete>
+
+
+    <update id="roleUpdate">
+
+        update roleinfo
+        <set>
+            <if test="roleInfo!=null">
+                <if test="roleInfo.roleName!=null">
+                    role_name = #{roleInfo.roleName},
+                </if>
+                <if test="roleInfo.roleTag!=null">
+                    role_tag = #{roleInfo.roleTag},
+                </if>
+
+                <if test="roleInfo.roleDescription!=null">
+                    role_description = #{roleInfo.roleDescription},
+                </if>
+
+            </if>
+        </set>
+        where role_id = #{roleInfo.roleId}
+    </update>
 </mapper>

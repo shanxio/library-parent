@@ -7,7 +7,7 @@
         <id column="id" property="id"/>
     </resultMap>
     <sql id="returnBookSql">
-        select id, book_id, book_name, book_author, isbn, reader_id, reader_name, lend_date, return_date, amount, lend_totalcount
+        select id,reader_phone, book_id, book_name, book_author, isbn, reader_id, reader_name, lend_date, return_date, amount, lend_totalcount
     </sql>
     <insert id="returnBookInsert">
         insert  into returnbook(
@@ -17,10 +17,11 @@
         lend_date, return_date,
         amount, lend_totalcount)
         values(
-        #{bookId},#{bookAuthor},
-        #{isbn},#{readerId},
-        #{readerName},#{lendDate},
-        #{returnDate},#{amount},#{lendTotalcount}
+        #{bookId},#{bookName},
+        #{bookAuthor},#{isbn},
+        #{readerId},#{readerName},
+        #{lendDate},#{returnDate},
+        #{amount},#{lendTotalcount}
         )
     </insert>
     <delete id="returnBookDelete">
@@ -33,7 +34,7 @@
         </foreach>
     </delete>
     <select id="getAll" resultMap="returnBookResultMap">
-        <include refid="returnBookSql"/> from returnbook
+        <include refid="returnBookSql"/> from returnbook order by id desc
         <trim prefix="where" suffixOverrides="and">
             <if test="returnBook.readerName!=null and returnBook.readerName!=''">
                 <bind name="readerName" value="'%'+_parameter.returnBook.readerName+'%'"/>
@@ -46,7 +47,7 @@
             <if test="returnBook.startDate !=null and returnBook.endDate != null  ">
                 return_date between  #{returnBook.startDate} and #{returnBook.endDate} and
             </if>
-            <if test="returnBook.isbn !=null   ">
+            <if test="returnBook.isbn !=null and returnBook.isbn != '' ">
                 isbn = #{returnBook.isbn}
             </if>
         </trim>

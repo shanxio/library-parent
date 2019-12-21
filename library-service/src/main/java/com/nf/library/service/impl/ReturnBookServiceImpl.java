@@ -4,10 +4,12 @@ import com.nf.library.dao.ReturnBookDao;
 import com.nf.library.entity.ReturnBook;
 import com.nf.library.service.ReturnBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class ReturnServiceImpl implements ReturnBookService {
+@Service
+public class ReturnBookServiceImpl implements ReturnBookService {
     @Autowired
     private ReturnBookDao returnBookDao;
 

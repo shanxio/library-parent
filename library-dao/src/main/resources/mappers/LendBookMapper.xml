@@ -40,6 +40,10 @@
             <if test="lend.readerId !=null and lend.readerId != ''">
                 r.reader_id = #{lend.readerId} and
             </if>
+
+            <if test="lend.lendState==1">
+                0 >(date_format(lend_date,'%d')+lend_day)-date_format(now(),'%d')and
+            </if>
         </trim>
         order by  l.id desc
     </select>
@@ -64,6 +68,9 @@
              </if>
              <if test="lend.lendTotalcount != null">
                  lend_totalcount = #{lend.lendTotalcount},
+             </if>
+             <if test="lend.lendDate != null">
+                 lend_date = #{lend.lendDate},
              </if>
          </set>
          where id = #{lend.id}

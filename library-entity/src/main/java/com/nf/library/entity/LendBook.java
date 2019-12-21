@@ -33,4 +33,6 @@ public class LendBook {
      * 借阅天数
      */
     private Integer lendDay;
+
+    private Integer lendState = 0;
 }

@@ -20,7 +20,7 @@ public class ReturnBook {
     private Date returnDate;
     private BigDecimal amount;
     private Integer lendTotalcount;
-
+    private String readerPhone;
 
     /**
      *  用作查询使用
@@ -36,7 +36,7 @@ public class ReturnBook {
     public ReturnBook() {
     }
 
-    public ReturnBook(Integer id, Integer bookId, String bookName, String bookAuthor, String isbn, Integer readerId, String readerName, Date lendDate, Date returnDate, BigDecimal amount, Integer lendTotalcount, Date startDate, Date endDate) {
+    public ReturnBook(Integer id, Integer bookId, String bookName, String bookAuthor, String isbn, Integer readerId, String readerName, Date lendDate, Date returnDate, BigDecimal amount, Integer lendTotalcount, String readerPhone, Date startDate, Date endDate) {
         this.id = id;
         this.bookId = bookId;
         this.bookName = bookName;
@@ -48,6 +48,7 @@ public class ReturnBook {
         this.returnDate = returnDate;
         this.amount = amount;
         this.lendTotalcount = lendTotalcount;
+        this.readerPhone = readerPhone;
         this.startDate = startDate;
         this.endDate = endDate;
     }

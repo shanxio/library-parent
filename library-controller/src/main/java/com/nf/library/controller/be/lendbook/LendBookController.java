@@ -43,7 +43,15 @@ public class LendBookController extends BaseController {
         return pageInfos;
     }
 
-
+    @PostMapping("/getNoReturn")
+    public PageInfo<LendBook> getNoReturn(@RequestBody LendBookPageVo lend){
+        LendBook lendBook = lend.getLend();
+        lendBook.setLendState(1);
+        List<LendBook> lendBooks = lendBookService.getAll(lendBook,
+                lend.getPageVo().getPageNum(),lend.getPageVo().getPageSize());
+        PageInfo<LendBook> pageInfos = new PageInfo<>(lendBooks,lend.getPageVo().getPageSize());
+        return pageInfos;
+    }
     @PostMapping("/lendBookInsert")
     public ResponseVo lendBookInsert(@RequestBody  LendBookVo lendBookVo, BindingResult bindingResult){
         this.checkNull(lendBookVo);
@@ -86,12 +94,24 @@ public class LendBookController extends BaseController {
      * @return
      */
     @PostMapping("/returnBook")
-    public ResponseVo lendBookStateUpdate(@RequestBody LendBook lendBook){
+    public ResponseVo returnBook(@RequestBody LendBook lendBook){
         this.checkNull(lendBook);
         lendBookService.returnBook(lendBook);
         return ResponseVo.builder().code("200").msg("修改成功").build();
     }
-
+    /**
+     * 此修改是批量归还使用
+     * @param lendBooks
+     * @return
+     */
+    @PostMapping("/returnBatchBook")
+    public ResponseVo returnBatchBook(@RequestBody LendBook[] lendBooks){
+        this.checkNull(lendBooks);
+        for (LendBook lendBook : lendBooks) {
+            lendBookService.returnBook(lendBook);
+        }
+        return ResponseVo.builder().code("200").msg("修改成功").build();
+    }
     /**
      * 续借图书
      * @param

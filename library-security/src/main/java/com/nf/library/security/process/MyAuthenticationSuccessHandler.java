@@ -80,7 +80,8 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
                 JwtUtils.createJWT(
                         UUID.randomUUID().toString(),
                         "wsx",
-                        JwtUtils.generalSubject(jwtSubject),1*60*10000);
+                        //设定时间一小时
+                        JwtUtils.generalSubject(jwtSubject),60*60*1000);
         return jwtToken;
     }
 

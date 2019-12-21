@@ -24,7 +24,7 @@ public interface NodeInfoDao {
      */
     List<NodeInfo> getRoleTagMenu(
             @Param("roleTag") String roleTag,
-            @Param("nodeType") int nodeType);
+            @Param("nodeType") Integer nodeType);
 
     /**
      * 根据pid查询子菜单

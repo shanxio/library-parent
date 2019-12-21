@@ -17,7 +17,7 @@ public interface NodeInfoService {
      * 根据角色的标识符查找对应的所有资源
      * @return
      */
-    List<NodeInfo> getRoleTag(@Param("roleTag") String roleTag);
+    List<NodeInfo> getRoleTag( String roleTag);
 
     /**
      * 根据pid查询子菜单
@@ -32,9 +32,18 @@ public interface NodeInfoService {
      */
     List<NodeInfo> getRoleTagMenu(String roleTag, int nodeType);
 
-
+    /**
+     * 生成所有的树菜单
+     * @return
+     */
     List<Tree> getAll();
 
+    /**
+     * 根据角色生成对应的树结果
+     * @param roleTag
+     * @return
+     */
+    List<Tree> getRoles(String roleTag);
     /**
      * 根据id来找对应的权限
      * @param nodeId

@@ -28,9 +28,14 @@ public class NodeInfoGenerateZthreeController extends BaseController {
 
 
     @PostMapping("tree")
-    public List<Tree> zTree(Integer roleId){
+    public List<Tree> zTree(){
        return nodeInfoService.getAll();
     }
 
+
+    @PostMapping("roleTree")
+    public List<Tree> roleTree(String roleTag){
+        return nodeInfoService.getRoles(roleTag);
+    }
 
 }

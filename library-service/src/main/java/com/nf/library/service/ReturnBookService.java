@@ -2,12 +2,14 @@ package com.nf.library.service;
 
 import com.nf.library.entity.ReturnBook;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author Sam
  */
+@Service
 public interface ReturnBookService {
 
 

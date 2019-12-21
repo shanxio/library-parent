@@ -38,7 +38,7 @@ public class LendBookServiceImpl implements LendBookService {
         ResponseVo responseVo = null;
         BookInfo bookInfo = bookInfoDao.getByIsbn(lendBook.getIsbn());
         ReaderInfo readerInfo = readerInfoDao.getById(Integer.parseInt(lendBook.getReaderId()));
-        if(bookInfo.getBookStock().equals(bookInfo.getTmamount())) {
+        if(bookInfo.getBookStock()==0) {
             responseVo = ResponseVo.builder().code("400").msg("该书籍已经不足").build();
         }else if(readerInfo.getReaderMoney().compareTo(lendBook.getLendMoney())==-1){
             responseVo = ResponseVo.builder().code("400").msg("余额不足").build();
@@ -52,6 +52,7 @@ public class LendBookServiceImpl implements LendBookService {
 
             readerInfo.setReaderMoney(readerInfo.getReaderMoney().subtract(lendBook.getLendMoney()));
             readerInfoDao.readerInfoUpdate(readerInfo);
+            responseVo = ResponseVo.builder().code("200").msg("添加成功").build();
         }
         return responseVo;
     }
@@ -90,6 +91,7 @@ public class LendBookServiceImpl implements LendBookService {
                 .lendDate(lendBook.getLendDate())
                 .returnDate(new Date())
                 .amount(lendBook.getLendMoney())
+                .readerPhone(readerInfo.getReaderPhone())
                 .lendTotalcount(lendBook.getLendTotalcount()).build();
 
         BookInfo bookUpdate = new BookInfo();
@@ -117,6 +119,7 @@ public class LendBookServiceImpl implements LendBookService {
             BigDecimal bigDecimal = lendBook.getLendMoney().add(lend.getLendMoney());
             book.setLendMoney(bigDecimal);
             book.setLendDay(lend.getLendDay());
+            book.setLendDate(new Date());
             lendBookDao.lendBookUpdate(book);
 
             readerInfo.setReaderMoney(readerInfo.getReaderMoney().subtract(lend.getLendMoney()));

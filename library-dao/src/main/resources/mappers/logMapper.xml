@@ -12,6 +12,6 @@
 
     <select id="getAll" resultType="com.nf.library.entity.Log">
 
-        select  id, logcontent, operatetime, operatetype, userid, real_name, total_time, args  from log desc
+        select  id, logcontent, operatetime, operatetype, userid, real_name, total_time, args  from log order by id desc
     </select>
 </mapper>

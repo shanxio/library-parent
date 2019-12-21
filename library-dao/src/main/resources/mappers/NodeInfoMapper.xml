@@ -26,8 +26,16 @@
         roleinfo r
         inner join role_node rn on r.role_id = rn.role_id
         inner join nodeinfo   n on rn.node_id = n.node_id
-        where
-        r.role_tag = #{roleTag} and n.node_type = #{nodeType}
+
+        <trim prefix="where" suffixOverrides="and">
+            <if test="roleTag!=null and roleTag != '' ">
+                r.role_tag = #{roleTag} and
+            </if>
+            <if test="nodeType!=null ">
+                n.node_type = #{nodeType} and
+            </if>
+        </trim>
+
     </select>
 
     <select id="getChild" resultMap="nodeInfoResultMap">

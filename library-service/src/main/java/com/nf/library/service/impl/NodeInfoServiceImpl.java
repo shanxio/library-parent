@@ -19,6 +19,9 @@ import java.util.List;
 public class NodeInfoServiceImpl implements NodeInfoService {
     @Autowired
     private NodeInfoDao nodeInfoDao;
+
+
+
     @Override
     public List<NodeInfo> getRoleTag(String roleTag) {
 
@@ -43,8 +46,16 @@ public class NodeInfoServiceImpl implements NodeInfoService {
 
     @Override
     public List<Tree> getAll() {
-        return getList(nodeInfoDao.getAll());
+
+        return getList(nodeInfoDao.getRoleTagMenu(null,0));
     }
+
+    @Override
+    public List<Tree> getRoles(String roleTag) {
+        List<NodeInfo> nodeInfos = nodeInfoDao.getRoleTag(roleTag);
+        return getList(nodeInfos);
+    }
+
 
     @Override
     public NodeInfo getById(String nodeId) {

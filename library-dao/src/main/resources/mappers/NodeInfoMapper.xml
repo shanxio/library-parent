@@ -8,7 +8,7 @@
     </resultMap>
     <sql id="nodeInfo">
         select n.node_id, n.node_url, n.node_description,
-         n.pid,n.node_type,n.node_tag,n.node_path,n.node_index
+         n.pid,n.node_type,n.node_tag,n.node_path,n.node_index,n.node_ids
     </sql>
     <select id="getRoleTag" resultMap="nodeInfoResultMap">
          <include refid="nodeInfo"/>  from
@@ -33,5 +33,13 @@
     <select id="getChild" resultMap="nodeInfoResultMap">
          <include refid="nodeInfo"/>  from nodeinfo n
         where n.pid = #{pid}
+    </select>
+
+
+    <select id="getAll" resultMap="nodeInfoResultMap">
+        <include refid="nodeInfo"/>  from nodeinfo n
+    </select>
+    <select id="getById" resultMap="nodeInfoResultMap">
+        <include refid="nodeInfo"/>  from nodeinfo n where n.node_id = #{nodeId}
     </select>
 </mapper>

@@ -43,7 +43,7 @@ public interface BookInfoService  {
      * 根据id删除对应的图书信息
      * @param id
      */
-    void bookInfoByIdDelete(Integer id);
+    void bookInfoByIdDelete(String id);
     /**
      * 修改
      * @param bookInfo

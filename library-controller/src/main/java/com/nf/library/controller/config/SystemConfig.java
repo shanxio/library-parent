@@ -28,13 +28,19 @@ public class SystemConfig extends AbstractAnnotationConfigDispatcherServletIniti
     }
 
     @Override
-    protected void registerDispatcherServlet(ServletContext servletContext) {
-        super.registerDispatcherServlet(servletContext);
-        ServletRegistration.Dynamic registration =
-                (ServletRegistration.Dynamic) servletContext.getServletRegistration(getServletName());
-        registration.setMultipartConfig(new MultipartConfigElement(servletContext.getRealPath("/file")));
-
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        super.customizeRegistration(registration);
+        registration.setMultipartConfig(new MultipartConfigElement(""));
     }
+
+//    @Override
+//    protected void registerDispatcherServlet(ServletContext servletContext) {
+//        super.registerDispatcherServlet(servletContext);
+//        ServletRegistration.Dynamic registration =
+//                (ServletRegistration.Dynamic) servletContext.getServletRegistration(getServletName());
+//        registration.setMultipartConfig(new MultipartConfigElement(servletContext.getRealPath("")));
+//
+//    }
 
 
 

@@ -26,6 +26,7 @@ import java.awt.print.Book;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -51,7 +52,7 @@ public class BookInfoDownloadAndUploadController{
                                                         @RequestParam(value = "pageSize",defaultValue = "3") Integer pageSize,
                                                         HttpServletResponse response) throws IOException {
 
-        List<BookInfo> bookInfos = bookInfoService.getAll(pageNum,pageSize*endPage);
+        List<BookInfo> bookInfos = bookInfoService.getAll(pageNum,Integer.MAX_VALUE);
         String[] columnNames = { "id", "isbn", "图书名称","作者","类型",
                 "出版社名称","价格","库存册数","现存册数","状态" };
         String fileName = UUID.randomUUID().toString();
@@ -59,6 +60,7 @@ public class BookInfoDownloadAndUploadController{
         ExportExcelWrapper<BookInfo> exportExcelWrapper = new ExportExcelWrapper<BookInfo>();
 
         response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+        //exportExcelWrapper.exportExcel(fileName,BookInfoVo.class,bookInfos,  response.getOutputStream(),ExportExcelUtil.EXCEL_FILE_2003);
         exportExcelWrapper.exportExcel(fileName,title,columnNames,bookInfos,response, ExportExcelUtil.EXCEL_FILE_2003);
     }
 

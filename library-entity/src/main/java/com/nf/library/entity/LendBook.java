@@ -2,6 +2,7 @@ package com.nf.library.entity;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -16,8 +17,20 @@ public class LendBook {
     private String bookAuthor;
     private String readerId;
     private String readerName;
+    /**
+     * 借阅时间
+     */
     private Date lendDate;
-    private Date returnDate;
-    private Integer totalcount;
-    private Integer lendState;
+    /**
+     * 续借次数
+     */
+    private Integer lendTotalcount;
+    /**
+     * 借阅金额
+     */
+    private BigDecimal lendMoney;
+    /**
+     * 借阅天数
+     */
+    private Integer lendDay;
 }

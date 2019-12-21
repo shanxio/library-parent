@@ -25,7 +25,7 @@ public class BookInfoServiceImplTest {
     public void bookInfoDeleteById()  {
         try{
 
-            bookInfoService.bookInfoByIdDelete(44);
+            bookInfoService.bookInfoByIdDelete("");
         }catch (RuntimeException e){
             System.out.println(e.getMessage()+"-----");
         }

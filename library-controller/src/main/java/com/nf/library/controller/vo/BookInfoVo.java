@@ -8,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 书籍信息vo对象
@@ -30,9 +31,8 @@ public class BookInfoVo {
     @NotEmpty
     @ExcelConfig(value = "类型")
     private String bookType;
-    @NotEmpty
-    @ExcelConfig(value = "出版社名称")
-    private String bookPublish;
+    @ExcelConfig(value = "出版日期")
+    private Date bookPublish;
     @Min(1)
     @ExcelConfig(value = "价格")
     private BigDecimal bookPrice;
@@ -42,7 +42,22 @@ public class BookInfoVo {
     @Min(1)
     @ExcelConfig(value = "现存册数")
     private Integer bookStock = this.tmamount;
-    @ExcelConfig(value = "状态")
     private Integer bookState;
+
+    private String typeName;
+    private String bookHouse;
+
+    private String bookImage;
+    /**
+     *  用作查询使用
+     *  开始日期
+     */
+    private Date startDate;
+    /**
+     * 用作查询使用
+     * 结束日期
+     */
+    private Date endDate;
+
 
 }

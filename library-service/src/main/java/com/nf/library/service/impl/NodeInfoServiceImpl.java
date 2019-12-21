@@ -2,7 +2,7 @@ package com.nf.library.service.impl;
 
 import com.nf.library.dao.NodeInfoDao;
 import com.nf.library.entity.NodeInfo;
-import com.nf.library.entity.Ztree;
+import com.nf.library.entity.Tree;
 import com.nf.library.service.NodeInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,38 +25,14 @@ public class NodeInfoServiceImpl implements NodeInfoService {
         return nodeInfoDao.getRoleTag(roleTag);
     }
 
-    @Override
-    public List<Ztree> getByPid(Integer pid, HttpSession session) {
-        List<Ztree> ztrees = new ArrayList<>();
-        List<NodeInfo> nodeInfos = nodeInfoDao.getByPid(pid);
-        for (NodeInfo nodeInfo : nodeInfos) {
 
-            Ztree ztree = Ztree.builder()
-                    .id(nodeInfo.getNodeId())
-                    .name(nodeInfo.getNodeDescription())
-//                    .isParent(nodeInfo.isParent())
-                    .open(true)
-                    .pid(pid).build();
-            //获取用户的所拥有的节点信息
-            List<NodeInfo> userNodeInfos = (List<NodeInfo>) session.getAttribute("nodeInfos");
-            if(userNodeInfos!=null) {
-                for (NodeInfo userNodeInfo : userNodeInfos) {
-                    //当id相等则选中复选框
-                    if (nodeInfo.getNodeId().equals(userNodeInfo.getNodeId())) {
-                        ztree.setChecked(true);
-                    }
-                }
-            }else{
-                //等于空表示admin用户
-                ztree.setChecked(true);
-            }
-            ztrees.add(ztree);
-        }
-        return ztrees;
-    }
+
+
+
 
     @Override
     public List<NodeInfo> getChild(Integer pid) {
+
         return nodeInfoDao.getChild(pid);
     }
 
@@ -65,5 +41,60 @@ public class NodeInfoServiceImpl implements NodeInfoService {
         return nodeInfoDao.getRoleTagMenu(username,nodeType);
     }
 
+    @Override
+    public List<Tree> getAll() {
+        return getList(nodeInfoDao.getAll());
+    }
+
+    @Override
+    public NodeInfo getById(String nodeId) {
+        return nodeInfoDao.getById(nodeId);
+    }
+
+
+    public List<Tree> getList(List<NodeInfo> nodeInfos){
+        List<Tree> trees = new ArrayList<>();
+        for (NodeInfo nodeInfo : nodeInfos) {
+            trees.add(Tree.builder().id(nodeInfo.getNodeId()).label(nodeInfo.getNodeDescription()).pid(nodeInfo.getPid()).build());
+        }
+        //找到所有的1级菜单
+        List<Tree> menuList = new ArrayList<>();
+        for (Tree tree : trees) {
+            if(tree.getPid()!=null) {
+                if (tree.getPid() == 0) {
+                    menuList.add(tree);
+                }
+            }
+        }
+
+        //为一级菜单设置子菜单准备递归
+        for (Tree menu:menuList) {
+            //获取父菜单下所有子菜单调用getChildList
+            List<Tree> childList = getChildList(menu.getId(),trees);
+            menu.setChildren(childList);
+        }
+        return menuList;
+    }
+    public List<Tree> getChildList(Integer id, List<Tree> menuList){
+        //构建子菜单
+        List<Tree> childList = new ArrayList<>();
+        //遍历传入的list
+        for (Tree menu:menuList) {
+            if(menu.getPid()!=null) {
+                //所有菜单的父id与传入的根节点id比较，若相等则为该级菜单的子菜单
+                if (menu.getPid().equals(id)) {
+                    childList.add(menu);
+                }
+            }
+        }
+        //递归
+        for (Tree m:childList) {
+            m.setChildren(getChildList(m.getId(),menuList));
+        }
+        if (childList.size() == 0){
+            return null;
+        }
+        return childList;
+    }
 
 }

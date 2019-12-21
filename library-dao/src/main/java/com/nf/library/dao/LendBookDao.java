@@ -14,10 +14,9 @@ import java.util.List;
 public interface LendBookDao {
     /**
      * 录入读者的借阅信息
-     * @param readerInfo
-     * @param bookInfo
+     * @param lendBook
      */
-    void lendBookInsert(@Param("reader") ReaderInfo readerInfo, @Param("book") BookInfo bookInfo);
+    void lendBookInsert(LendBook lendBook);
 
     /**
      * 根据条件查询数据
@@ -47,5 +46,11 @@ public interface LendBookDao {
      * @param lendBook
      */
     void lendBookUpdate(@Param("lend") LendBook lendBook);
-    
+
+    /**
+     * 删除数据
+     * @param id
+     */
+    void lendBookDelete(Integer id);
+
 }

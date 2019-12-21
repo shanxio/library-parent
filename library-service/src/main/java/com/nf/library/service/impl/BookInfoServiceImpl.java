@@ -39,7 +39,7 @@ public class BookInfoServiceImpl implements BookInfoService {
     }
 
     @Override
-    public void bookInfoByIdDelete(Integer id) throws AppException {
+    public void bookInfoByIdDelete(String id) throws AppException {
         bookInfoDao.bookInfoByIdDelete(id);
     }
 

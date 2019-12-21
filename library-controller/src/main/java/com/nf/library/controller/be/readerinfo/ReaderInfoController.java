@@ -26,9 +26,10 @@ public class ReaderInfoController extends BaseController {
     private ReaderInfoService readerInfoService;
 
     @PostMapping("/getById")
-    public ReaderInfo getById(Integer id){
-        this.checkNull(id);
-        return readerInfoService.getById(id);
+    public ResponseVo getById(Integer id){
+        ReaderInfo readerInfo =  readerInfoService.getById(id);
+        this.checkNull(readerInfo);
+        return ResponseVo.builder().code("200").msg("通过验证").data(readerInfo).build();
     }
 
 

@@ -19,6 +19,7 @@ public class ReaderInfoServiceImpl implements ReaderInfoService {
 
     @Override
     public ReaderInfo getById(Integer id) {
+
         return readerInfoDao.getById(id);
     }
 

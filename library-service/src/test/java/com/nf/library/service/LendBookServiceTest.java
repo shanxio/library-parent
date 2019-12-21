@@ -27,18 +27,13 @@ public class LendBookServiceTest {
     /**
      * 测试增加
      */
-    @Test
-    public void lendBookInsertTest(){
-        BookInfo bookInfo = bookInfoService.getByIsbn("9");
-        ReaderInfo readerInfo = readerInfoService.getById(1);
-        lendBookService.lendBookInsert(readerInfo,bookInfo);
-    }
+
 
 
     @Test
     public void lendBookGetAllTest(){
         LendBook lendBook = new LendBook();
-        lendBook.setLendState(1);
+        //lendBook.setLendState(1);
         List<LendBook> lendBooks = lendBookService.getAll(lendBook,1,10);
         for (LendBook book : lendBooks) {
             System.out.println("book = " + book);

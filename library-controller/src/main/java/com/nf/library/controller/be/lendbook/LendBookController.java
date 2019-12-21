@@ -11,12 +11,15 @@ import com.nf.library.execption.vo.ResponseVo;
 import com.nf.library.service.BookInfoService;
 import com.nf.library.service.LendBookService;
 import com.nf.library.service.ReaderInfoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -42,16 +45,12 @@ public class LendBookController extends BaseController {
 
 
     @PostMapping("/lendBookInsert")
-    public ResponseVo lendBookInsert(@RequestBody LendBookVo lendBookVo){
+    public ResponseVo lendBookInsert(@RequestBody  LendBookVo lendBookVo, BindingResult bindingResult){
         this.checkNull(lendBookVo);
-        ReaderInfo readerInfo = new ReaderInfo();
-        readerInfo.setId(lendBookVo.getReaderId());
-        readerInfo.setReaderName(lendBookVo.getReaderName());
-        BookInfo bookInfo = new BookInfo();
-        bookInfo.setIsbn(lendBookVo.getIsbn());
-        bookInfo.setBookName(lendBookVo.getBookName());
-        bookInfo.setBookAuthor(lendBookVo.getBookAuthor());
-        lendBookService.lendBookInsert(readerInfo, bookInfo);
+        this.validException(bindingResult);
+        LendBook lendBook = new LendBook() ;
+        BeanUtils.copyProperties(lendBookVo,lendBook);
+        lendBookService.lendBookInsert(lendBook);
         return ResponseVo.builder().code("200").msg("添加成功").build();
     }
 
@@ -60,10 +59,8 @@ public class LendBookController extends BaseController {
     public ResponseVo lendBookBatchDelete(@RequestBody  Integer[] id){
         this.checkNull(id);
         lendBookService.lendBookBatchDelete(id);
-
         return ResponseVo.builder().code("200").msg("删除成功").build();
     }
-
     @PostMapping("/lendBookUpdate")
     public ResponseVo lendBookUpdate(LendBook lendBook){
         this.checkNull(lendBook);
@@ -88,17 +85,24 @@ public class LendBookController extends BaseController {
      * @param lendBook
      * @return
      */
-    @PostMapping("/lendBookStateUpdate")
+    @PostMapping("/returnBook")
     public ResponseVo lendBookStateUpdate(@RequestBody LendBook lendBook){
         this.checkNull(lendBook);
-
-        lendBookService.lendBookStateUpdate(lendBook);
+        lendBookService.returnBook(lendBook);
         return ResponseVo.builder().code("200").msg("修改成功").build();
     }
+
+    /**
+     * 续借图书
+     * @param
+     * @return
+     */
     @PostMapping("lendTotalcountUpdate")
-    public ResponseVo lendTotalcountUpdate(Integer id){
-        this.checkNull(id);
-        lendBookService.lendTotalcountUpdate(id);
-        return ResponseVo.builder().code("200").msg("修改成功").build();
+    public ResponseVo lendTotalcountUpdate(@RequestBody LendBookVo lendBookVo, BindingResult bindingResult){
+        this.checkNull(lendBookVo);
+        this.validException(bindingResult);
+        LendBook lendBook = new LendBook() ;
+        BeanUtils.copyProperties(lendBookVo,lendBook);
+        return  lendBookService.lendBookTotalUpdate(lendBook);
     }
 }

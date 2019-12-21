@@ -37,4 +37,17 @@ public interface NodeInfoDao {
      * @return
      */
     List<NodeInfo> getByPid(Integer pid);
+
+    /**
+     * 所有节点数据
+     * @return
+     */
+    List<NodeInfo> getAll();
+
+    /**
+     * 根据id来找对应的权限
+     * @param nodeId
+     * @return
+     */
+    NodeInfo getById(String nodeId);
 }

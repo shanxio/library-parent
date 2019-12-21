@@ -18,6 +18,8 @@ public class BookInfo {
     private String bookName;
     private String bookAuthor;
     private String bookType;
+    private String typeName;
+    private String bookHouse;
     /**
      *   出版日期
      */
@@ -26,6 +28,7 @@ public class BookInfo {
     private Integer tmamount;
     private Integer bookStock;
     private Integer bookState;
+    private String bookImage;
     /**
      *  用作查询使用
      *  开始日期

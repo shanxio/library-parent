@@ -7,33 +7,38 @@
         <id column="id" property="id"/>
     </resultMap>
     <sql id="lendBookSql">
-        select l.id, l.isbn, l.book_name, l.book_author,
-         l.reader_id, l.reader_name, l.lend_date, l.lend_state, l.return_date, l.totalcount
+       select l.lend_day, l.id,
+       l.isbn, l.reader_id,
+       l.lend_date, l.lend_totalcount,
+       l.lend_money
     </sql>
     <insert id="lendBookInsert">
-        insert into lendbook(isbn,book_name,book_author,reader_id,reader_name,lend_date,lend_state,totalcount)
-        values (#{book.isbn},#{book.bookName},#{book.bookAuthor},#{reader.id},#{reader.readerName},now(),1,0)
+        insert into lendbook(
+        isbn, reader_id,
+         lend_date,lend_totalcount,
+         lend_money, lend_day)
+         values(#{isbn},#{readerId},now(),0,#{lendMoney},#{lendDay})
     </insert>
 
     <select id="getAll" resultMap="lendBookResultMap">
-        <include refid="lendBookSql"/> from lendbook l
+        <include refid="lendBookSql"/>,
+        b.isbn,b.book_name,b.book_author,r.id,r.reader_name from  lendbook l
+         inner join bookinfo b on l.isbn = b.isbn
+         inner join readerinfo r on r.id = l.reader_id
         <trim prefix="where" suffixOverrides="and">
             <if test="lend.isbn != null and lend.isbn != ''">
-                l.isbn = #{lend.isbn} and
+                b.isbn = #{lend.isbn} and
             </if>
             <if test="lend.bookName != null and lend.bookName != ''">
                 <bind name="bookName" value="'%' + _parameter.lend.bookName + '%'"/>
-                l.book_name like #{bookName} and
+                b.book_name like #{bookName} and
             </if>
             <if test="lend.bookAuthor !=null and lend.bookAuthor != ''">
                 <bind name="bookAuthor" value="'%' + _parameter.lend.bookAuthor + '%'"/>
-                l.book_author like #{bookAuthor} and
+                b.book_author like #{bookAuthor} and
             </if>
             <if test="lend.readerId !=null and lend.readerId != ''">
-                l.reader_id = #{lend.readerId} and
-            </if>
-            <if test="lend.lendState != null  ">
-                l.lend_state = #{lend.lendState} and
+                r.reader_id = #{lend.readerId} and
             </if>
         </trim>
         order by  l.id desc
@@ -44,18 +49,21 @@
             id = #{id}
         </foreach>
     </delete>
+    <delete id="lendBookDelete">
+        delete from lendbook where id = #{id}
+    </delete>
 
     <update id="lendBookUpdate">
         update lendbook
          <set>
-             <if test="lend.lendState != null">
-                 lend_state = #{lend.lendState},
+             <if test="lend.lendDay != null">
+                 lend_day = #{lend.lendDay},
              </if>
-             <if test="lend.returnDate != null">
-                 return_date = #{lend.returnDate},
+             <if test="lend.lendMoney != null">
+                 lend_money = #{lend.lendMoney},
              </if>
-             <if test="lend.totalcount != null">
-                 totalcount = #{lend.totalcount},
+             <if test="lend.lendTotalcount != null">
+                 lend_totalcount = #{lend.lendTotalcount},
              </if>
          </set>
          where id = #{lend.id}

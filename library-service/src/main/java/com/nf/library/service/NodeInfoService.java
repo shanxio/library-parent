@@ -1,7 +1,7 @@
 package com.nf.library.service;
 
 import com.nf.library.entity.NodeInfo;
-import com.nf.library.entity.Ztree;
+import com.nf.library.entity.Tree;
 import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpSession;
@@ -20,13 +20,6 @@ public interface NodeInfoService {
     List<NodeInfo> getRoleTag(@Param("roleTag") String roleTag);
 
     /**
-     * 查询子节点
-     * @return
-     */
-    List<Ztree> getByPid(Integer pid, HttpSession session);
-
-
-    /**
      * 根据pid查询子菜单
      * @param pid
      * @return
@@ -38,4 +31,14 @@ public interface NodeInfoService {
      * @return
      */
     List<NodeInfo> getRoleTagMenu(String roleTag, int nodeType);
+
+
+    List<Tree> getAll();
+
+    /**
+     * 根据id来找对应的权限
+     * @param nodeId
+     * @return
+     */
+    NodeInfo getById(String nodeId);
 }

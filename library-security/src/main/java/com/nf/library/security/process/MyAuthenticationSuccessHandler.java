@@ -106,7 +106,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     private Set<NodeInfo> generateRouters(Set<NodeInfo> rolesNodeInfos){
         Set<NodeInfo> routers = new HashSet<>();
         for (NodeInfo router : rolesNodeInfos) {
-            routers.add(router);
+             routers.add(router);
         }
         return routers;
     }
@@ -120,8 +120,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     private Set<NodeInfo> generateMenus(Set<NodeInfo> rolesNodeInfos){
         Set<NodeInfo> menus = new HashSet<>();
         for (NodeInfo menu : rolesNodeInfos) {
-            if(menu.getPid()==0) {
-                menus.add(setChid(menu,rolesNodeInfos));
+            if(menu.getPid()!=null) {
+                if (menu.getPid() == 0) {
+                    menus.add(setChid(menu, rolesNodeInfos));
+                }
             }
         }
         return menus;
@@ -154,8 +156,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     public NodeInfo setChid(NodeInfo nodeInfo,Set<NodeInfo> rolesNodeInfos){
         List<NodeInfo> nodeInfoList = new ArrayList<>();
         for (NodeInfo info : rolesNodeInfos) {
-            if(info.getPid().equals(nodeInfo.getNodeId())){
-                nodeInfoList.add(info);
+            if(info.getPid()!=null) {
+                if (info.getPid().equals(nodeInfo.getNodeId())) {
+                    nodeInfoList.add(info);
+                }
             }
         }
         nodeInfo.setChild(nodeInfoList);

@@ -18,7 +18,7 @@
          r.createDate
     </sql>
     <select id="getById" resultMap="readerInfoResultMap">
-       <include refid="readerInfoSql"/> from readerinfo r where r.id = #{id}
+       <include refid="readerInfoSql"/> from readerinfo r where r.id = #{id} and r.reader_state = 0
     </select>
     <select id="getAll" resultType="com.nf.library.entity.ReaderInfo">
         <include refid="readerInfoSql"/> from readerinfo r
@@ -67,6 +67,10 @@
             </if>
             <if test="readerCard!=null and readerCard!=''">
                 reader_card = #{readerCard},
+            </if>
+
+            <if test="readerMoney!=null ">
+                reader_money = #{readerMoney},
             </if>
         </set>
         where id = #{id}

@@ -35,7 +35,7 @@ public class NodeInfo {
      */
     private String nodeTag;
 
-
+    private String nodeIds;
     /**
      * 菜单唯一标识符
      */

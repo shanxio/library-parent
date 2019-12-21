@@ -26,9 +26,9 @@ public class SystemControllerAdvice {
         return responseVo;
     }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseVo ioException(IOException e){
-        ResponseVo responseVo = ResponseVo.builder().code("500").msg("文件上传失败").data(e).build();
-        return responseVo;
-    }
+//    @ExceptionHandler(IOException.class)
+//    public ResponseVo ioException(IOException e){
+//        ResponseVo responseVo = ResponseVo.builder().code("500").msg("文件上传失败").data(e).build();
+//        return responseVo;
+//    }
 }

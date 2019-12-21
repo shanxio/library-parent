@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nf.library.dao.ReturnBookDao">
+    <resultMap id="returnBookResultMap" type="com.nf.library.entity.ReturnBook">
+        <id column="id" property="id"/>
+    </resultMap>
+    <sql id="returnBookSql">
+        select id, book_id, book_name, book_author, isbn, reader_id, reader_name, lend_date, return_date, amount, lend_totalcount
+    </sql>
+    <insert id="returnBookInsert">
+        insert  into returnbook(
+        book_id, book_name,
+        book_author, isbn,
+        reader_id, reader_name,
+        lend_date, return_date,
+        amount, lend_totalcount)
+        values(
+        #{bookId},#{bookAuthor},
+        #{isbn},#{readerId},
+        #{readerName},#{lendDate},
+        #{returnDate},#{amount},#{lendTotalcount}
+        )
+    </insert>
+    <delete id="returnBookDelete">
+        delete from returnbook where id =#{id}
+    </delete>
+    <delete id="returnBookBatchDelete">
+        delete from returnbook where
+        <foreach collection="array" item="id" separator="or">
+            id = #{id}
+        </foreach>
+    </delete>
+    <select id="getAll" resultMap="returnBookResultMap">
+        <include refid="returnBookSql"/> from returnbook
+        <trim prefix="where" suffixOverrides="and">
+            <if test="returnBook.readerName!=null and returnBook.readerName!=''">
+                <bind name="readerName" value="'%'+_parameter.returnBook.readerName+'%'"/>
+                reader_name like #{readerName} and
+            </if>
+            <if test="returnBook.bookName!=null and returnBook.bookName!=''">
+                <bind name="bookName" value="'%'+_parameter.returnBook.bookName+'%'"/>
+                book_name like #{bookName} and
+            </if>
+            <if test="returnBook.startDate !=null and returnBook.endDate != null  ">
+                return_date between  #{returnBook.startDate} and #{returnBook.endDate} and
+            </if>
+            <if test="returnBook.isbn !=null   ">
+                isbn = #{returnBook.isbn}
+            </if>
+        </trim>
+    </select>
+</mapper>

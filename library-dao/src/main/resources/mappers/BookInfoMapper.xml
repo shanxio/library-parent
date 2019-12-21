@@ -4,14 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nf.library.dao.BookInfoDao">
     <sql id="bookInfoSql">
-        select  b.id, b.isbn, b.book_name, b.book_author, b.book_type,
-        b.book_publish, b.book_price, b.tmamount, b.bookstock, b.book_state
+        select  b.id, b.isbn, b.book_name,b.book_image, b.book_author, b.book_type,
+        b.book_publish, b.book_price, b.tmamount, b.bookstock, b.book_state,b.book_house
     </sql>
     <resultMap id="bookInfoResultMap" type="com.nf.library.entity.BookInfo">
         <id column="id" property="id"/>
     </resultMap>
     <delete id="bookInfoByIdDelete">
-        delete from bookinfo where id = #{id}
+        delete from bookinfo where isbn = #{isbn}
     </delete>
 
 
@@ -25,8 +25,8 @@
 
 
     <select id="getAll" resultType="com.nf.library.entity.BookInfo">
-
-        <include refid="bookInfoSql"/> from bookinfo b
+        <include refid="bookInfoSql"/>, t.typename from bookinfo b
+         inner join booktype t on b.book_type = t.id
         <trim prefix="where" suffixOverrides="and">
             <if test="bookInfo.bookName != null and bookInfo.bookName != ''">
                 <bind name="bookName" value="'%' + _parameter.bookInfo.bookName + '%'"/>
@@ -56,9 +56,9 @@
     </select>
     <insert id="bookInfoInsert" parameterType="com.nf.library.entity.BookInfo">
         insert into
-        bookinfo(isbn, book_name, book_author, book_type, book_publish, book_price, tmamount, bookstock, book_state)
+        bookinfo(isbn, book_name, book_author, book_type, book_publish, book_price, tmamount, bookstock, book_state, book_house, book_image)
         values (#{isbn},#{bookName},#{bookAuthor},#{bookType} ,#{bookPublish},#{bookPrice},
-        #{tmamount},#{bookStock},#{bookState})
+        #{tmamount},#{bookStock},#{bookState},#{bookHouse},#{bookImage})
     </insert>
     <update id="bookInfoUpdate" parameterType="com.nf.library.entity.BookInfo">
         update bookinfo
@@ -88,7 +88,15 @@
                 bookstock = #{bookStock},
             </if>
             <if test="bookState !=null">
-                book_state = #{bookState}
+                book_state = #{bookState},
+            </if>
+
+            <if test="bookHouse !=null">
+                book_house = #{bookHouse},
+            </if>
+
+            <if test="bookImage !=null">
+                book_image = #{bookImage},
             </if>
         </set>
         where isbn = #{isbn}

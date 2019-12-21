@@ -31,10 +31,9 @@ public interface BookInfoDao {
 
     /**
      * 根据id删除对应的图书信息
-     * @param id
-     * @throws AppException
+     * @param isbn
      */
-    void bookInfoByIdDelete(Integer id) ;
+    void bookInfoByIdDelete(String isbn) ;
 
     /**
      * 修改

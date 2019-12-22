@@ -63,7 +63,6 @@ public class BookInfoController extends BaseController {
         ResponseVo responseVo = null;
         BookInfo bookInfo = new BookInfo();
         BeanUtils.copyProperties(bookInfoVo,bookInfo);
-
         bookInfoService.bookInfoUpdate(bookInfo);
         responseVo = ResponseVo.builder().code("200").msg("修改成功").build();
         return responseVo;

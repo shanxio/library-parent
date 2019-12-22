@@ -66,6 +66,7 @@ public interface RoleInfoDao {
      */
     void roleDelete(Integer roleId);
 
+
     /**
      * 根据角色查询用户
      * @param roleId

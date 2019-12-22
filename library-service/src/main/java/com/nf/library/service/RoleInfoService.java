@@ -49,7 +49,7 @@ public interface RoleInfoService {
      * 用户和权限的id值，用于授权使用
      * @param ids
      */
-    void roleNodeInsert(List<RequestVo> ids);
+    void roleNodeInsert(List<RequestVo> ids,Integer roleId);
 
     /**
      * 添加角色
@@ -83,4 +83,10 @@ public interface RoleInfoService {
      * @return
      */
     RoleInfo getRoleByTag(String roleTag);
+
+    /**
+     * 删除某个角色下的所有权限
+     * @param roldId
+     */
+    void roleNodeDelete(Integer roldId);
 }

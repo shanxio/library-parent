@@ -44,9 +44,10 @@ public class RoleInfoServiceImpl implements RoleInfoService {
 
         roleInfoDao.roleUserInsert(ids);
     }
-
+    @Transactional(readOnly = false)
     @Override
-    public void roleNodeInsert(List<RequestVo> ids) {
+    public void roleNodeInsert(List<RequestVo> ids,Integer roleId) {
+        roleInfoDao.roleNodeDelete(roleId);
         roleInfoDao.roleNodeInsert(ids);
     }
 
@@ -86,6 +87,11 @@ public class RoleInfoServiceImpl implements RoleInfoService {
     @Override
     public RoleInfo getRoleByTag(String roleTag) {
         return roleInfoDao.getRoleByTag(roleTag);
+    }
+
+    @Override
+    public void roleNodeDelete(Integer roldId) {
+        roleInfoDao.roleNodeDelete(roldId);
     }
 
 

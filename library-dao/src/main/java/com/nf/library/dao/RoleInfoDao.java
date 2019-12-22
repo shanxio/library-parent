@@ -36,6 +36,13 @@ public interface RoleInfoDao {
      * @param ids
      */
     void roleUserInsert(List<RequestVo> ids);
+
+    /**
+     * 用户和权限的id值，用于授权使用
+     * @param ids
+     */
+    void roleNodeInsert(List<RequestVo> ids);
+
     /**
      * 查询所有的角色
      * @param role
@@ -78,4 +85,12 @@ public interface RoleInfoDao {
      * @param roleInfo
      */
     void roleUpdate(@Param("roleInfo") RoleInfo roleInfo);
+
+    /**
+     * 根据标识查找对应的角色
+     * @param roleTag
+     * @return
+     */
+    RoleInfo getRoleByTag(String roleTag);
+
 }

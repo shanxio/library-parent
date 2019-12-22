@@ -41,7 +41,13 @@ public class RoleInfoServiceImpl implements RoleInfoService {
 
     @Override
     public void roleUserInsert(List<RequestVo> ids) {
+
         roleInfoDao.roleUserInsert(ids);
+    }
+
+    @Override
+    public void roleNodeInsert(List<RequestVo> ids) {
+        roleInfoDao.roleNodeInsert(ids);
     }
 
     @Override
@@ -75,6 +81,11 @@ public class RoleInfoServiceImpl implements RoleInfoService {
     @Override
     public void roleUpdate(RoleInfo roleInfo) {
         roleInfoDao.roleUpdate(roleInfo);
+    }
+
+    @Override
+    public RoleInfo getRoleByTag(String roleTag) {
+        return roleInfoDao.getRoleByTag(roleTag);
     }
 
 

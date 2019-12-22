@@ -45,6 +45,11 @@ public interface RoleInfoService {
     void roleUserInsert(List<RequestVo> ids);
 
 
+    /**
+     * 用户和权限的id值，用于授权使用
+     * @param ids
+     */
+    void roleNodeInsert(List<RequestVo> ids);
 
     /**
      * 添加角色
@@ -71,4 +76,11 @@ public interface RoleInfoService {
      * @param roleInfo
      */
     void roleUpdate(RoleInfo roleInfo);
+
+    /**
+     * 根据标识查找对应的角色
+     * @param roleTag
+     * @return
+     */
+    RoleInfo getRoleByTag(String roleTag);
 }

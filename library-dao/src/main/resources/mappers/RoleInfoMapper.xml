@@ -44,6 +44,9 @@
         inner join userinfo u on ru.user_id = u.user_id
         where r.role_id = #{roleId}
     </select>
+    <select id="getRoleByTag" resultMap="roleResultMap">
+        <include refid="roleSql"/> from roleinfo r
+    </select>
 
 
     <insert id="roleUserInsert">
@@ -54,6 +57,13 @@
         </foreach>
     </insert>
 
+    <insert id="roleNodeInsert">
+        insert into role_node(role_id,node_id )
+        values
+        <foreach collection="list" item="id" separator=",">
+            (#{id.roleId},#{id.nodeId})
+        </foreach>
+    </insert>
 
     <delete id="roleUserDelete">
         delete from role_user  where user_id = #{userId}

@@ -19,12 +19,7 @@ public interface NodeInfoService {
      */
     List<NodeInfo> getRoleTag( String roleTag);
 
-    /**
-     * 根据pid查询子菜单
-     * @param pid
-     * @return
-     */
-    List<NodeInfo> getChild(Integer pid);
+
     /**
      * 根据角色标识符，和 权限类型进行查询
      * @param roleTag
@@ -36,14 +31,29 @@ public interface NodeInfoService {
      * 生成所有的树菜单
      * @return
      */
-    List<Tree> getAll();
+    List<Tree> getMenusAll();
 
     /**
-     * 根据角色生成对应的树结果
+     * 根据对应的角色生成树菜单
      * @param roleTag
      * @return
      */
-    List<Tree> getRoles(String roleTag);
+    List<Tree> getMenusRoles(String roleTag);
+    /**
+     * 根据角色生成对应的按钮权限
+     * @param roleTag
+     * @return
+     */
+    List<Tree> getBtnRoles(String roleTag);
+
+    /**
+     * 生成所有的按钮权限
+     * @return
+     */
+    List<Tree> getBtns();
+
+
+
     /**
      * 根据id来找对应的权限
      * @param nodeId

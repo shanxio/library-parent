@@ -25,17 +25,22 @@ public class NodeInfoGenerateZthreeController extends BaseController {
     @Autowired
     private NodeInfoService nodeInfoService;
 
-
-
     @PostMapping("tree")
     public List<Tree> zTree(){
-       return nodeInfoService.getAll();
+        return nodeInfoService.getMenusAll();
     }
-
-
     @PostMapping("roleTree")
     public List<Tree> roleTree(String roleTag){
-        return nodeInfoService.getRoles(roleTag);
+        return nodeInfoService.getMenusRoles(roleTag);
     }
+    @PostMapping("/btnRoleTree")
+    public List<Tree> btnRoleTree(String roleTag){
+        return nodeInfoService.getBtnRoles(roleTag);
+    }
+    @GetMapping("/btnTree")
+    public List<Tree> btnTree(){
+        return nodeInfoService.getBtns();
+    }
+
 
 }

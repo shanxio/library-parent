@@ -24,19 +24,7 @@ public class NodeInfoServiceImpl implements NodeInfoService {
 
     @Override
     public List<NodeInfo> getRoleTag(String roleTag) {
-
         return nodeInfoDao.getRoleTag(roleTag);
-    }
-
-
-
-
-
-
-    @Override
-    public List<NodeInfo> getChild(Integer pid) {
-
-        return nodeInfoDao.getChild(pid);
     }
 
     @Override
@@ -45,15 +33,26 @@ public class NodeInfoServiceImpl implements NodeInfoService {
     }
 
     @Override
-    public List<Tree> getAll() {
+    public List<Tree> getMenusAll() {
 
         return getList(nodeInfoDao.getRoleTagMenu(null,0));
     }
 
     @Override
-    public List<Tree> getRoles(String roleTag) {
-        List<NodeInfo> nodeInfos = nodeInfoDao.getRoleTag(roleTag);
-        return getList(nodeInfos);
+    public List<Tree> getMenusRoles(String roleTag) {
+        return getList(nodeInfoDao.getRoleTagMenu(roleTag,0));
+    }
+
+    @Override
+    public List<Tree> getBtnRoles(String roleTag) {
+        List<NodeInfo> nodeInfos = nodeInfoDao.getRoleTagMenu(roleTag,1);
+        return getBtnList(nodeInfos);
+    }
+
+    @Override
+    public List<Tree> getBtns() {
+        List<NodeInfo> nodeInfos = nodeInfoDao.getRoleTagMenu(null,1);
+        return getBtnList(nodeInfos);
     }
 
 
@@ -62,6 +61,14 @@ public class NodeInfoServiceImpl implements NodeInfoService {
         return nodeInfoDao.getById(nodeId);
     }
 
+
+    public List<Tree> getBtnList(List<NodeInfo> nodeInfos ){
+        List<Tree> trees = new ArrayList<>();
+        for (NodeInfo nodeInfo : nodeInfos) {
+            trees.add(Tree.builder().id(nodeInfo.getNodeId()).label(nodeInfo.getNodeDescription()).pid(nodeInfo.getPid()).build());
+        }
+        return trees;
+    }
 
     public List<Tree> getList(List<NodeInfo> nodeInfos){
         List<Tree> trees = new ArrayList<>();
@@ -97,10 +104,6 @@ public class NodeInfoServiceImpl implements NodeInfoService {
                     childList.add(menu);
                 }
             }
-        }
-        //递归
-        for (Tree m:childList) {
-            m.setChildren(getChildList(m.getId(),menuList));
         }
         if (childList.size() == 0){
             return null;

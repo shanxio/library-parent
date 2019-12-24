@@ -8,6 +8,8 @@ import io.jsonwebtoken.lang.Assert;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * json与Bean对象相互转化
@@ -71,8 +73,8 @@ public class JsonUtils {
         }
 
     public static void main(String[] args) {
-        String str = "{\"username\":\"123\"}";
-        JwtSubject jwtSubject = readValue(str,JwtSubject.class);
-        System.out.println(jwtSubject);
+        Map<String,String> masp = new HashMap<>();
+        masp.put("key","12");
+        System.out.println(JsonUtils.getJsonString(masp));
     }
 }

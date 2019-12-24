@@ -2,6 +2,10 @@ package com.nf.library.controller.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.code.kaptcha.Constants;
+import com.google.code.kaptcha.Producer;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.google.code.kaptcha.util.Config;
 import com.nf.library.security.config.EnableSecurity;
 import com.nf.library.service.config.EnableServiceSpring;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +25,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import javax.swing.text.DateFormatter;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * springmvc所需的配置
@@ -42,9 +47,11 @@ public class MvcConfig  implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        ResourceHandlerRegistration registration =
-                registry.addResourceHandler("/static/**");
-        registration.addResourceLocations("classpath:/static/");
+//        ResourceHandlerRegistration registration =
+//                registry.addResourceHandler("/static/**");
+//        registration.addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/img/**").addResourceLocations("file:C:/Users/Sam/Pictures/file/");
+
     }
 
     @Bean(name = "multipartResolver")
@@ -74,7 +81,7 @@ public class MvcConfig  implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowCredentials(true)
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .allowedMethods("GET", "POST", "DELETE","OPTIONS","PUT")
                 .maxAge(3600);
     }
 
@@ -102,5 +109,30 @@ public class MvcConfig  implements WebMvcConfigurer {
         mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         return mappingJackson2HttpMessageConverter;
+    }
+
+    /**
+     * 生成图形验证码的基本参数
+     * @return
+     */
+    @Bean
+    public Producer captchaProducer() {
+        DefaultKaptcha captchaProducer = new DefaultKaptcha();
+        Properties properties = new Properties();
+        properties.setProperty(Constants.KAPTCHA_IMAGE_WIDTH, "100");
+        properties.setProperty(Constants.KAPTCHA_IMAGE_HEIGHT, "30");
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_FONT_SIZE, "22");
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_LENGTH, "4");
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "6");
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_FONT_COLOR, "black");
+        properties.setProperty(Constants.KAPTCHA_BORDER_COLOR, "LIGHT_GRAY");
+        properties.setProperty(Constants.KAPTCHA_BACKGROUND_CLR_FROM, "WHITE");
+        properties.setProperty(Constants.KAPTCHA_NOISE_IMPL, "com.google.code.kaptcha.impl.NoNoise");
+        properties.setProperty(Constants.KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.ShadowGimpy");
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_STRING, "0123456789");
+        properties.setProperty(Constants.KAPTCHA_SESSION_CONFIG_KEY, "checkCode");
+        Config config = new Config(properties);
+        captchaProducer.setConfig(config);
+        return captchaProducer;
     }
 }

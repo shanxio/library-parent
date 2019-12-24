@@ -26,13 +26,9 @@ public class RbacServiceImpl implements RbacService {
 
     @Autowired
     private NodeInfoDao nodeInfoDao;
-
-    private Map<String,List<NodeInfo>> nodeInfoMap = new HashMap<>();
     private static final String userName= "admin";
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-//        HttpSession session = request.getSession();
-
         Object principal = authentication.getPrincipal();
         boolean hasPermission = false;
         if(principal instanceof UserInfo){
@@ -61,8 +57,6 @@ public class RbacServiceImpl implements RbacService {
         Set<String> urls = new HashSet<>();
         //读取用户的所有角色
         Collection<GrantedAuthority> authorityList = (Collection<GrantedAuthority>) principal.getAuthorities();
-
-//        List<NodeInfo> nodeInfos = new ArrayList<>(10);
         //读取用户的所有uri地址
         for (GrantedAuthority grantedAuthority : authorityList) {
             //保存用户所用的节点信息
@@ -76,13 +70,7 @@ public class RbacServiceImpl implements RbacService {
 
             }
         }
-//        log.info("用户所有的节点信息："+nodeInfos);
-//        if(nodeInfos!=null){
-//            //清除
-//            session.removeAttribute("nodeInfos");
-//        }
-//        //保存至会话中，以便可以随时使用
-//        session.setAttribute("nodeInfos",nodeInfos);
+        log.info("用户所有的节点信息："+urls);
         return urls;
     }
 

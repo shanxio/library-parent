@@ -3,6 +3,7 @@ package com.nf.library.security.config;
 
 import com.nf.library.security.authorize.AuthorizeConfigManager;
 import com.nf.library.security.filter.JwtAuthenticationTokenFilter;
+import com.nf.library.security.filter.VerifcationCodeFilter;
 import com.nf.library.security.process.MyAccessDeniedHandler;
 import com.nf.library.security.process.MyAuthenticationFailureHandler;
 import com.nf.library.security.process.MyAuthenticationSuccessHandler;
@@ -56,11 +57,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(new MyAuthenticationSuccessHandler(nodeInfoService))
                 .failureHandler(new MyAuthenticationFailureHandler());
                 //不要创建会话
-                http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                //添加jwt认证过滤器
-                http.addFilterBefore(new JwtAuthenticationTokenFilter(userDetailsService),
-                        UsernamePasswordAuthenticationFilter.class);
-                //自定义异常处理
+                //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
+        //添加jwt认证过滤器
+        http.addFilterBefore(new JwtAuthenticationTokenFilter(userDetailsService),
+                UsernamePasswordAuthenticationFilter.class);
+
+        //http.addFilterBefore(new VerifcationCodeFilter(), JwtAuthenticationTokenFilter.class);
+        //自定义异常处理
                 http.exceptionHandling().accessDeniedHandler(new MyAccessDeniedHandler());
                 //禁用页面缓存
                 http.headers().cacheControl();

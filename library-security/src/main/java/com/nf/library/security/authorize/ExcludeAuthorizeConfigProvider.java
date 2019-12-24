@@ -20,7 +20,8 @@ public class ExcludeAuthorizeConfigProvider implements AuthorizeConfigProvider {
         config.antMatchers("/userLogin"
                 ,"/login"
                 ,"/403"
-                ,"/static/**")
+                ,"/static/**",
+                "/captcha.jpg","/img/**")
                 .permitAll();
         return false;
     }

@@ -40,8 +40,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeard = request.getHeader(JWT_TOKEN);
         response.setContentType("application/json;charset=utf-8");
-
-        if(!"/userLogin".equals(request.getRequestURI())){
+        if(request.getRequestURI().contains("img")){
+            filterChain.doFilter(request,response);
+            return;
+        }
+        if(!"/userLogin".equals(request.getRequestURI())&&!"/captcha.jpg".equals(request.getRequestURI())){
             ResponseVo responseVo = null;
             if(authHeard!=null){
 

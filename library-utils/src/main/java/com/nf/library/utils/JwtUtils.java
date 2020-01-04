@@ -69,7 +69,6 @@ public class JwtUtils {
      */
     public static JwtResult validateJWT(String jwtStr){
         JwtResult checkResult = new JwtResult();
-
         Claims claims = null;
         try {
 

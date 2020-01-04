@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -52,8 +53,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             userInfo.setRolesName(rolesName.substring(0,rolesName.lastIndexOf("|")));
             log.info("登录用户名称为："+username+"----用户角色分别有："+authorities);
             userInfo.setAuthorities(authorities);
-
         }
+
         return userInfo;
     }
 }

@@ -78,7 +78,7 @@ public class BookInfoController extends BaseController {
             bookInfoService.bookInfoByIdDelete(isbn);
             responseVo = ResponseVo.builder().code("200").msg("删除成功").build();
         }else{
-            responseVo = ResponseVo.builder().code("400").msg("删除失败，读者正在借阅该数据").build();
+            responseVo = ResponseVo.builder().code("400").msg("删除失败，读者正在借阅该书籍").build();
         }
         return responseVo;
     }

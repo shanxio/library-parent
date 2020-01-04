@@ -23,10 +23,6 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
-//        // 允许跨域
-//        response.setHeader("Access-Control-Allow-Origin", "*");
-//        // 允许自定义请求头token(允许head跨域)
-//        response.setHeader("Access-Control-Allow-Headers", "token, Accept, Origin, X-Requested-With, Content-Type, Last-Modified");
 
         response.setContentType("application/json;charset=utf-8");
         ResponseVo responseVo = ResponseVo.builder()

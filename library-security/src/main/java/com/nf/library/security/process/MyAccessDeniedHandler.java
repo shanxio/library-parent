@@ -4,6 +4,7 @@ import com.nf.library.execption.vo.ResponseVo;
 import com.nf.library.utils.JsonUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ import java.io.IOException;
  * @author Sam
  */
 
+
+@Component
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
 

@@ -33,15 +33,12 @@ public class SystemConfig extends AbstractAnnotationConfigDispatcherServletIniti
         registration.setMultipartConfig(new MultipartConfigElement(""));
     }
 
-//    @Override
-//    protected void registerDispatcherServlet(ServletContext servletContext) {
-//        super.registerDispatcherServlet(servletContext);
-//        ServletRegistration.Dynamic registration =
-//                (ServletRegistration.Dynamic) servletContext.getServletRegistration(getServletName());
-//        registration.setMultipartConfig(new MultipartConfigElement(servletContext.getRealPath("")));
-//
-//    }
-
-
-
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        servletContext.addFilter("endoing",characterEncodingFilter);
+        super.onStartup(servletContext);
+    }
 }

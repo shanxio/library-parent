@@ -7,11 +7,13 @@ import com.nf.library.utils.JwtResult;
 import com.nf.library.utils.JwtSubject;
 import com.nf.library.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -29,15 +31,12 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private static final  String JWT_TOKEN = "token";
-
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
-    public JwtAuthenticationTokenFilter(UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         String authHeard = request.getHeader(JWT_TOKEN);
         response.setContentType("application/json;charset=utf-8");
         if(request.getRequestURI().contains("img")){

@@ -26,18 +26,16 @@ import java.util.*;
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-
+    @Autowired
     private NodeInfoService nodeInfoService;
 
-    public MyAuthenticationSuccessHandler(NodeInfoService nodeInfoService) {
-        this.nodeInfoService = nodeInfoService;
-    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
         response.setContentType("application/json;charset=utf-8");
+
 
         UserInfo userInfo = (UserInfo) authentication.getPrincipal();
         //生成token信息

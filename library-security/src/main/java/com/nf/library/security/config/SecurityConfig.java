@@ -15,14 +15,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用于securit各种安全配置
@@ -38,47 +46,68 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthorizeConfigManager authorizeConfigManager;
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private VerifcationCodeFilter verifcationCodeFilter;
     @Autowired
-    private NodeInfoService nodeInfoService;
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
+    @Autowired
+    private MyAuthenticationFailureHandler failureHandler;
+
+    @Autowired
+    private MyAuthenticationSuccessHandler successHandler;
+
+    @Autowired
+    private MyAccessDeniedHandler myAccessDeniedHandler;
+
+   
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                //处理跨域请求中的Preflight请求
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll();
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS)
-                .permitAll();
+        http.cors().configurationSource(configurationSource()).and().csrf().disable();
         authorizeConfigManager.config(http.authorizeRequests());
         http.formLogin()
                 .loginProcessingUrl("/userLogin")
-                .successHandler(new MyAuthenticationSuccessHandler(nodeInfoService))
-                .failureHandler(new MyAuthenticationFailureHandler());
+                .successHandler(successHandler)
+                .failureHandler(failureHandler);
                 //不要创建会话
                 //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-
         //添加jwt认证过滤器
-        http.addFilterBefore(new JwtAuthenticationTokenFilter(userDetailsService),
+        http.addFilterBefore(jwtAuthenticationTokenFilter,
                 UsernamePasswordAuthenticationFilter.class);
-
-        //http.addFilterBefore(new VerifcationCodeFilter(), JwtAuthenticationTokenFilter.class);
+        http.addFilterBefore(verifcationCodeFilter, JwtAuthenticationTokenFilter.class);
         //自定义异常处理
-                http.exceptionHandling().accessDeniedHandler(new MyAccessDeniedHandler());
-                //禁用页面缓存
-                http.headers().cacheControl();
+       http.exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
+        //禁用页面缓存
+       http.headers().cacheControl();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
-    //   @Bean
+
+    @Bean
+    public UrlBasedCorsConfigurationSource configurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedHeader("*");
+        config.addAllowedOrigin("http://127.0.0.1:8081");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("HEAD");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+//       @Bean
 //    public UserDetailsManager inMemoryUserDetailsManager(){
-//       InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//       manager.createUser(User.withUsername("admin").password("$2a$10$k9zX2LRoVlSgHWo6GbU1VubWD.FPRias9FH1A8MRTH0heSb9BqQny").roles("ADMIN").build());
-//       return manager;
-//   }
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        manager.createUser(User.withUsername("admin").password("$2a$10$k9zX2LRoVlSgHWo6GbU1VubWD.FPRias9FH1A8MRTH0heSb9BqQny").roles("ADMIN").build());
+//        return manager;
+//    }
 }

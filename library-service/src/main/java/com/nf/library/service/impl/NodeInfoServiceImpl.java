@@ -16,6 +16,7 @@ import java.util.List;
  * @author Sam
  */
 @Service
+
 public class NodeInfoServiceImpl implements NodeInfoService {
     @Autowired
     private NodeInfoDao nodeInfoDao;
@@ -75,7 +76,9 @@ public class NodeInfoServiceImpl implements NodeInfoService {
         for (NodeInfo nodeInfo : nodeInfos) {
             trees.add(Tree.builder().id(nodeInfo.getNodeId()).label(nodeInfo.getNodeDescription()).pid(nodeInfo.getPid()).build());
         }
-        //找到所有的1级菜单
+
+
+        //找到所有的1级菜单 // id name pid
         List<Tree> menuList = new ArrayList<>();
         for (Tree tree : trees) {
             if(tree.getPid()!=null) {
@@ -105,6 +108,7 @@ public class NodeInfoServiceImpl implements NodeInfoService {
                 }
             }
         }
+
         if (childList.size() == 0){
             return null;
         }

@@ -35,6 +35,7 @@ public class ReaderInfoServiceImpl implements ReaderInfoService {
 
     @Override
     public void readerInfoDelete(Integer id) {
+        
         readerInfoDao.readerInfoDelete(id);
     }
 

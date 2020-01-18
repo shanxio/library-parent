@@ -16,6 +16,9 @@ public class LendBook {
     private String bookName;
     private String bookAuthor;
     private String readerId;
+    /**
+     * 读者姓名
+     */
     private String readerName;
     /**
      * 借阅时间

@@ -11,5 +11,6 @@ public class Address {
     private String code;
     private String name;
     private String pid;
+
 }
 

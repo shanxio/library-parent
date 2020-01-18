@@ -31,15 +31,11 @@ public class RoleInfoAuthorizationController extends BaseController {
     private NodeInfoService nodeInfoService;
     @PostMapping("/auth")
     public ResponseVo auth(@RequestBody AuthVo authVo){
-
-
         this.checkNull(authVo);
         Integer[] nodeInfos = authVo.getNodeInfos();
         String roleTag =authVo.getRoleTag();
         RoleInfo roleInfo = roleInfoService.getRoleByTag(roleTag);
         if(nodeInfos.length!=0) {
-
-
             List<RequestVo> requestVos = new ArrayList<>();
             for (Integer nodeInfo : nodeInfos) {
                 NodeInfo node = nodeInfoService.getById(nodeInfo.toString());

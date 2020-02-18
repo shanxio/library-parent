@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequestMapping("/admin/file")
 public class FileController extends BaseController{
 
-    private final static String FILE_PATH = "C:\\Users\\Sam\\Pictures\\file";
+    private final static String FILE_PATH = "C:\\Users\\sam\\Pictures\\file";
     @PostMapping("/upload")
     @ResponseBody
     public ResponseVo upload(MultipartFile myFile, HttpServletRequest request) throws IOException {

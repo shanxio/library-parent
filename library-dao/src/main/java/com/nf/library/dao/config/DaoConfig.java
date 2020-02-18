@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * 用来配置与spring,mybatis相关的数据库操作
+ * 用来配置与spring,mybatis相关的数据库操作。
  * @author Sam
  */
 @Configuration

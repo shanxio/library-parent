@@ -5,7 +5,7 @@ import com.nf.library.entity.Address;
 import java.util.List;
 
 /**
- * 地址表的相关业务
+ * 地址表的相关业务。
  * @author Sam
  */
 public interface AddressService {

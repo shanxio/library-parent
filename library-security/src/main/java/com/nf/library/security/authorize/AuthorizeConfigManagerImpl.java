@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * 默认的授权配置管理器
+ * 默认的授权配置管理器。
  * @author Sam
  */
 @Component

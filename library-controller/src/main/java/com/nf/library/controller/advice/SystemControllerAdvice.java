@@ -22,7 +22,7 @@ public class SystemControllerAdvice {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseVo validationException(ValidationException e){
-        ResponseVo responseVo = ResponseVo.builder().code("500").msg("数据校验失败").data(e).build();
+        ResponseVo responseVo = ResponseVo.builder().code("500").msg("数据校验失败！").data(e).build();
         return responseVo;
     }
 

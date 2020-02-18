@@ -3,7 +3,7 @@ package com.nf.library.entity;
 import lombok.Data;
 
 /**
- * 地址表实体类
+ * 地址表实体类。
  * @author Sam
  */
 @Data

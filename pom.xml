@@ -46,7 +46,7 @@
         <!--aop版本号-->
         <aspectj.version>1.9.4</aspectj.version>
         <!--spring security版本号-->
-        <security.version>5.2.0.RELEASE</security.version>
+        <security.version>5.2.10.RELEASE</security.version>
         <!--校验器版本号-->
         <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
         <!--poi版本号-->

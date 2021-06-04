@@ -48,7 +48,7 @@
         <!--spring security版本号-->
         <security.version>5.2.0.RELEASE</security.version>
         <!--校验器版本号-->
-        <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
+        <hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
         <!--poi版本号-->
         <version.poi>3.11-beta2</version.poi>
         <!--日志标准版本号-->
